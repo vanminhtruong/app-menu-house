@@ -68,28 +68,61 @@ export default {
     blur: {
       type: Number,
       default: 2
+    },
+    hideDelay: {
+      type: Number,
+      default: 0
     }
   },
   setup(props) {
     const revealContainer = ref(null)
     const isRevealed = ref(false)
     let observer = null
+    let showTimer = null
+    let hideTimer = null
+
+    const clearTimers = () => {
+      if (showTimer) {
+        clearTimeout(showTimer)
+        showTimer = null
+      }
+      if (hideTimer) {
+        clearTimeout(hideTimer)
+        hideTimer = null
+      }
+    }
 
     const checkVisibility = (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Element has entered the viewport
-          setTimeout(() => {
-            isRevealed.value = true
-          }, props.delay)
+          // Any intersection: keep revealed until fully out of view
+          if (hideTimer) {
+            clearTimeout(hideTimer)
+            hideTimer = null
+          }
+          if (!isRevealed.value) {
+            if (showTimer) clearTimeout(showTimer)
+            showTimer = setTimeout(() => {
+              isRevealed.value = true
+              showTimer = null
+            }, props.delay)
+          }
 
           // If once is true, disconnect the observer after revealing
           if (props.once && observer) {
             observer.disconnect()
           }
         } else if (!props.once) {
-          // Element has left the viewport (and we want to hide it again)
-          isRevealed.value = false
+          // No intersection (100% out of view): hide
+          if (showTimer) {
+            clearTimeout(showTimer)
+            showTimer = null
+          }
+          if (hideTimer) clearTimeout(hideTimer)
+          hideTimer = setTimeout(() => {
+            isRevealed.value = false
+            hideTimer = null
+          }, props.hideDelay)
         }
       })
     }
@@ -100,7 +133,8 @@ export default {
       observer = new IntersectionObserver(checkVisibility, {
         root: null,
         rootMargin: props.rootMargin,
-        threshold: props.threshold
+        // Trigger when becoming visible past the configured threshold and when fully out (0)
+        threshold: [0, props.threshold]
       })
 
       observer.observe(revealContainer.value)
@@ -110,6 +144,7 @@ export default {
       if (observer) {
         observer.disconnect()
       }
+      clearTimers()
     })
 
     // Function for dynamic transform styles

@@ -53,7 +53,7 @@
               mode="out-in"
               appear
             >
-              <ScrollReveal v-if="activeTab === 'electricity' || activeTab === 'both'" :once="false" :delay="100" :duration="800" direction="up" :threshold="0.6" root-margin="-100px 0px -100px 0px">
+              <ScrollReveal v-if="activeTab === 'electricity' || activeTab === 'both'" :once="false" :delay="100" :duration="800" direction="up" :threshold="0.6" root-margin="0px" :hide-delay="120">
                 <ElectricityCalculator
                   key="electricity" 
                   :electricity-old="electricityOld"
@@ -77,7 +77,7 @@
               mode="out-in"
               appear
             >
-              <ScrollReveal v-if="activeTab === 'water' || activeTab === 'both'" :once="false" :delay="100" :duration="800" direction="up" :threshold="0.6" root-margin="-100px 0px -100px 0px">
+              <ScrollReveal v-if="activeTab === 'water' || activeTab === 'both'" :once="false" :delay="100" :duration="800" direction="up" :threshold="0.6" root-margin="0px" :hide-delay="120">
                 <WaterCalculator
                   key="water"
                   :water-old="waterOld"
@@ -122,7 +122,7 @@
               mode="out-in"
               appear
             >
-              <ScrollReveal v-if="activeTab === 'rent' || activeTab === 'both'" :once="false" :delay="100" :duration="800" direction="up" :threshold="0.6" root-margin="-100px 0px -100px 0px">
+              <ScrollReveal v-if="activeTab === 'rent' || activeTab === 'both'" :once="false" :delay="100" :duration="800" direction="up" :threshold="0.6" root-margin="0px" :hide-delay="120">
                 <RentCalculator
                   key="rent"
                   :monthly-rent="monthlyRent"
