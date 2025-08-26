@@ -11,15 +11,25 @@ const getStoredLanguage = () => {
   }
 }
 
+const defaultLocale = 'vi'
+const storedLanguage = getStoredLanguage()
+
+console.log('i18n init - Stored language:', storedLanguage)
+console.log('i18n init - Using locale:', storedLanguage || defaultLocale)
+console.log('i18n init - Available messages:', Object.keys({ en, vi }))
+
 const i18n = createI18n({
   legacy: false, // You must set `false`, to use Composition API
-  locale: getStoredLanguage() || 'vi', // set default locale
-  fallbackLocale: 'vi', // set fallback locale
+  locale: storedLanguage || defaultLocale, // set default locale
+  fallbackLocale: defaultLocale, // set fallback locale
   globalInjection: true, // Enable global $t
   messages: {
     en,
     vi
-  }
+  },
+  silentTranslationWarn: false, // Show missing translation warnings
+  missingWarn: false,
+  silentFallbackWarn: false
 })
 
 export default i18n
