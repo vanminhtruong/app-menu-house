@@ -55,6 +55,8 @@
 </template>
 
 <script setup lang="ts">
+import { watch, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useThemeStore } from '../stores/theme'
 import { useLanguageStore } from '../stores/language'
 import { useBackgroundStore } from '../stores/background'
@@ -62,6 +64,16 @@ import { useBackgroundStore } from '../stores/background'
 const themeStore = useThemeStore()
 const languageStore = useLanguageStore()
 const backgroundStore = useBackgroundStore()
+const { locale } = useI18n()
+
+// Initialize locale and watch for language changes
+onMounted(() => {
+  locale.value = languageStore.currentLanguage
+})
+
+watch(() => languageStore.currentLanguage, (newLang) => {
+  locale.value = newLang
+}, { immediate: true })
 
 // Handle background toggle with debug logging
 const handleBackgroundToggle = () => {
@@ -69,4 +81,4 @@ const handleBackgroundToggle = () => {
   backgroundStore.toggleBackground()
   console.log('Background toggle after click:', backgroundStore.isEnabled)
 }
-</script> 
+</script>

@@ -15,10 +15,19 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, watch } from 'vue'
 import { useBackToTopStore } from '../stores/backToTop'
+import { useLanguageStore } from '../stores/language'
+import { useI18n } from 'vue-i18n'
 
 const backToTopStore = useBackToTopStore()
+const languageStore = useLanguageStore()
+const { locale } = useI18n()
+
+// Initialize locale and watch for language changes
+watch(() => languageStore.currentLanguage, (newLang) => {
+  locale.value = newLang
+}, { immediate: true })
 
 onMounted(() => {
   backToTopStore.setupScrollListener()

@@ -183,7 +183,9 @@
 </template>
 
 <script setup lang="ts">
+import { watch, onMounted } from 'vue'
 import { useThemeStore } from '../stores/theme'
+import { useLanguageStore } from '../stores/language'
 import { useToast } from '../composables/useToast'
 import { useI18n } from 'vue-i18n'
 
@@ -209,8 +211,18 @@ const props = defineProps<{
 const emit = defineEmits(['close-detail-modal'])
 
 const themeStore = useThemeStore()
+const languageStore = useLanguageStore()
 const { copyToClipboard, showSuccess, showError } = useToast()
-const { t } = useI18n()
+const { t, locale } = useI18n()
+
+// Initialize locale and watch for language changes
+onMounted(() => {
+  locale.value = languageStore.currentLanguage
+})
+
+watch(() => languageStore.currentLanguage, (newLang) => {
+  locale.value = newLang
+}, { immediate: true })
 
 const closeDetailModal = () => {
   emit('close-detail-modal')
