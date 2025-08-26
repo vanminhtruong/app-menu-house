@@ -1,18 +1,18 @@
 <template>
   <div :class="[
-    'rent-calculator rounded-lg p-6 border transition-all duration-300',
+    'rent-calculator rounded-lg p-6 max-sm:p-4 max-xs:p-3 border transition-all duration-300',
     themeStore.isDarkMode 
       ? 'bg-gradient-to-br from-gray-700 to-gray-600 border-gray-500 shadow-[0_4px_12px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15)]' 
       : 'bg-white border-gray-200 shadow-sm',
-    isInBothTab ? 'mt-8 mb-6' : ''
+    isInBothTab ? 'mt-8 mb-6 max-sm:mt-6 max-sm:mb-4 max-xs:mt-4 max-xs:mb-3' : ''
   ]">
     <!-- Header -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center justify-between mb-6 max-sm:mb-4 max-xs:mb-3">
       <h2 :class="[
-        'text-xl font-bold flex items-center gap-2',
+        'text-xl max-sm:text-lg max-xs:text-base font-bold flex items-center gap-2 max-sm:gap-1.5 max-xs:gap-1 leading-tight max-xs:leading-snug max-sm:whitespace-normal max-sm:break-words',
         themeStore.isDarkMode ? 'text-white' : 'text-gray-800'
       ]">
-        <span class="text-2xl">🏠</span>
+        <span class="text-2xl max-sm:text-xl max-xs:text-lg">🏠</span>
         {{ $t('calculator.rent.title', 'Tính Tiền Nhà') }}
       </h2>
     </div>

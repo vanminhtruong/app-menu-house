@@ -3,24 +3,24 @@
     <div 
       @click="toggleAccordion" 
       :class="[
-        'flex justify-between items-center cursor-pointer py-3 px-4 rounded-md transition-all duration-300 mt-8',
+        'flex justify-between items-center cursor-pointer py-3 px-4 max-sm:py-2 max-sm:px-3 max-xs:py-1 max-xs:px-2 gap-2 max-sm:gap-2 max-xs:gap-1 rounded-md transition-all duration-300 mt-8 max-sm:mt-6 max-xs:mt-4',
         isInBothTab ? (themeStore.isDarkMode ? 'hover:bg-gray-700 border border-gray-700' : 'hover:bg-gray-100 border border-gray-200') : '',
         isInBothTab && isCollapsed ? (themeStore.isDarkMode ? 'mb-3' : 'mb-3') : 'mb-4'
       ]"
     >
-      <div class="flex items-center">
-        <div class="mr-3 flex-shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" :class="themeStore.isDarkMode ? 'text-blue-300' : 'text-blue-500'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="flex items-center flex-1 min-w-0">
+        <div class="mr-3 max-sm:mr-2 max-xs:mr-1 flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 max-xs:h-4 max-xs:w-4" :class="themeStore.isDarkMode ? 'text-blue-300' : 'text-blue-500'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
           </svg>
         </div>
         <h2 :class="[
-          'text-lg font-semibold',
+          'text-lg max-sm:text-base max-xs:text-sm font-semibold leading-tight max-xs:leading-snug max-sm:whitespace-normal max-sm:break-words',
           themeStore.isDarkMode ? 'text-gray-100' : 'text-gray-800'
         ]">{{ $t('calculator.water.title') }}</h2>
       </div>
-      <div v-if="isInBothTab" class="transform transition-transform duration-300" :class="{ 'rotate-180': !isCollapsed }">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-600'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div v-if="isInBothTab" class="ml-2 max-xs:ml-1 flex-shrink-0 transform transition-transform duration-300" :class="{ 'rotate-180': !isCollapsed }">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 max-sm:h-4 max-sm:w-4 max-xs:h-4 max-xs:w-4" :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-600'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
       </div>

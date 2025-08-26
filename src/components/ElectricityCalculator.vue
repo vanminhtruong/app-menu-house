@@ -3,24 +3,24 @@
     <div 
       @click="toggleAccordion" 
       :class="[
-        'flex justify-between items-center cursor-pointer py-3 px-4 rounded-md transition-all duration-300',
+        'flex justify-between items-center cursor-pointer py-3 px-4 max-sm:py-2 max-sm:px-3 max-xs:py-1 max-xs:px-2 gap-2 max-sm:gap-2 max-xs:gap-1 rounded-md transition-all duration-300',
         isInBothTab ? (themeStore.isDarkMode ? 'hover:bg-gray-700 border border-gray-700' : 'hover:bg-gray-100 border border-gray-200') : '',
         isInBothTab && isCollapsed ? (themeStore.isDarkMode ? 'mb-3' : 'mb-3') : 'mb-4'
       ]"
     >
-      <div class="flex items-center">
-        <div class="mr-3 flex-shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" :class="themeStore.isDarkMode ? 'text-yellow-300' : 'text-yellow-500'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="flex items-center flex-1 min-w-0">
+        <div class="mr-3 max-sm:mr-2 max-xs:mr-1 flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 max-xs:h-4 max-xs:w-4" :class="themeStore.isDarkMode ? 'text-yellow-300' : 'text-yellow-500'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
         <h2 :class="[
-          'text-lg font-semibold',
+          'text-lg max-sm:text-base max-xs:text-sm font-semibold leading-tight max-xs:leading-snug max-sm:whitespace-normal max-sm:break-words',
           themeStore.isDarkMode ? 'text-gray-100' : 'text-gray-800'
         ]">{{ $t('calculator.electricity.title') }}</h2>
       </div>
-      <div v-if="isInBothTab" class="transform transition-transform duration-300" :class="{ 'rotate-180': !isCollapsed }">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-600'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div v-if="isInBothTab" class="ml-2 max-xs:ml-1 flex-shrink-0 transform transition-transform duration-300" :class="{ 'rotate-180': !isCollapsed }">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 max-sm:h-4 max-sm:w-4 max-xs:h-4 max-xs:w-4" :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-600'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
       </div>
@@ -33,10 +33,10 @@
         isInBothTab ? 'accordion-content' : ''
       ]"
     >
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 max-sm:gap-3 max-sm:mb-3 max-xs:gap-2 max-xs:mb-2">
         <div class="form-group">
           <label :class="[
-            'block text-sm font-medium mb-1',
+            'block text-sm max-xs:text-xs font-medium mb-1',
             themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
           ]">{{ $t('calculator.electricity.oldReading') }}</label>
           <div class="relative">
@@ -52,7 +52,7 @@
               v-model="electricityOldModel" 
               id="electricity-old"
               :class="[
-                'w-full px-3 py-2 rounded-md focus:outline-none transition-colors duration-200',
+                'w-full px-3 py-2 max-sm:px-3 max-sm:py-2 max-xs:px-2 max-xs:py-1.5 rounded-md focus:outline-none transition-colors duration-200',
                 themeStore.isDarkMode 
                   ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
                   : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
@@ -62,7 +62,7 @@
             <label 
               :for="'electricity-old-image-upload'"
               :class="[
-                'absolute right-2 top-2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200',
+                'absolute right-2 top-2 -translate-y-1/2 w-7 h-7 max-xs:w-6 max-xs:h-6 max-xs:right-1 max-xs:top-1 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200',
                 themeStore.isDarkMode 
                   ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
                   : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
@@ -84,7 +84,7 @@
         </div>
         <div class="form-group">
           <label :class="[
-            'block text-sm font-medium mb-1',
+            'block text-sm max-xs:text-xs font-medium mb-1',
             themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
           ]">{{ $t('calculator.electricity.newReading') }}</label>
           <div class="relative">
@@ -100,7 +100,7 @@
               v-model="electricityNewModel"
               id="electricity-new" 
               :class="[
-                'w-full px-3 py-2 rounded-md focus:outline-none transition-colors duration-200',
+                'w-full px-3 py-2 max-sm:px-3 max-sm:py-2 max-xs:px-2 max-xs:py-1.5 rounded-md focus:outline-none transition-colors duration-200',
                 themeStore.isDarkMode 
                   ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
                   : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
@@ -110,7 +110,7 @@
             <label 
               :for="'electricity-new-image-upload'"
               :class="[
-                'absolute right-2 top-2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200',
+                'absolute right-2 top-2 -translate-y-1/2 w-7 h-7 max-xs:w-6 max-xs:h-6 max-xs:right-1 max-xs:top-1 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200',
                 themeStore.isDarkMode 
                   ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
                   : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
@@ -134,7 +134,7 @@
 
       <div class="form-group mb-4">
         <label :class="[
-          'block text-sm font-medium mb-1',
+          'block text-sm max-xs:text-xs font-medium mb-1',
           themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
         ]">{{ $t('calculator.electricity.rate') }}</label>
         <input 
@@ -148,7 +148,7 @@
           @wheel.prevent
           v-model="electricityRateModel" 
           :class="[
-            'w-full px-3 py-2 rounded-md focus:outline-none transition-colors duration-200',
+            'w-full px-3 py-2 max-sm:px-3 max-sm:py-2 max-xs:px-2 max-xs:py-1.5 rounded-md focus:outline-none transition-colors duration-200',
             themeStore.isDarkMode 
               ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
               : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
@@ -159,18 +159,18 @@
     </div>
 
     <div :class="[
-      'result-box rounded-lg p-4',
+      'result-box rounded-lg p-4 max-sm:p-3 max-xs:p-2',
       themeStore.isDarkMode ? 'bg-gray-700 shadow-[0_4px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] border border-gray-600' : 'bg-gray-50 shadow-sm'
     ]">
       <div class="flex justify-between items-center mb-2">
-        <span :class="themeStore.isDarkMode ? 'text-sm text-gray-300' : 'text-sm text-gray-600'">{{ $t('calculator.formula') }}</span>
-        <span :class="themeStore.isDarkMode ? 'text-sm font-medium text-white' : 'text-sm font-medium'">
+        <span :class="themeStore.isDarkMode ? 'text-sm max-xs:text-xs text-gray-300' : 'text-sm max-xs:text-xs text-gray-600'">{{ $t('calculator.formula') }}</span>
+        <span :class="themeStore.isDarkMode ? 'text-sm max-xs:text-xs font-medium text-white' : 'text-sm max-xs:text-xs font-medium'">
           ({{ electricityNewModel || '0' }} - {{ electricityOldModel || '0' }}) × {{ electricityRateModel || defaultElectricityRate }} = {{ formatCurrency(electricityTotal) }}
         </span>
       </div>
       <div class="flex justify-between items-center">
-        <span :class="themeStore.isDarkMode ? 'text-sm text-gray-300' : 'text-sm text-gray-600'">{{ $t('calculator.total') }}</span>
-        <span :class="themeStore.isDarkMode ? 'text-lg font-bold text-white' : 'text-lg font-bold text-indigo-600'">{{ formatCurrency(electricityTotal) }}</span>
+        <span :class="themeStore.isDarkMode ? 'text-sm max-xs:text-xs text-gray-300' : 'text-sm max-xs:text-xs text-gray-600'">{{ $t('calculator.total') }}</span>
+        <span :class="themeStore.isDarkMode ? 'text-lg max-sm:text-base max-xs:text-sm font-bold text-white' : 'text-lg max-sm:text-base max-xs:text-sm font-bold text-indigo-600'">{{ formatCurrency(electricityTotal) }}</span>
       </div>
     </div>
   </div>

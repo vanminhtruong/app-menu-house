@@ -1,6 +1,6 @@
 <template>
   <div :class="[
-    'min-h-screen py-8 px-4 transition-colors duration-300 relative overflow-hidden',
+    'min-h-screen py-8 px-4 max-sm:py-6 max-sm:px-3 max-xs:py-4 max-xs:px-2 transition-colors duration-300 relative overflow-hidden',
     themeStore.isDarkMode ? 'text-white' : '',
     showDetailModal ? 'overflow-hidden' : '',
     // Fallback background when AnimatedBackground is disabled
@@ -18,7 +18,7 @@
     <div class="max-w-3xl mx-auto relative z-20">
       <LazyLoader :delay="1000" :loading-text="$t('common.loading')">
         <div :class="[
-          'rounded-2xl overflow-hidden',
+          'rounded-2xl max-sm:rounded-xl max-xs:rounded-lg overflow-hidden',
           // Conditional backdrop blur and transparency based on background state
           backgroundStore.isEnabled ? 'backdrop-blur-sm' : '',
           // Different styling when background is enabled vs disabled
@@ -38,7 +38,7 @@
           </ScrollReveal>
 
           <!-- Calculator Form -->
-          <div :class="['p-6', themeStore.isDarkMode ? 'text-gray-200' : '']">
+          <div :class="['p-6 max-sm:p-4 max-xs:p-3', themeStore.isDarkMode ? 'text-gray-200' : '']">
             <!-- Tabs -->
             <ScrollReveal :once="true" :delay="400" :duration="1000" direction="right" :distance="30">
               <CalculatorTabs 
@@ -97,15 +97,15 @@
 
             <!-- Separator for Both Tab -->
             <div v-if="activeTab === 'both'" :class="[
-              'separator my-8 flex items-center',
+              'separator my-8 max-sm:my-6 max-xs:my-4 flex items-center',
               themeStore.isDarkMode ? 'text-gray-500' : 'text-gray-400'
             ]">
               <div :class="[
                 'flex-1 h-px',
                 themeStore.isDarkMode ? 'bg-gray-600' : 'bg-gray-300'
               ]"></div>
-              <div class="px-4 text-sm font-medium">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="px-4 max-xs:px-2 text-sm font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 max-xs:h-4 max-xs:w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
                 Tiền Nhà
