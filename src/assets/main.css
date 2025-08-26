@@ -1,0 +1,255 @@
+@import './base.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Thiết lập cho dark mode để tránh chớp nháy khi tải trang */
+html.dark-mode {
+  background-color: #1a202c;
+  color: #e2e8f0;
+}
+
+html.dark-mode body {
+  background-color: #1a202c;
+  color: #e2e8f0;
+}
+
+/* Transition mượt cho theme */
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom toast styling */
+.custom-toast {
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.custom-toast-body {
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+
+/* Light theme toast styling - đồng bộ với color scheme của dự án */
+.light-theme .Vue-Toastification__toast {
+  background-color: #ffffff !important;
+  color: #2c3e50 !important; /* Màu indigo chính của dự án */
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.light-theme .Vue-Toastification__toast--success {
+  background-color: #ebf8ff !important; /* Xanh dương nhạt */
+  color: #2c5282 !important; /* Xanh dương đậm */
+  border-color: #3182ce !important; /* Blue-600 */
+}
+
+.light-theme .Vue-Toastification__toast--error {
+  background-color: #fed7d7 !important; /* Đỏ nhạt */
+  color: #742a2a !important; /* Đỏ đậm */
+  border-color: #e53e3e !important; /* Red-500 */
+}
+
+.light-theme .Vue-Toastification__toast--warning {
+  background-color: #fefcbf !important; /* Vàng nhạt */
+  color: #744210 !important; /* Vàng đậm */
+  border-color: #d69e2e !important; /* Yellow-600 */
+}
+
+.light-theme .Vue-Toastification__toast--info {
+  background-color: #ebf8ff !important; /* Xanh dương nhạt */
+  color: #2c5282 !important; /* Xanh dương đậm - màu chính */
+  border-color: #4299e1 !important; /* Blue-400 */
+}
+
+/* Dark mode support - đồng bộ với color scheme của dự án */
+html.dark-mode .Vue-Toastification__toast,
+.dark-mode .Vue-Toastification__toast,
+.dark-theme .Vue-Toastification__toast {
+  background-color: #2d3748 !important; /* Tương tự gray-700 */
+  color: #e2e8f0 !important; /* Màu text chính của dự án */
+  border: 1px solid #4a5568 !important; /* gray-600 */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark-mode .Vue-Toastification__toast--success,
+.dark-mode .Vue-Toastification__toast--success,
+.dark-theme .Vue-Toastification__toast--success {
+  background-color: #1a365d !important; /* Xanh dương đậm thay vì xanh lá */
+  color: #bee3f8 !important; /* Xanh dương nhạt */
+  border-color: #3182ce !important; /* Blue-600 */
+}
+
+html.dark-mode .Vue-Toastification__toast--error,
+.dark-mode .Vue-Toastification__toast--error,
+.dark-theme .Vue-Toastification__toast--error {
+  background-color: #742a2a !important; /* Đỏ đậm */
+  color: #fed7d7 !important; /* Đỏ nhạt */
+  border-color: #e53e3e !important; /* Red-500 */
+}
+
+html.dark-mode .Vue-Toastification__toast--warning,
+.dark-mode .Vue-Toastification__toast--warning,
+.dark-theme .Vue-Toastification__toast--warning {
+  background-color: #744210 !important; /* Vàng đậm thay vì cam */
+  color: #faf089 !important; /* Vàng nhạt */
+  border-color: #d69e2e !important; /* Yellow-600 */
+}
+
+html.dark-mode .Vue-Toastification__toast--info,
+.dark-mode .Vue-Toastification__toast--info,
+.dark-theme .Vue-Toastification__toast--info {
+  background-color: #2c5282 !important; /* Indigo đậm - màu chính của dự án */
+  color: #bee3f8 !important; /* Xanh dương nhạt */
+  border-color: #4299e1 !important; /* Blue-400 */
+}
+
+/* Progress bar styling */
+.Vue-Toastification__progress-bar {
+  height: 3px !important;
+}
+
+/* Light theme progress bars */
+.light-theme .Vue-Toastification__toast--success .Vue-Toastification__progress-bar {
+  background-color: #3182ce !important; /* Blue-600 */
+}
+
+.light-theme .Vue-Toastification__toast--error .Vue-Toastification__progress-bar {
+  background-color: #e53e3e !important; /* Red-500 */
+}
+
+.light-theme .Vue-Toastification__toast--warning .Vue-Toastification__progress-bar {
+  background-color: #d69e2e !important; /* Yellow-600 */
+}
+
+.light-theme .Vue-Toastification__toast--info .Vue-Toastification__progress-bar {
+  background-color: #4299e1 !important; /* Blue-400 */
+}
+
+/* Dark theme progress bars */
+html.dark-mode .Vue-Toastification__toast--success .Vue-Toastification__progress-bar,
+.dark-mode .Vue-Toastification__toast--success .Vue-Toastification__progress-bar,
+.dark-theme .Vue-Toastification__toast--success .Vue-Toastification__progress-bar {
+  background-color: #3182ce !important; /* Blue-600 */
+}
+
+html.dark-mode .Vue-Toastification__toast--error .Vue-Toastification__progress-bar,
+.dark-mode .Vue-Toastification__toast--error .Vue-Toastification__progress-bar,
+.dark-theme .Vue-Toastification__toast--error .Vue-Toastification__progress-bar {
+  background-color: #e53e3e !important; /* Red-500 */
+}
+
+html.dark-mode .Vue-Toastification__toast--warning .Vue-Toastification__progress-bar,
+.dark-mode .Vue-Toastification__toast--warning .Vue-Toastification__progress-bar,
+.dark-theme .Vue-Toastification__toast--warning .Vue-Toastification__progress-bar {
+  background-color: #d69e2e !important; /* Yellow-600 */
+}
+
+html.dark-mode .Vue-Toastification__toast--info .Vue-Toastification__progress-bar,
+.dark-mode .Vue-Toastification__toast--info .Vue-Toastification__progress-bar,
+.dark-theme .Vue-Toastification__toast--info .Vue-Toastification__progress-bar {
+  background-color: #4299e1 !important; /* Blue-400 */
+}
+
+/* Animation improvements */
+.Vue-Toastification__bounce-enter-active {
+  animation-duration: 0.4s !important;
+}
+
+.Vue-Toastification__bounce-leave-active {
+  animation-duration: 0.3s !important;
+}
+
+/* Close button styling */
+html.dark-mode .Vue-Toastification__close-button,
+.dark-mode .Vue-Toastification__close-button,
+.dark-theme .Vue-Toastification__close-button {
+  color: #d1d5db !important;
+  opacity: 0.8 !important;
+}
+
+html.dark-mode .Vue-Toastification__close-button:hover,
+.dark-mode .Vue-Toastification__close-button:hover,
+.dark-theme .Vue-Toastification__close-button:hover {
+  opacity: 1 !important;
+}
+
+.light-theme .Vue-Toastification__close-button {
+  color: #6b7280 !important;
+  opacity: 0.8 !important;
+}
+
+.light-theme .Vue-Toastification__close-button:hover {
+  opacity: 1 !important;
+}
+
+/* FORCE OVERRIDE - Highest specificity for dark mode toast colors */
+html.dark-mode body .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--warning,
+html.dark-mode .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--warning,
+.dark-mode .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--warning {
+  background: #2d3748 !important;
+  background-color: #2d3748 !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #d69e2e !important;
+  border-color: #d69e2e !important;
+}
+
+html.dark-mode body .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--warning .Vue-Toastification__progress-bar,
+html.dark-mode .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--warning .Vue-Toastification__progress-bar,
+.dark-mode .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--warning .Vue-Toastification__progress-bar {
+  background: #d69e2e !important;
+  background-color: #d69e2e !important;
+}
+
+/* Override all toast types in dark mode */
+html.dark-mode body .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--success,
+html.dark-mode .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--success {
+  background: #1a365d !important;
+  background-color: #1a365d !important;
+  color: #bee3f8 !important;
+  border-color: #3182ce !important;
+}
+
+html.dark-mode body .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--error,
+html.dark-mode .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--error {
+  background: #742a2a !important;
+  background-color: #742a2a !important;
+  color: #fed7d7 !important;
+  border-color: #e53e3e !important;
+}
+
+html.dark-mode body .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--info,
+html.dark-mode .Vue-Toastification__container .Vue-Toastification__toast.Vue-Toastification__toast--info {
+  background: #2c5282 !important;
+  background-color: #2c5282 !important;
+  color: #bee3f8 !important;
+  border-color: #4299e1 !important;
+}
+
+/* Override toast icons in dark mode */
+html.dark-mode .Vue-Toastification__toast .Vue-Toastification__icon {
+  color: inherit !important;
+}
+
+/* Override toast body text */
+html.dark-mode .Vue-Toastification__toast .Vue-Toastification__toast-body {
+  color: inherit !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .Vue-Toastification__container {
+    width: 100vw !important;
+    padding: 0 16px !important;
+  }
+
+  .custom-toast {
+    margin-bottom: 8px !important;
+    border-radius: 6px !important;
+  }
+}

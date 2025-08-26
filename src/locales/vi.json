@@ -1,0 +1,144 @@
+{
+  "calculator": {
+    "title": "Tính Tiền Điện & Nước",
+    "subtitle": "Tính toán chi phí hàng tháng",
+    "tabs": {
+      "electricity": "Tiền Điện",
+      "water": "Tiền Nước",
+      "both": "Tổng Hợp"
+    },
+    "electricity": {
+      "title": "Tính Tiền Điện",
+      "oldReading": "Số Điện Cũ",
+      "newReading": "Số Điện Mới",
+      "rate": "Đơn Giá (VND/kWh)",
+      "oldReadingPlaceholder": "Nhập số điện cũ",
+      "newReadingPlaceholder": "Nhập số điện mới",
+      "ratePlaceholder": "Đơn giá điện"
+    },
+    "water": {
+      "title": "Tính Tiền Nước",
+      "oldReading": "Số Nước Cũ",
+      "newReading": "Số Nước Mới",
+      "rate": "Đơn Giá (VND/m³)",
+      "oldReadingPlaceholder": "Nhập số nước cũ",
+      "newReadingPlaceholder": "Nhập số nước mới",
+      "ratePlaceholder": "Đơn giá nước"
+    },
+    "formula": "Công thức:",
+    "total": "Thành Tiền:",
+    "summary": {
+      "title": "Tổng Điện & Nước",
+      "note": "Đã bao gồm thuế và phí"
+    },
+    "footer": {
+      "updatedOn": "Cập nhật ngày",
+      "sampleData": "Dữ liệu mẫu",
+      "reset": "Làm Mới",
+      "viewDetail": "Xem Chi Tiết"
+    },
+    "theme": {
+      "lightMode": "Chuyển sang chế độ sáng",
+      "darkMode": "Chuyển sang chế độ tối"
+    },
+    "background": {
+      "toggle": "Nền"
+    },
+    "detailModal": {
+      "title": "Chi Tiết Cách Tính",
+      "reading": "Số đo",
+      "amount": "Thành tiền",
+      "new": "Số mới",
+      "old": "Số cũ",
+      "utilityTotal": "Tổng Điện Nước",
+      "grandTotal": "Tổng Cộng",
+      "note": "Giá trị tiền đã bao gồm thuế và phí",
+      "closeButton": "Đóng chi tiết",
+      "copyButton": "Sao chép chi tiết",
+      "copyTotalButton": "Sao chép tổng tiền"
+    },
+    "fireworks": {
+      "congratulation": "Chúc mừng bạn đã hoàn thành tính toán!"
+    },
+    "imageUpload": {
+      "title": "Tải ảnh chụp số công tơ",
+      "processing": "Đang xử lý ảnh...",
+      "success": "Đã nhận dạng thành công!",
+      "error": "Không thể nhận dạng số từ ảnh",
+      "unsupportedFile": "Vui lòng chọn file ảnh",
+      "fileTooLarge": "Kích thước ảnh quá lớn",
+      "pleaseWait": "Vui lòng đợi trong khi chúng tôi đang xử lý ảnh của bạn",
+      "manualEntry": "Không thể nhận diện số đọc, vui lòng nhập thủ công."
+    }
+  },
+  "toast": {
+    "success": {
+      "copy": "Đã sao chép thành công!",
+      "copyDetail": "Đã sao chép chi tiết tính toán!",
+      "copyTotal": "Đã sao chép tổng tiền!",
+      "save": "Đã lưu thành công!",
+      "reset": "Đã reset form thành công!",
+      "upload": "Tải ảnh thành công!",
+      "calculate": "Tính toán hoàn tất!",
+      "fillSampleData": "Đã điền dữ liệu mẫu thành công!",
+      "dataLoaded": "Dữ liệu đã được tải thành công!",
+      "dataSaved": "Dữ liệu đã được lưu thành công!",
+      "general": "Thao tác thành công!"
+    },
+    "error": {
+      "copy": "Không thể sao chép!",
+      "save": "Lỗi khi lưu dữ liệu!",
+      "upload": "Lỗi khi tải ảnh!",
+      "network": "Lỗi kết nối mạng!",
+      "validation": "Dữ liệu không hợp lệ!",
+      "electricityValidation": "Số điện mới không thể nhỏ hơn số điện cũ!",
+      "waterValidation": "Số nước mới không thể nhỏ hơn số nước cũ!",
+      "dataLoadFailed": "Không thể tải dữ liệu!",
+      "dataSaveFailed": "Không thể lưu dữ liệu!",
+      "general": "Có lỗi xảy ra!"
+    },
+    "warning": {
+      "validation": "Vui lòng kiểm tra lại dữ liệu!",
+      "limit": "Đã đạt giới hạn cho phép!",
+      "noData": "Vui lòng nhập ít nhất một loại tiện ích để xem chi tiết!",
+      "general": "Cảnh báo!"
+    },
+    "info": {
+      "processing": "Đang xử lý...",
+      "loading": "Đang tải...",
+      "general": "Thông tin"
+    }
+  },
+  "dataManager": {
+    "title": "Quản lý dữ liệu",
+    "totalRecords": "Tổng bản ghi",
+    "totalElectricity": "Tổng tiền điện",
+    "totalWater": "Tổng tiền nước",
+    "totalSpent": "Tổng chi phí",
+    "saveProgress": "Lưu tiến độ",
+    "saving": "Đang lưu...",
+    "exportData": "Xuất dữ liệu",
+    "importData": "Nhập dữ liệu",
+    "loading": "Đang tải...",
+    "clearAll": "Xóa tất cả",
+    "latestRecord": "Bản ghi mới nhất",
+    "date": "Ngày",
+    "total": "Tổng",
+    "noDataToSave": "Không có dữ liệu để lưu!",
+    "saveSuccess": "Đã lưu tiến độ thành công!",
+    "confirmClear": "Bạn có chắc chắn muốn xóa tất cả dữ liệu?",
+    "clearSuccess": "Đã xóa tất cả dữ liệu!",
+    "oldReading": "Chỉ số cũ",
+    "newReading": "Chỉ số mới",
+    "usage": "Sử dụng",
+    "rate": "Đơn giá",
+    "amount": "Thành tiền",
+    "grandTotal": "Tổng cộng",
+    "loadRecord": "Tải bản ghi này",
+    "recordLoaded": "Đã tải bản ghi vào form!"
+  },
+  "common": {
+    "backToTop": "Về đầu trang",
+    "loading": "Đang tải..."
+  }
+}

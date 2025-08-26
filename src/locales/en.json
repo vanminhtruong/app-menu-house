@@ -1,0 +1,144 @@
+{
+  "calculator": {
+    "title": "Electricity & Water Calculator",
+    "subtitle": "Calculate your monthly utility bills",
+    "tabs": {
+      "electricity": "Electricity",
+      "water": "Water",
+      "both": "Summary"
+    },
+    "electricity": {
+      "title": "Electricity Bill",
+      "oldReading": "Previous Reading",
+      "newReading": "Current Reading",
+      "rate": "Rate (VND/kWh)",
+      "oldReadingPlaceholder": "Enter previous reading",
+      "newReadingPlaceholder": "Enter current reading",
+      "ratePlaceholder": "Electricity rate"
+    },
+    "water": {
+      "title": "Water Bill",
+      "oldReading": "Previous Reading",
+      "newReading": "Current Reading",
+      "rate": "Rate (VND/m³)",
+      "oldReadingPlaceholder": "Enter previous reading",
+      "newReadingPlaceholder": "Enter current reading",
+      "ratePlaceholder": "Water rate"
+    },
+    "formula": "Formula:",
+    "total": "Total:",
+    "summary": {
+      "title": "Total Electricity & Water",
+      "note": "Including taxes and fees"
+    },
+    "footer": {
+      "updatedOn": "Updated on",
+      "sampleData": "Sample Data",
+      "reset": "Reset",
+      "viewDetail": "View Details"
+    },
+    "theme": {
+      "lightMode": "Switch to light mode",
+      "darkMode": "Switch to dark mode"
+    },
+    "background": {
+      "toggle": "Background"
+    },
+    "detailModal": {
+      "title": "Calculation Details",
+      "reading": "Reading",
+      "amount": "Amount",
+      "new": "New",
+      "old": "Previous",
+      "utilityTotal": "Utilities Total",
+      "grandTotal": "Grand Total",
+      "note": "Amount includes taxes and fees",
+      "closeButton": "Close details",
+      "copyButton": "Copy details",
+      "copyTotalButton": "Copy total"
+    },
+    "fireworks": {
+      "congratulation": "Congratulations on completing your calculation!"
+    },
+    "imageUpload": {
+      "title": "Upload meter reading image",
+      "processing": "Processing image...",
+      "success": "Successfully recognized!",
+      "error": "Could not recognize numbers from image",
+      "unsupportedFile": "Please select an image file",
+      "fileTooLarge": "Image file is too large",
+      "pleaseWait": "Please wait while we process your image",
+      "manualEntry": "Unable to recognize reading, please enter manually."
+    }
+  },
+  "toast": {
+    "success": {
+      "copy": "Copied successfully!",
+      "copyDetail": "Calculation details copied!",
+      "copyTotal": "Total amount copied!",
+      "save": "Saved successfully!",
+      "reset": "Form reset successfully!",
+      "upload": "Image uploaded successfully!",
+      "calculate": "Calculation completed!",
+      "fillSampleData": "Sample data filled successfully!",
+      "dataLoaded": "Data loaded successfully!",
+      "dataSaved": "Data saved successfully!",
+      "general": "Operation successful!"
+    },
+    "error": {
+      "copy": "Cannot copy!",
+      "save": "Error saving data!",
+      "upload": "Error uploading image!",
+      "network": "Network connection error!",
+      "validation": "Invalid data!",
+      "electricityValidation": "New electricity reading cannot be less than old reading!",
+      "waterValidation": "New water reading cannot be less than old reading!",
+      "dataLoadFailed": "Failed to load data!",
+      "dataSaveFailed": "Failed to save data!",
+      "general": "An error occurred!"
+    },
+    "warning": {
+      "validation": "Please check your data!",
+      "limit": "Limit reached!",
+      "noData": "Please enter at least one utility type to view details!",
+      "general": "Warning!"
+    },
+    "info": {
+      "processing": "Processing...",
+      "loading": "Loading...",
+      "general": "Information"
+    }
+  },
+  "dataManager": {
+    "title": "Data Management",
+    "totalRecords": "Total Records",
+    "totalElectricity": "Total Electricity",
+    "totalWater": "Total Water",
+    "totalSpent": "Total Spent",
+    "saveProgress": "Save Progress",
+    "saving": "Saving...",
+    "exportData": "Export Data",
+    "importData": "Import Data",
+    "loading": "Loading...",
+    "clearAll": "Clear All",
+    "latestRecord": "Latest Record",
+    "date": "Date",
+    "total": "Total",
+    "noDataToSave": "No data to save!",
+    "saveSuccess": "Progress saved successfully!",
+    "confirmClear": "Are you sure you want to delete all data?",
+    "clearSuccess": "All data cleared!",
+    "oldReading": "Old Reading",
+    "newReading": "New Reading",
+    "usage": "Usage",
+    "rate": "Rate",
+    "amount": "Amount",
+    "grandTotal": "Grand Total",
+    "loadRecord": "Load This Record",
+    "recordLoaded": "Record loaded into form!"
+  },
+  "common": {
+    "backToTop": "Back to top",
+    "loading": "Loading..."
+  }
+}
