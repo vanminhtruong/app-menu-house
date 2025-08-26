@@ -1,6 +1,6 @@
 # GitHub Pages Deployment Setup
 
-Hướng dẫn deploy dự án Vue.js lên GitHub Pages sử dụng GitHub Actions.
+Hướng dẫn deploy dự án Vue.js lên GitHub Pages sử dụng GitHub Actions với nhánh gh-pages.
 
 ## Cài đặt GitHub Repository
 
@@ -11,7 +11,8 @@ Hướng dẫn deploy dự án Vue.js lên GitHub Pages sử dụng GitHub Actio
 ### 2. Cấu hình GitHub Pages
 1. Vào repository trên GitHub
 2. Chọn **Settings** → **Pages**
-3. Trong phần **Source**, chọn **GitHub Actions**
+3. Trong phần **Source**, chọn **Deploy from a branch**
+4. Chọn nhánh **gh-pages** và folder **/ (root)**
 
 ### 3. Cập nhật Base Path
 Trong file `vite.config.ts`, thay đổi `repository-name` thành tên repository GitHub của bạn:
