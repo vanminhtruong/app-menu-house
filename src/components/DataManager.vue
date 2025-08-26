@@ -346,9 +346,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useThemeStore } from '../stores/theme'
-import { useLanguageStore } from '../stores/language'
 import { useDataPersistence } from '../composables/useDataPersistence'
 import { useFormatterUtils } from '../composables/useFormatterUtils'
 import { useToast } from '../composables/useToast'
@@ -372,19 +371,9 @@ const props = defineProps<{
 }>()
 
 const themeStore = useThemeStore()
-const languageStore = useLanguageStore()
 const { formatCurrency } = useFormatterUtils()
 const { showSuccess, showError, showWarning } = useToast()
-const { t, locale } = useI18n()
-
-// Initialize locale and watch for language changes
-onMounted(() => {
-  locale.value = languageStore.currentLanguage
-})
-
-watch(() => languageStore.currentLanguage, (newLang) => {
-  locale.value = newLang
-}, { immediate: true })
+const { t } = useI18n()
 
 // State for collapsible sections
 const isDataManagerExpanded = ref(false)

@@ -1,38 +1,21 @@
 import { defineStore } from 'pinia'
-
-// Safe localStorage access
-const getStoredLanguage = () => {
-  try {
-    return typeof window !== 'undefined' ? localStorage.getItem('language') : null
-  } catch {
-    return null
-  }
-}
-
-const setStoredLanguage = (lang: string) => {
-  try {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('language', lang)
-    }
-  } catch {
-    // Ignore localStorage errors
-  }
-}
+import { setLocale, getLocale, toggleLocale } from '../i18n'
 
 export const useLanguageStore = defineStore('language', {
   state: () => ({
-    currentLanguage: getStoredLanguage() || 'vi'
+    currentLanguage: getLocale()
   }),
   
   actions: {
-    setLanguage(lang: string) {
+    setLanguage(lang: 'en' | 'vi') {
       this.currentLanguage = lang
-      setStoredLanguage(lang)
+      setLocale(lang)
     },
     
     toggleLanguage() {
-      const newLang = this.currentLanguage === 'vi' ? 'en' : 'vi'
-      this.setLanguage(newLang)
+      const newLang = toggleLocale()
+      this.currentLanguage = newLang
+      return newLang
     }
   },
   

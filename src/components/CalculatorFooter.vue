@@ -60,10 +60,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useThemeStore } from '../stores/theme'
-import { useLanguageStore } from '../stores/language'
-import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   currentDate: string
@@ -74,17 +72,6 @@ const props = defineProps<{
 defineEmits(['fill-sample-data', 'open-detail-modal', 'reset-form'])
 
 const themeStore = useThemeStore()
-const languageStore = useLanguageStore()
-const { locale } = useI18n()
-
-// Initialize locale and watch for language changes
-onMounted(() => {
-  locale.value = languageStore.currentLanguage
-})
-
-watch(() => languageStore.currentLanguage, (newLang) => {
-  locale.value = newLang
-}, { immediate: true })
 
 // Computed property to check if details can be shown with special effects
 const canShowDetails = computed(() => {

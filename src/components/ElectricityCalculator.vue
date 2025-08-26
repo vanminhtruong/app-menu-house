@@ -156,10 +156,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useThemeStore } from '../stores/theme'
-import { useLanguageStore } from '../stores/language'
-import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   electricityOld: number | string
@@ -174,17 +172,6 @@ const props = defineProps<{
 const emit = defineEmits(['update:electricityOld', 'update:electricityNew', 'update:electricityRate', 'image-upload'])
 
 const themeStore = useThemeStore()
-const languageStore = useLanguageStore()
-const { locale } = useI18n()
-
-// Initialize locale and watch for language changes
-onMounted(() => {
-  locale.value = languageStore.currentLanguage
-})
-
-watch(() => languageStore.currentLanguage, (newLang) => {
-  locale.value = newLang
-}, { immediate: true })
 const isCollapsed = ref(false)
 
 const toggleAccordion = () => {

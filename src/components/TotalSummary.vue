@@ -63,10 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, onMounted } from 'vue'
 import { useThemeStore } from '../stores/theme'
-import { useLanguageStore } from '../stores/language'
-import { useI18n } from 'vue-i18n'
 
 defineProps<{
   totalBill: number
@@ -77,17 +74,6 @@ defineProps<{
 }>()
 
 const themeStore = useThemeStore()
-const languageStore = useLanguageStore()
-const { locale } = useI18n()
-
-// Initialize locale and watch for language changes
-onMounted(() => {
-  locale.value = languageStore.currentLanguage
-})
-
-watch(() => languageStore.currentLanguage, (newLang) => {
-  locale.value = newLang
-}, { immediate: true })
 </script>
 
 <style scoped>
