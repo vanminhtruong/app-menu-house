@@ -128,6 +128,7 @@
 
 <script setup lang="ts">
 import { useThemeStore } from '../stores/theme'
+import { useI18n } from 'vue-i18n'
 
 defineProps<{
   monthlyRent: number
@@ -141,6 +142,7 @@ const emit = defineEmits<{
 }>()
 
 const themeStore = useThemeStore()
+const { t } = useI18n()
 
 const handleRentInput = (event: Event) => {
   const target = event.target as HTMLInputElement

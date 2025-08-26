@@ -45,6 +45,7 @@
 
 <script setup lang="ts">
 import { useThemeStore } from '../stores/theme'
+import { useI18n } from 'vue-i18n'
 
 defineProps<{
   activeTab: string
@@ -52,6 +53,7 @@ defineProps<{
 
 const emit = defineEmits(['change-tab'])
 const themeStore = useThemeStore()
+const { t } = useI18n()
 
 const changeTab = (tab: string) => {
   emit('change-tab', tab)

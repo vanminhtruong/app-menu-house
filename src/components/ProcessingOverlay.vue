@@ -31,6 +31,7 @@
 
 <script setup lang="ts">
 import { useThemeStore } from '../stores/theme'
+import { useI18n } from 'vue-i18n'
 
 defineProps<{
   isProcessing: boolean
@@ -38,6 +39,7 @@ defineProps<{
 }>()
 
 const themeStore = useThemeStore()
+const { t } = useI18n()
 </script>
 
 <style scoped>

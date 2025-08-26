@@ -158,6 +158,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useThemeStore } from '../stores/theme'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   waterOld: number | string
@@ -172,6 +173,7 @@ const props = defineProps<{
 const emit = defineEmits(['update:waterOld', 'update:waterNew', 'update:waterRate', 'image-upload'])
 
 const themeStore = useThemeStore()
+const { t } = useI18n()
 const isCollapsed = ref(false)
 
 const toggleAccordion = () => {

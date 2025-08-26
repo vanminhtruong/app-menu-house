@@ -17,8 +17,10 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
 import { useBackToTopStore } from '../stores/backToTop'
+import { useI18n } from 'vue-i18n'
 
 const backToTopStore = useBackToTopStore()
+const { t } = useI18n()
 
 onMounted(() => {
   backToTopStore.setupScrollListener()

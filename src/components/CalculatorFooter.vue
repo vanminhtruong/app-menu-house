@@ -62,6 +62,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useThemeStore } from '../stores/theme'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   currentDate: string
@@ -72,6 +73,7 @@ const props = defineProps<{
 defineEmits(['fill-sample-data', 'open-detail-modal', 'reset-form'])
 
 const themeStore = useThemeStore()
+const { t } = useI18n()
 
 // Computed property to check if details can be shown with special effects
 const canShowDetails = computed(() => {
