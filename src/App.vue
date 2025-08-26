@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import { onMounted, defineAsyncComponent, watch } from 'vue'
+import { onMounted, defineAsyncComponent, watch, nextTick } from 'vue'
 import { useThemeStore } from './stores/theme'
 import { useLanguageStore } from './stores/language'
 import { useUtilityCalculator } from './composables/useUtilityCalculator'
@@ -29,6 +29,13 @@ onMounted(() => {
   setTimeout(() => {
     forceUpdateTheme()
   }, 200)
+
+  // Kết thúc khởi tạo theme: bật lại transition và gỡ CSS tạm
+  nextTick(() => {
+    document.documentElement.removeAttribute('data-theme-init')
+    const boot = document.getElementById('__theme_boot_css__')
+    if (boot && boot.parentNode) boot.parentNode.removeChild(boot)
+  })
 })
 
 // Watch for language changes và đồng bộ với i18n

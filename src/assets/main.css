@@ -20,6 +20,12 @@ html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Tắt transition khi đang khởi tạo để tránh flash */
+html[data-theme-init],
+html[data-theme-init] body {
+  transition: none !important;
+}
+
 /* Custom toast styling */
 .custom-toast {
   border-radius: 8px !important;
