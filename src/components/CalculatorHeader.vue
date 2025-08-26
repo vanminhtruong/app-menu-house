@@ -32,11 +32,11 @@
       </div>
 
       <button
-        @click="languageStore.toggleLanguage"
+        @click="toggleLanguage"
         class="p-2 rounded-full hover:bg-opacity-10 hover:bg-white mr-2"
-        :title="languageStore.isVietnamese ? 'Switch to English' : 'Chuyển sang tiếng Việt'"
+        :title="isVietnamese ? 'Switch to English' : 'Chuyển sang tiếng Việt'"
       >
-        <span class="text-white font-medium">{{ languageStore.isVietnamese ? 'EN' : 'VI' }}</span>
+        <span class="text-white font-medium">{{ isVietnamese ? 'EN' : 'VI' }}</span>
       </button>
       <button 
         @click="themeStore.toggleTheme"
@@ -55,13 +55,21 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useThemeStore } from '../stores/theme'
-import { useLanguageStore } from '../stores/language'
 import { useBackgroundStore } from '../stores/background'
+import { toggleLocale, getLocale } from '../i18n'
 
 const themeStore = useThemeStore()
-const languageStore = useLanguageStore()
 const backgroundStore = useBackgroundStore()
+
+// Current locale for rendering button text
+const currentLocale = computed(() => getLocale())
+const isVietnamese = computed(() => getLocale() === 'vi')
+
+const toggleLanguage = () => {
+  toggleLocale()
+}
 
 // Handle background toggle with debug logging
 const handleBackgroundToggle = () => {

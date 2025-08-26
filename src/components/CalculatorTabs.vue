@@ -45,7 +45,6 @@
 
 <script setup lang="ts">
 import { useThemeStore } from '../stores/theme'
-import { useLanguageStore } from '../stores/language'
 
 defineProps<{
   activeTab: string
@@ -53,7 +52,6 @@ defineProps<{
 
 const emit = defineEmits(['change-tab'])
 const themeStore = useThemeStore()
-const languageStore = useLanguageStore()
 
 const changeTab = (tab: string) => {
   emit('change-tab', tab)
