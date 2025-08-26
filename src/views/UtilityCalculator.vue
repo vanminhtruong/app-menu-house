@@ -16,7 +16,7 @@
       :is-visible="backgroundStore.isEnabled"
     />
     <div class="max-w-3xl mx-auto relative z-20">
-      <LazyLoader :delay="1000" :loading-text="$t('common.loading')">
+      <LazyLoader :delay="1000" :loading-text="t('common.loading')">
         <div :class="[
           'rounded-2xl overflow-hidden',
           // Conditional backdrop blur and transparency based on background state

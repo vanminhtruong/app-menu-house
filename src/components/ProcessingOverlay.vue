@@ -14,7 +14,7 @@
         </svg>
       </div>
       <h3 :class="themeStore.isDarkMode ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'">
-        {{ $t('calculator.imageUpload.processing') }}
+        {{ t('calculator.imageUpload.processing') }}
       </h3>
       <div class="mt-4">
         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 overflow-hidden">
@@ -23,7 +23,7 @@
         <p :class="themeStore.isDarkMode ? 'text-gray-400 text-sm mt-2' : 'text-gray-600 text-sm mt-2'">{{ progress }}%</p>
       </div>
       <p class="text-xs mt-4" :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-500'">
-        {{ $t('calculator.imageUpload.pleaseWait') }}
+        {{ t('calculator.imageUpload.pleaseWait') }}
       </p>
     </div>
   </div>

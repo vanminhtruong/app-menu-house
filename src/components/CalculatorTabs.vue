@@ -8,7 +8,7 @@
           ? (themeStore.isDarkMode ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator' : 'text-indigo-600 border-b-2 border-indigo-600') 
           : (themeStore.isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700')
       ]">
-      {{ $t('calculator.tabs.electricity') }}
+      {{ t('calculator.tabs.electricity') }}
     </button>
     <button 
       @click="changeTab('water')"
@@ -18,7 +18,7 @@
           ? (themeStore.isDarkMode ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator' : 'text-indigo-600 border-b-2 border-indigo-600') 
           : (themeStore.isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700')
       ]">
-      {{ $t('calculator.tabs.water') }}
+      {{ t('calculator.tabs.water') }}
     </button>
     <button 
       @click="changeTab('rent')"
@@ -28,7 +28,7 @@
           ? (themeStore.isDarkMode ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator' : 'text-indigo-600 border-b-2 border-indigo-600') 
           : (themeStore.isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700')
       ]">
-      {{ $t('calculator.tabs.rent', 'Tiền Nhà') }}
+      {{ t('calculator.tabs.rent', 'Tiền Nhà') }}
     </button>
     <button 
       @click="changeTab('both')"
@@ -38,7 +38,7 @@
           ? (themeStore.isDarkMode ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator' : 'text-indigo-600 border-b-2 border-indigo-600') 
           : (themeStore.isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700')
       ]">
-      {{ $t('calculator.tabs.all', 'Tất Cả') }}
+      {{ t('calculator.tabs.all', 'Tất Cả') }}
     </button>
   </div>
 </template>

@@ -4,7 +4,7 @@
       v-if="backToTopStore.isVisible" 
       :class="backToTopStore.buttonClasses"
       @click="backToTopStore.scrollToTop"
-      :title="$t('common.backToTop')"
+      :title="t('common.backToTop')"
       aria-label="Back to top"
     >
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

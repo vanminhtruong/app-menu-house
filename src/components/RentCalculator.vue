@@ -13,7 +13,7 @@
         themeStore.isDarkMode ? 'text-white' : 'text-gray-800'
       ]">
         <span class="text-2xl">🏠</span>
-        {{ $t('calculator.rent.title', 'Tính Tiền Nhà') }}
+        {{ t('calculator.rent.title', 'Tính Tiền Nhà') }}
       </h2>
     </div>
 
@@ -26,13 +26,13 @@
           themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
         ]"
       >
-        {{ $t('calculator.rent.monthlyRent', 'Tiền nhà 1 tháng') }} (VND)
+        {{ t('calculator.rent.monthlyRent', 'Tiền nhà 1 tháng') }} (VND)
       </label>
       <input
         id="monthly-rent"
         type="number"
         :value="monthlyRent"
-        :placeholder="$t('calculator.rent.placeholder', 'Nhập tiền nhà 1 tháng...')"
+        :placeholder="t('calculator.rent.placeholder', 'Nhập tiền nhà 1 tháng...')"
         :class="[
           'w-full px-4 py-3 rounded-lg border-2 transition-all duration-300 text-lg font-medium',
           themeStore.isDarkMode 
@@ -56,7 +56,7 @@
         themeStore.isDarkMode ? 'text-blue-300' : 'text-blue-700'
       ]">
         <span>🧮</span>
-        {{ $t('calculator.rent.calculation', 'Chi tiết tính toán') }}
+        {{ t('calculator.rent.calculation', 'Chi tiết tính toán') }}
       </h3>
       
       <div class="space-y-2">
@@ -66,7 +66,7 @@
             'text-sm',
             themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-600'
           ]">
-            {{ $t('calculator.rent.perMonth', 'Tiền nhà/tháng') }}:
+            {{ t('calculator.rent.perMonth', 'Tiền nhà/tháng') }}:
           </span>
           <span :class="[
             'font-medium',
@@ -82,7 +82,7 @@
             'text-sm',
             themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-600'
           ]">
-            {{ $t('calculator.rent.formula', 'Công thức') }}:
+            {{ t('calculator.rent.formula', 'Công thức') }}:
           </span>
           <span :class="[
             'font-medium text-sm',
@@ -101,7 +101,7 @@
             'font-semibold',
             themeStore.isDarkMode ? 'text-blue-300' : 'text-blue-700'
           ]">
-            {{ $t('calculator.rent.quarterlyTotal', 'Tiền nhà 3 tháng') }}:
+            {{ t('calculator.rent.quarterlyTotal', 'Tiền nhà 3 tháng') }}:
           </span>
           <span :class="[
             'text-lg font-bold',
@@ -120,7 +120,7 @@
     ]">
       <div class="text-4xl mb-2">🏠</div>
       <p class="text-sm">
-        {{ $t('calculator.rent.emptyState', 'Nhập tiền nhà để xem chi tiết tính toán') }}
+        {{ t('calculator.rent.emptyState', 'Nhập tiền nhà để xem chi tiết tính toán') }}
       </p>
     </div>
   </div>
