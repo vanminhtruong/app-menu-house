@@ -18,9 +18,9 @@
         ]"
       >
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-        <span>{{ t('calculator.footer.sampleData') }}</span>
+        <span>{{ $t('calculator.footer.sampleData') }}</span>
       </button>
-      <div :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-500'" class="text-xs">{{ t('calculator.footer.updatedOn') }}: {{ currentDate }}</div>
+      <div :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-500'" class="text-xs">{{ $t('calculator.footer.updatedOn') }}: {{ currentDate }}</div>
     </div>
     
     <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
@@ -41,7 +41,7 @@
           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
           </svg>
-          {{ t('calculator.footer.viewDetail') }}
+          {{ $t('calculator.footer.viewDetail') }}
         </span>
       </button>
       <button 
@@ -53,15 +53,16 @@
             : 'bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500'
         ]"
       >
-        {{ t('calculator.footer.reset') }}
+        {{ $t('calculator.footer.reset') }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch, onMounted } from 'vue'
 import { useThemeStore } from '../stores/theme'
+import { useLanguageStore } from '../stores/language'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
@@ -73,7 +74,17 @@ const props = defineProps<{
 defineEmits(['fill-sample-data', 'open-detail-modal', 'reset-form'])
 
 const themeStore = useThemeStore()
-const { t } = useI18n()
+const languageStore = useLanguageStore()
+const { locale } = useI18n()
+
+// Initialize locale and watch for language changes
+onMounted(() => {
+  locale.value = languageStore.currentLanguage
+})
+
+watch(() => languageStore.currentLanguage, (newLang) => {
+  locale.value = newLang
+}, { immediate: true })
 
 // Computed property to check if details can be shown with special effects
 const canShowDetails = computed(() => {

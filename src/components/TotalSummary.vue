@@ -6,14 +6,14 @@
     <h3 :class="[
       'text-lg font-semibold mb-3',
       themeStore.isDarkMode ? 'text-white' : 'text-indigo-800'
-    ]">{{ t('calculator.summary.title') }}</h3>
+    ]">{{ $t('calculator.summary.title') }}</h3>
     
     <!-- Chi tiết từng khoản -->
     <div class="space-y-2 mb-4">
       <!-- Tiền điện -->
       <div v-if="electricityTotal > 0" class="flex justify-between items-center text-sm">
         <span :class="themeStore.isDarkMode ? 'text-gray-300' : 'text-indigo-600'">
-          ⚡ {{ t('calculator.tabs.electricity') }}:
+          ⚡ {{ $t('calculator.tabs.electricity') }}:
         </span>
         <span :class="[
           'font-medium',
@@ -24,7 +24,7 @@
       <!-- Tiền nước -->
       <div v-if="waterTotal > 0" class="flex justify-between items-center text-sm">
         <span :class="themeStore.isDarkMode ? 'text-gray-300' : 'text-indigo-600'">
-          💧 {{ t('calculator.tabs.water') }}:
+          💧 {{ $t('calculator.tabs.water') }}:
         </span>
         <span :class="[
           'font-medium',
@@ -35,7 +35,7 @@
       <!-- Tiền nhà -->
       <div v-if="quarterlyRent > 0" class="flex justify-between items-center text-sm">
         <span :class="themeStore.isDarkMode ? 'text-gray-300' : 'text-indigo-600'">
-          🏠 {{ t('calculator.tabs.rent', 'Tiền Nhà') }} (3 tháng):
+          🏠 {{ $t('calculator.tabs.rent', 'Tiền Nhà') }} (3 tháng):
         </span>
         <span :class="[
           'font-medium',
@@ -58,12 +58,14 @@
     <p :class="[
       'text-xs mt-1',
       themeStore.isDarkMode ? 'text-gray-400' : 'text-indigo-600'
-    ]">{{ t('calculator.summary.note') }}</p>
+    ]">{{ $t('calculator.summary.note') }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
+import { watch, onMounted } from 'vue'
 import { useThemeStore } from '../stores/theme'
+import { useLanguageStore } from '../stores/language'
 import { useI18n } from 'vue-i18n'
 
 defineProps<{
@@ -75,7 +77,17 @@ defineProps<{
 }>()
 
 const themeStore = useThemeStore()
-const { t } = useI18n()
+const languageStore = useLanguageStore()
+const { locale } = useI18n()
+
+// Initialize locale and watch for language changes
+onMounted(() => {
+  locale.value = languageStore.currentLanguage
+})
+
+watch(() => languageStore.currentLanguage, (newLang) => {
+  locale.value = newLang
+}, { immediate: true })
 </script>
 
 <style scoped>

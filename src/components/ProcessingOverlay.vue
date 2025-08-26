@@ -14,7 +14,7 @@
         </svg>
       </div>
       <h3 :class="themeStore.isDarkMode ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'">
-        {{ t('calculator.imageUpload.processing') }}
+        {{ $t('calculator.imageUpload.processing') }}
       </h3>
       <div class="mt-4">
         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 overflow-hidden">
@@ -23,14 +23,16 @@
         <p :class="themeStore.isDarkMode ? 'text-gray-400 text-sm mt-2' : 'text-gray-600 text-sm mt-2'">{{ progress }}%</p>
       </div>
       <p class="text-xs mt-4" :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-500'">
-        {{ t('calculator.imageUpload.pleaseWait') }}
+        {{ $t('calculator.imageUpload.pleaseWait') }}
       </p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { watch, onMounted } from 'vue'
 import { useThemeStore } from '../stores/theme'
+import { useLanguageStore } from '../stores/language'
 import { useI18n } from 'vue-i18n'
 
 defineProps<{
@@ -39,7 +41,17 @@ defineProps<{
 }>()
 
 const themeStore = useThemeStore()
-const { t } = useI18n()
+const languageStore = useLanguageStore()
+const { locale } = useI18n()
+
+// Initialize locale and watch for language changes
+onMounted(() => {
+  locale.value = languageStore.currentLanguage
+})
+
+watch(() => languageStore.currentLanguage, (newLang) => {
+  locale.value = newLang
+}, { immediate: true })
 </script>
 
 <style scoped>

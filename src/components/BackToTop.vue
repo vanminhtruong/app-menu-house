@@ -4,7 +4,7 @@
       v-if="backToTopStore.isVisible" 
       :class="backToTopStore.buttonClasses"
       @click="backToTopStore.scrollToTop"
-      :title="t('common.backToTop')"
+      :title="$t('common.backToTop')"
       aria-label="Back to top"
     >
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -15,12 +15,19 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, watch } from 'vue'
 import { useBackToTopStore } from '../stores/backToTop'
+import { useLanguageStore } from '../stores/language'
 import { useI18n } from 'vue-i18n'
 
 const backToTopStore = useBackToTopStore()
-const { t } = useI18n()
+const languageStore = useLanguageStore()
+const { locale } = useI18n()
+
+// Initialize locale and watch for language changes
+watch(() => languageStore.currentLanguage, (newLang) => {
+  locale.value = newLang
+}, { immediate: true })
 
 onMounted(() => {
   backToTopStore.setupScrollListener()

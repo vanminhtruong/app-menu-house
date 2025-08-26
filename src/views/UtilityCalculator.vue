@@ -16,7 +16,7 @@
       :is-visible="backgroundStore.isEnabled"
     />
     <div class="max-w-3xl mx-auto relative z-20">
-      <LazyLoader :delay="1000" :loading-text="t('common.loading')">
+      <LazyLoader :delay="1000" :loading-text="$t('common.loading')">
         <div :class="[
           'rounded-2xl overflow-hidden',
           // Conditional backdrop blur and transparency based on background state
@@ -225,6 +225,7 @@
 
 <script setup lang="ts">
 import { useThemeStore } from '../stores/theme'
+import { useLanguageStore } from '../stores/language'
 import { useBackgroundStore } from '../stores/background'
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -263,8 +264,9 @@ import RentCalculator from '../components/RentCalculator.vue'
 
 // Get stores
 const themeStore = useThemeStore()
+const languageStore = useLanguageStore()
 const backgroundStore = useBackgroundStore()
-const { t } = useI18n()
+const { locale, t } = useI18n()
 const { toastError, toastWarning } = useToast()
 
 // Get composables
@@ -301,7 +303,15 @@ const { currentDate, setCurrentDate } = useCurrentDate()
 
 const { showDetailModal, openDetailModal, closeDetailModal } = useModalControl()
 
-// No need for manual locale synchronization - i18n handles it automatically
+// Initialize locale and watch for language changes
+onMounted(() => {
+  // Ensure locale is synchronized with language store on mount
+  locale.value = languageStore.currentLanguage
+})
+
+watch(() => languageStore.currentLanguage, (newLang) => {
+  locale.value = newLang
+}, { immediate: true })
 
 // Simple validation for modal opening
 const validateBeforeOpenModal = () => {

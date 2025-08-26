@@ -17,7 +17,7 @@
         <h2 :class="[
           'text-lg font-semibold',
           themeStore.isDarkMode ? 'text-gray-100' : 'text-gray-800'
-        ]">{{ t('calculator.electricity.title') }}</h2>
+        ]">{{ $t('calculator.electricity.title') }}</h2>
       </div>
       <div v-if="isInBothTab" class="transform transition-transform duration-300" :class="{ 'rotate-180': !isCollapsed }">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-600'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -38,7 +38,7 @@
           <label :class="[
             'block text-sm font-medium mb-1',
             themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
-          ]">{{ t('calculator.electricity.oldReading') }}</label>
+          ]">{{ $t('calculator.electricity.oldReading') }}</label>
           <div class="relative">
             <input 
               type="number" 
@@ -50,7 +50,7 @@
                   ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
                   : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
               ]"
-              :placeholder="t('calculator.electricity.oldReadingPlaceholder')"
+              :placeholder="$t('calculator.electricity.oldReadingPlaceholder')"
             />
             <label 
               :for="'electricity-old-image-upload'"
@@ -60,7 +60,7 @@
                   ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
                   : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
               ]"
-              :title="t('calculator.imageUpload.title')"
+              :title="$t('calculator.imageUpload.title')"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -79,7 +79,7 @@
           <label :class="[
             'block text-sm font-medium mb-1',
             themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
-          ]">{{ t('calculator.electricity.newReading') }}</label>
+          ]">{{ $t('calculator.electricity.newReading') }}</label>
           <div class="relative">
             <input 
               type="number" 
@@ -91,7 +91,7 @@
                   ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
                   : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
               ]"
-              :placeholder="t('calculator.electricity.newReadingPlaceholder')"
+              :placeholder="$t('calculator.electricity.newReadingPlaceholder')"
             />
             <label 
               :for="'electricity-new-image-upload'"
@@ -101,7 +101,7 @@
                   ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
                   : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
               ]"
-              :title="t('calculator.imageUpload.title')"
+              :title="$t('calculator.imageUpload.title')"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -122,7 +122,7 @@
         <label :class="[
           'block text-sm font-medium mb-1',
           themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
-        ]">{{ t('calculator.electricity.rate') }}</label>
+        ]">{{ $t('calculator.electricity.rate') }}</label>
         <input 
           type="number" 
           v-model="electricityRateModel" 
@@ -132,7 +132,7 @@
               ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
               : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
           ]"
-          :placeholder="t('calculator.electricity.ratePlaceholder')"
+          :placeholder="$t('calculator.electricity.ratePlaceholder')"
         />
       </div>
     </div>
@@ -142,13 +142,13 @@
       themeStore.isDarkMode ? 'bg-gray-700 shadow-[0_4px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] border border-gray-600' : 'bg-gray-50 shadow-sm'
     ]">
       <div class="flex justify-between items-center mb-2">
-        <span :class="themeStore.isDarkMode ? 'text-sm text-gray-300' : 'text-sm text-gray-600'">{{ t('calculator.formula') }}</span>
+        <span :class="themeStore.isDarkMode ? 'text-sm text-gray-300' : 'text-sm text-gray-600'">{{ $t('calculator.formula') }}</span>
         <span :class="themeStore.isDarkMode ? 'text-sm font-medium text-white' : 'text-sm font-medium'">
           ({{ electricityNewModel || '0' }} - {{ electricityOldModel || '0' }}) × {{ electricityRateModel || defaultElectricityRate }} = {{ formatCurrency(electricityTotal) }}
         </span>
       </div>
       <div class="flex justify-between items-center">
-        <span :class="themeStore.isDarkMode ? 'text-sm text-gray-300' : 'text-sm text-gray-600'">{{ t('calculator.total') }}</span>
+        <span :class="themeStore.isDarkMode ? 'text-sm text-gray-300' : 'text-sm text-gray-600'">{{ $t('calculator.total') }}</span>
         <span :class="themeStore.isDarkMode ? 'text-lg font-bold text-white' : 'text-lg font-bold text-indigo-600'">{{ formatCurrency(electricityTotal) }}</span>
       </div>
     </div>
@@ -156,8 +156,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useThemeStore } from '../stores/theme'
+import { useLanguageStore } from '../stores/language'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
@@ -173,7 +174,17 @@ const props = defineProps<{
 const emit = defineEmits(['update:electricityOld', 'update:electricityNew', 'update:electricityRate', 'image-upload'])
 
 const themeStore = useThemeStore()
-const { t } = useI18n()
+const languageStore = useLanguageStore()
+const { locale } = useI18n()
+
+// Initialize locale and watch for language changes
+onMounted(() => {
+  locale.value = languageStore.currentLanguage
+})
+
+watch(() => languageStore.currentLanguage, (newLang) => {
+  locale.value = newLang
+}, { immediate: true })
 const isCollapsed = ref(false)
 
 const toggleAccordion = () => {
