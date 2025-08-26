@@ -227,13 +227,13 @@
 import { useThemeStore } from '../stores/theme'
 import { useLanguageStore } from '../stores/language'
 import { useBackgroundStore } from '../stores/background'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useUtilityCalculator } from '../composables/useUtilityCalculator'
 import { useModalControl } from '../composables/useModalControl'
 import { useCurrentDate } from '../composables/useCurrentDate'
 import { useToast } from '../composables/useToast'
-import { watch, onMounted, onUnmounted, ref, nextTick } from 'vue'
 
 // @ts-ignore
 import CalculatorHeader from '../components/CalculatorHeader.vue'
@@ -303,10 +303,15 @@ const { currentDate, setCurrentDate } = useCurrentDate()
 
 const { showDetailModal, openDetailModal, closeDetailModal } = useModalControl()
 
-// Watch for language changes
+// Initialize locale and watch for language changes
+onMounted(() => {
+  // Ensure locale is synchronized with language store on mount
+  locale.value = languageStore.currentLanguage
+})
+
 watch(() => languageStore.currentLanguage, (newLang) => {
   locale.value = newLang
-})
+}, { immediate: true })
 
 // Simple validation for modal opening
 const validateBeforeOpenModal = () => {

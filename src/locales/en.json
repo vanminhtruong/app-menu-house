@@ -5,7 +5,9 @@
     "tabs": {
       "electricity": "Electricity",
       "water": "Water",
-      "both": "Summary"
+      "both": "Summary",
+      "rent": "Rent",
+      "all": "All"
     },
     "electricity": {
       "title": "Electricity Bill",
@@ -24,6 +26,16 @@
       "oldReadingPlaceholder": "Enter previous reading",
       "newReadingPlaceholder": "Enter current reading",
       "ratePlaceholder": "Water rate"
+    },
+    "rent": {
+      "title": "Rent Calculator",
+      "monthlyRent": "Monthly Rent",
+      "placeholder": "Enter monthly rent...",
+      "calculation": "Calculation Details",
+      "perMonth": "Rent/month",
+      "formula": "Formula",
+      "quarterlyTotal": "Quarterly Rent",
+      "emptyState": "Enter monthly rent to view calculation details"
     },
     "formula": "Formula:",
     "total": "Total:",
@@ -114,6 +126,7 @@
     "totalRecords": "Total Records",
     "totalElectricity": "Total Electricity",
     "totalWater": "Total Water",
+    "totalRent": "Total Rent",
     "totalSpent": "Total Spent",
     "saveProgress": "Save Progress",
     "saving": "Saving...",

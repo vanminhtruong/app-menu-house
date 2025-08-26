@@ -1,14 +1,33 @@
 import { defineStore } from 'pinia'
 
+// Safe localStorage access
+const getStoredLanguage = () => {
+  try {
+    return typeof window !== 'undefined' ? localStorage.getItem('language') : null
+  } catch {
+    return null
+  }
+}
+
+const setStoredLanguage = (lang: string) => {
+  try {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', lang)
+    }
+  } catch {
+    // Ignore localStorage errors
+  }
+}
+
 export const useLanguageStore = defineStore('language', {
   state: () => ({
-    currentLanguage: localStorage.getItem('language') || 'vi'
+    currentLanguage: getStoredLanguage() || 'vi'
   }),
   
   actions: {
     setLanguage(lang: string) {
       this.currentLanguage = lang
-      localStorage.setItem('language', lang)
+      setStoredLanguage(lang)
     },
     
     toggleLanguage() {
@@ -21,4 +40,4 @@ export const useLanguageStore = defineStore('language', {
     isVietnamese: (state) => state.currentLanguage === 'vi',
     isEnglish: (state) => state.currentLanguage === 'en'
   }
-}) 
+})
