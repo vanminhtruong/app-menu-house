@@ -31,6 +31,9 @@
       <input
         id="monthly-rent"
         type="number"
+        inputmode="numeric"
+        step="1"
+        min="0"
         :value="monthlyRent"
         :placeholder="$t('calculator.rent.placeholder', 'Nhập tiền nhà 1 tháng...')"
         :class="[
@@ -40,6 +43,9 @@
             : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:bg-white',
           'focus:outline-none focus:ring-2 focus:ring-blue-500/20'
         ]"
+        @keydown="preventInvalidKeyInteger"
+        @paste="onPasteInteger"
+        @wheel.prevent
         @input="handleRentInput"
       />
     </div>
@@ -158,7 +164,26 @@ watch(() => languageStore.currentLanguage, (newLang) => {
 
 const handleRentInput = (event: Event) => {
   const target = event.target as HTMLInputElement
-  emit('update:monthly-rent', Number(target.value || 0))
+  const cleaned = (target.value || '').replace(/[^\d]/g, '')
+  if (target.value !== cleaned) target.value = cleaned
+  emit('update:monthly-rent', Number(cleaned || 0))
+}
+
+// Prevent invalid characters and sanitize paste
+const preventInvalidKeyInteger = (e: KeyboardEvent) => {
+  const invalid = ['e', 'E', '+', '-', '.']
+  if (invalid.includes(e.key)) e.preventDefault()
+}
+
+const onPasteInteger = (e: ClipboardEvent) => {
+  const input = e.target as HTMLInputElement
+  const text = e.clipboardData?.getData('text') ?? ''
+  const cleaned = text.replace(/[^\d]/g, '')
+  if (cleaned !== text) {
+    e.preventDefault()
+    input.setRangeText(cleaned, input.selectionStart ?? input.value.length, input.selectionEnd ?? input.value.length, 'end')
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+  }
 }
 </script>
 

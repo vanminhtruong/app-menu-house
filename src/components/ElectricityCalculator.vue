@@ -41,7 +41,14 @@
           ]">{{ $t('calculator.electricity.oldReading') }}</label>
           <div class="relative">
             <input 
-              type="number" 
+              type="number"
+              inputmode="numeric"
+              step="1"
+              min="0"
+              @keydown="preventInvalidKeyInteger"
+              @input="sanitizeInputInteger"
+              @paste="onPasteInteger"
+              @wheel.prevent
               v-model="electricityOldModel" 
               id="electricity-old"
               :class="[
@@ -82,7 +89,14 @@
           ]">{{ $t('calculator.electricity.newReading') }}</label>
           <div class="relative">
             <input 
-              type="number" 
+              type="number"
+              inputmode="numeric"
+              step="1"
+              min="0"
+              @keydown="preventInvalidKeyInteger"
+              @input="sanitizeInputInteger"
+              @paste="onPasteInteger"
+              @wheel.prevent
               v-model="electricityNewModel"
               id="electricity-new" 
               :class="[
@@ -124,7 +138,14 @@
           themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
         ]">{{ $t('calculator.electricity.rate') }}</label>
         <input 
-          type="number" 
+          type="number"
+          inputmode="decimal"
+          step="any"
+          min="0"
+          @keydown="preventInvalidKeyDecimal"
+          @input="sanitizeInputDecimal"
+          @paste="onPasteDecimal"
+          @wheel.prevent
           v-model="electricityRateModel" 
           :class="[
             'w-full px-3 py-2 rounded-md focus:outline-none transition-colors duration-200',
@@ -219,6 +240,61 @@ const handleImageUpload = (event: Event, type: 'electricity' | 'water', isOld: b
   
   // Reset input value to allow selecting the same file again
   input.value = ''
+}
+
+// Prevent invalid characters and sanitize content
+const preventInvalidKeyInteger = (e: KeyboardEvent) => {
+  const invalid = ['e', 'E', '+', '-', '.']
+  if (invalid.includes(e.key)) {
+    e.preventDefault()
+  }
+}
+
+const preventInvalidKeyDecimal = (e: KeyboardEvent) => {
+  const invalid = ['e', 'E', '+', '-']
+  if (invalid.includes(e.key)) {
+    e.preventDefault()
+  }
+}
+
+const sanitizeInputInteger = (e: Event) => {
+  const input = e.target as HTMLInputElement
+  const cleaned = input.value.replace(/[^\d]/g, '')
+  if (input.value !== cleaned) input.value = cleaned
+}
+
+const sanitizeInputDecimal = (e: Event) => {
+  const input = e.target as HTMLInputElement
+  let cleaned = input.value.replace(/[^\d.]/g, '')
+  const firstDot = cleaned.indexOf('.')
+  if (firstDot !== -1) {
+    cleaned = cleaned.slice(0, firstDot + 1) + cleaned.slice(firstDot + 1).replace(/\./g, '')
+  }
+  if (input.value !== cleaned) input.value = cleaned
+}
+
+const onPasteInteger = (e: ClipboardEvent) => {
+  const input = e.target as HTMLInputElement
+  const text = e.clipboardData?.getData('text') ?? ''
+  const cleaned = text.replace(/[^\d]/g, '')
+  if (cleaned !== text) {
+    e.preventDefault()
+    input.setRangeText(cleaned, input.selectionStart ?? input.value.length, input.selectionEnd ?? input.value.length, 'end')
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+  }
+}
+
+const onPasteDecimal = (e: ClipboardEvent) => {
+  const input = e.target as HTMLInputElement
+  const text = e.clipboardData?.getData('text') ?? ''
+  let cleaned = text.replace(/[^\d.]/g, '')
+  const firstDot = cleaned.indexOf('.')
+  if (firstDot !== -1) cleaned = cleaned.slice(0, firstDot + 1) + cleaned.slice(firstDot + 1).replace(/\./g, '')
+  if (cleaned !== text) {
+    e.preventDefault()
+    input.setRangeText(cleaned, input.selectionStart ?? input.value.length, input.selectionEnd ?? input.value.length, 'end')
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+  }
 }
 </script>
 
