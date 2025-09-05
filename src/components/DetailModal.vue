@@ -107,8 +107,11 @@
             'rounded-lg p-4',
             themeStore.isDarkMode ? 'bg-gray-900 border border-gray-600 shadow-[0_2px_4px_rgba(0,0,0,0.3)]' : 'bg-gray-50'
           ]">
-            <div class="font-medium">
+            <div class="font-medium" v-if="monthlyRent && monthlyRent > 0">
               {{ formatCurrency(electricityTotal) }} + {{ formatCurrency(waterTotal) }} + {{ formatCurrency(quarterlyRent || 0) }} = {{ formatCurrency(totalBill) }}
+            </div>
+            <div class="font-medium" v-else>
+              {{ formatCurrency(electricityTotal) }} + {{ formatCurrency(waterTotal) }} = {{ formatCurrency(totalBill) }}
             </div>
           </div>
         </div>

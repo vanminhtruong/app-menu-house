@@ -1,6 +1,6 @@
 <template>
   <div :class="[
-    'min-h-screen py-8 px-4 max-sm:py-6 max-sm:px-3 max-xs:py-4 max-xs:px-2 transition-colors duration-300 relative overflow-hidden',
+    'h-screen py-8 px-4 max-sm:py-6 max-sm:px-3 max-xs:py-4 max-xs:px-2 transition-colors duration-300 relative overflow-y-auto overflow-x-hidden',
     themeStore.isDarkMode ? 'text-white' : '',
     showDetailModal ? 'overflow-hidden' : '',
     // Fallback background when AnimatedBackground is disabled
@@ -34,7 +34,7 @@
         ]">
           <!-- Header -->
           <ScrollReveal :once="true" :delay="200" :duration="1000" direction="down">
-            <CalculatorHeader />
+            <AppHeader />
           </ScrollReveal>
 
           <!-- Calculator Form -->
@@ -180,7 +180,7 @@
 
           <!-- Footer -->
           <ScrollReveal :once="true" :delay="500" :duration="1200" direction="up" :distance="40">
-            <CalculatorFooter 
+            <AppFooter 
               :current-date="currentDate"
               :electricity-total="electricityTotal"
               :water-total="waterTotal"
@@ -236,7 +236,7 @@ import { useCurrentDate } from '../composables/useCurrentDate'
 import { useToast } from '../composables/useToast'
 
 // @ts-ignore
-import CalculatorHeader from '../components/CalculatorHeader.vue'
+import AppHeader from '../components/AppHeader.vue'
 // @ts-ignore
 import CalculatorTabs from '../components/CalculatorTabs.vue'
 // @ts-ignore
@@ -246,7 +246,7 @@ import WaterCalculator from '../components/WaterCalculator.vue'
 // @ts-ignore
 import TotalSummary from '../components/TotalSummary.vue'
 // @ts-ignore
-import CalculatorFooter from '../components/CalculatorFooter.vue'
+import AppFooter from '../components/AppFooter.vue'
 // @ts-ignore
 import DetailModal from '../components/DetailModal.vue'
 // @ts-ignore
