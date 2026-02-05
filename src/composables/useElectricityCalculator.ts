@@ -13,12 +13,26 @@ export function useElectricityCalculator() {
   const debounceTimeout = ref<number | null>(null)
 
   // State
-  const electricityOld = ref('')
-  const electricityNew = ref('')
-  const electricityRate = ref(defaultElectricityRate)
+  const electricityOld = ref(localStorage.getItem('electricity_old') || '')
+  const electricityNew = ref(localStorage.getItem('electricity_new') || '')
+  const storedRate = localStorage.getItem('electricity_rate')
+  const electricityRate = ref(storedRate ? Number(storedRate) : defaultElectricityRate)
 
   // Validation state flags
   const electricityErrorShown = ref(false)
+
+  // Watch for state changes and persist to localStorage
+  watch(electricityOld, (newVal) => {
+    localStorage.setItem('electricity_old', newVal)
+  })
+
+  watch(electricityNew, (newVal) => {
+    localStorage.setItem('electricity_new', newVal)
+  })
+
+  watch(electricityRate, (newVal) => {
+    localStorage.setItem('electricity_rate', String(newVal))
+  })
 
   // Watch for electricity readings validation with debounce
   watch([electricityOld, electricityNew], () => {
@@ -26,29 +40,29 @@ export function useElectricityCalculator() {
     if (debounceTimeout.value) {
       clearTimeout(debounceTimeout.value)
     }
-    
+
     // Set a new timeout to delay validation
     debounceTimeout.value = setTimeout(() => {
       const oldValue = Number(electricityOld.value) || 0
       const newValue = Number(electricityNew.value) || 0
-      
+
       // Skip validation if either value is empty or 0
       if (oldValue === 0 || newValue === 0) {
         electricityErrorShown.value = false
         return
       }
-      
+
       // Skip validation if user is likely still typing (new value has fewer digits)
       if (electricityNew.value.length < electricityOld.value.length && newValue < oldValue) {
         return
       }
-      
+
       // Reset error flag when values become valid
       if (newValue >= oldValue) {
         electricityErrorShown.value = false
         return
       }
-      
+
       // Only show error once until values become valid again
       if (newValue < oldValue && !electricityErrorShown.value) {
         validateElectricityReadings()
@@ -104,6 +118,11 @@ export function useElectricityCalculator() {
     electricityNew.value = ''
     electricityRate.value = defaultElectricityRate
     electricityErrorShown.value = false
+
+    // Clear localStorage
+    localStorage.removeItem('electricity_old')
+    localStorage.removeItem('electricity_new')
+    localStorage.removeItem('electricity_rate')
   }
 
   // Fill sample data
@@ -117,7 +136,7 @@ export function useElectricityCalculator() {
   // Set value from OCR
   const setElectricityValueFromOCR = (value: string, isOld: boolean) => {
     if (!value) return
-    
+
     if (isOld) {
       electricityOld.value = value
     } else {
@@ -131,11 +150,11 @@ export function useElectricityCalculator() {
     electricityNew,
     electricityRate,
     defaultElectricityRate,
-    
+
     // Computed
     electricityUsage,
     electricityTotal,
-    
+
     // Methods
     validateElectricityReadings,
     resetElectricity,

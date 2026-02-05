@@ -63,6 +63,7 @@
       "new": "New",
       "old": "Previous",
       "utilityTotal": "Utilities Total",
+      "utilityAndRentTotal": "Utilities & Rent Total",
       "grandTotal": "Grand Total",
       "note": "Amount includes taxes and fees",
       "closeButton": "Close details",

@@ -13,12 +13,26 @@ export function useWaterCalculator() {
   const debounceTimeout = ref<number | null>(null)
 
   // State
-  const waterOld = ref('')
-  const waterNew = ref('')
-  const waterRate = ref(defaultWaterRate)
+  const waterOld = ref(localStorage.getItem('water_old') || '')
+  const waterNew = ref(localStorage.getItem('water_new') || '')
+  const storedRate = localStorage.getItem('water_rate')
+  const waterRate = ref(storedRate ? Number(storedRate) : defaultWaterRate)
 
   // Validation state flags
   const waterErrorShown = ref(false)
+
+  // Watch for state changes and persist to localStorage
+  watch(waterOld, (newVal) => {
+    localStorage.setItem('water_old', newVal)
+  })
+
+  watch(waterNew, (newVal) => {
+    localStorage.setItem('water_new', newVal)
+  })
+
+  watch(waterRate, (newVal) => {
+    localStorage.setItem('water_rate', String(newVal))
+  })
 
   // Watch for water readings validation with debounce
   watch([waterOld, waterNew], () => {
@@ -26,29 +40,29 @@ export function useWaterCalculator() {
     if (debounceTimeout.value) {
       clearTimeout(debounceTimeout.value)
     }
-    
+
     // Set a new timeout to delay validation
     debounceTimeout.value = setTimeout(() => {
       const oldValue = Number(waterOld.value) || 0
       const newValue = Number(waterNew.value) || 0
-      
+
       // Skip validation if either value is empty or 0
       if (oldValue === 0 || newValue === 0) {
         waterErrorShown.value = false
         return
       }
-      
+
       // Skip validation if user is likely still typing (new value has fewer digits)
       if (waterNew.value.length < waterOld.value.length && newValue < oldValue) {
         return
       }
-      
+
       // Reset error flag when values become valid
       if (newValue >= oldValue) {
         waterErrorShown.value = false
         return
       }
-      
+
       // Only show error once until values become valid again
       if (newValue < oldValue && !waterErrorShown.value) {
         validateWaterReadings()
@@ -104,6 +118,11 @@ export function useWaterCalculator() {
     waterNew.value = ''
     waterRate.value = defaultWaterRate
     waterErrorShown.value = false
+
+    // Clear localStorage
+    localStorage.removeItem('water_old')
+    localStorage.removeItem('water_new')
+    localStorage.removeItem('water_rate')
   }
 
   // Fill sample data
@@ -117,7 +136,7 @@ export function useWaterCalculator() {
   // Set value from OCR
   const setWaterValueFromOCR = (value: string, isOld: boolean) => {
     if (!value) return
-    
+
     if (isOld) {
       waterOld.value = value
     } else {
@@ -131,16 +150,15 @@ export function useWaterCalculator() {
     waterNew,
     waterRate,
     defaultWaterRate,
-    
+
     // Computed
     waterUsage,
     waterTotal,
-    
+
     // Methods
     validateWaterReadings,
     resetWater,
     fillWaterSampleData,
     setWaterValueFromOCR
   }
-} 
- 
+}

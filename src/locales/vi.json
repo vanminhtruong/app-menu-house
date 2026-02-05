@@ -5,7 +5,9 @@
     "tabs": {
       "electricity": "Tiền Điện",
       "water": "Tiền Nước",
-      "both": "Tổng Hợp"
+      "both": "Tổng Hợp",
+      "rent": "Tiền Nhà",
+      "all": "Tất Cả"
     },
     "electricity": {
       "title": "Tính Tiền Điện",
@@ -51,6 +53,7 @@
       "new": "Số mới",
       "old": "Số cũ",
       "utilityTotal": "Tổng Điện Nước",
+      "utilityAndRentTotal": "Tổng Điện Nước + Tiền Nhà",
       "grandTotal": "Tổng Cộng",
       "note": "Giá trị tiền đã bao gồm thuế và phí",
       "closeButton": "Đóng chi tiết",
