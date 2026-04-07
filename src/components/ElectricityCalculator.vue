@@ -1,46 +1,85 @@
 <template>
   <div>
-    <div 
-      @click="toggleAccordion" 
+    <div
+      @click="toggleAccordion"
       :class="[
         'flex justify-between items-center cursor-pointer py-3 px-4 max-sm:py-2 max-sm:px-3 max-xs:py-1 max-xs:px-2 gap-2 max-sm:gap-2 max-xs:gap-1 rounded-md transition-all duration-300',
-        isInBothTab ? (themeStore.isDarkMode ? 'hover:bg-gray-700 border border-gray-700' : 'hover:bg-gray-100 border border-gray-200') : '',
-        isInBothTab && isCollapsed ? (themeStore.isDarkMode ? 'mb-3' : 'mb-3') : 'mb-4'
+        isInBothTab ? (themeStore.isPureDark ? 'hover:bg-neutral-900 pd-shadow' : themeStore.isDarkMode ? 'hover:bg-gray-700 border border-gray-700' : 'hover:bg-gray-100 border border-gray-200') : '',
+        isInBothTab && isCollapsed ? 'mb-3' : 'mb-4',
       ]"
     >
       <div class="flex items-center flex-1 min-w-0">
         <div class="mr-3 max-sm:mr-2 max-xs:mr-1 flex-shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 max-xs:h-4 max-xs:w-4" :class="themeStore.isDarkMode ? 'text-yellow-300' : 'text-yellow-500'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 max-xs:h-4 max-xs:w-4"
+            :class="
+              themeStore.isDarkMode ? 'text-yellow-300' : 'text-yellow-500'
+            "
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
           </svg>
         </div>
-        <h2 :class="[
-          'text-lg max-sm:text-base max-xs:text-sm font-semibold leading-tight max-xs:leading-snug max-sm:whitespace-normal max-sm:break-words',
-          themeStore.isDarkMode ? 'text-gray-100' : 'text-gray-800'
-        ]">{{ $t('calculator.electricity.title') }}</h2>
+        <h2
+          :class="[
+            'text-lg max-sm:text-base max-xs:text-sm font-semibold leading-tight max-xs:leading-snug max-sm:whitespace-normal max-sm:break-words',
+            themeStore.isDarkMode ? 'text-gray-100' : 'text-gray-800',
+          ]"
+        >
+          {{ $t("calculator.electricity.title") }}
+        </h2>
       </div>
-      <div v-if="isInBothTab" class="ml-2 max-xs:ml-1 flex-shrink-0 transform transition-transform duration-300" :class="{ 'rotate-180': !isCollapsed }">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 max-sm:h-4 max-sm:w-4 max-xs:h-4 max-xs:w-4" :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-600'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      <div
+        v-if="isInBothTab"
+        class="ml-2 max-xs:ml-1 flex-shrink-0 transform transition-transform duration-300"
+        :class="{ 'rotate-180': !isCollapsed }"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 max-sm:h-4 max-sm:w-4 max-xs:h-4 max-xs:w-4"
+          :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-600'"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </div>
     </div>
-  
-    <div 
-      v-show="!isCollapsed" 
+
+    <div
+      v-show="!isCollapsed"
       :class="[
         'transition-all duration-500 overflow-hidden',
-        isInBothTab ? 'accordion-content' : ''
+        isInBothTab ? 'accordion-content' : '',
       ]"
     >
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 max-sm:gap-3 max-sm:mb-3 max-xs:gap-2 max-xs:mb-2">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 max-sm:gap-3 max-sm:mb-3 max-xs:gap-2 max-xs:mb-2"
+      >
         <div class="form-group">
-          <label :class="[
-            'block text-sm max-xs:text-xs font-medium mb-1',
-            themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
-          ]">{{ $t('calculator.electricity.oldReading') }}</label>
+          <label
+            :class="[
+              'block text-sm max-xs:text-xs font-medium mb-1',
+              themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700',
+            ]"
+            >{{ $t("calculator.electricity.oldReading") }}</label
+          >
           <div class="relative">
-            <input 
+            <input
               type="number"
               inputmode="numeric"
               step="1"
@@ -49,46 +88,64 @@
               @input="sanitizeInputInteger"
               @paste="onPasteInteger"
               @wheel.prevent
-              v-model="electricityOldModel" 
+              v-model="electricityOldModel"
               id="electricity-old"
               :class="[
                 'w-full px-3 py-2 max-sm:px-3 max-sm:py-2 max-xs:px-2 max-xs:py-1.5 rounded-md focus:outline-none transition-colors duration-200',
-                themeStore.isDarkMode 
+                themeStore.isPureDark
+                  ? 'bg-neutral-900 text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 pd-shadow-input'
+                  : themeStore.isDarkMode
                   ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
-                  : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
+                  : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm',
               ]"
               :placeholder="$t('calculator.electricity.oldReadingPlaceholder')"
             />
-            <label 
+            <label
               :for="'electricity-old-image-upload'"
               :class="[
                 'absolute right-2 top-2 -translate-y-1/2 w-7 h-7 max-xs:w-6 max-xs:h-6 max-xs:right-1 max-xs:top-1 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200',
-                themeStore.isDarkMode 
-                  ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
-                  : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
+                themeStore.isPureDark
+                  ? 'bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white'
+                  : themeStore.isDarkMode
+                  ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
+                  : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600',
               ]"
               :title="$t('calculator.imageUpload.title')"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"
+                />
               </svg>
             </label>
-            <input 
-              type="file" 
-              id="electricity-old-image-upload" 
-              class="hidden" 
+            <input
+              type="file"
+              id="electricity-old-image-upload"
+              class="hidden"
               accept="image/*"
               @change="handleImageUpload($event, 'electricity', true)"
             />
           </div>
         </div>
         <div class="form-group">
-          <label :class="[
-            'block text-sm max-xs:text-xs font-medium mb-1',
-            themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
-          ]">{{ $t('calculator.electricity.newReading') }}</label>
+          <label
+            :class="[
+              'block text-sm max-xs:text-xs font-medium mb-1',
+              themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700',
+            ]"
+            >{{ $t("calculator.electricity.newReading") }}</label
+          >
           <div class="relative">
-            <input 
+            <input
               type="number"
               inputmode="numeric"
               step="1"
@@ -98,33 +155,48 @@
               @paste="onPasteInteger"
               @wheel.prevent
               v-model="electricityNewModel"
-              id="electricity-new" 
+              id="electricity-new"
               :class="[
                 'w-full px-3 py-2 max-sm:px-3 max-sm:py-2 max-xs:px-2 max-xs:py-1.5 rounded-md focus:outline-none transition-colors duration-200',
-                themeStore.isDarkMode 
+                themeStore.isPureDark
+                  ? 'bg-neutral-900 border-none text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 pd-shadow-input'
+                  : themeStore.isDarkMode
                   ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
-                  : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
+                  : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm',
               ]"
               :placeholder="$t('calculator.electricity.newReadingPlaceholder')"
             />
-            <label 
+            <label
               :for="'electricity-new-image-upload'"
               :class="[
                 'absolute right-2 top-2 -translate-y-1/2 w-7 h-7 max-xs:w-6 max-xs:h-6 max-xs:right-1 max-xs:top-1 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200',
-                themeStore.isDarkMode 
-                  ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
-                  : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
+                themeStore.isPureDark
+                  ? 'bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white'
+                  : themeStore.isDarkMode
+                  ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
+                  : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600',
               ]"
               :title="$t('calculator.imageUpload.title')"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"
+                />
               </svg>
             </label>
-            <input 
-              type="file" 
-              id="electricity-new-image-upload" 
-              class="hidden" 
+            <input
+              type="file"
+              id="electricity-new-image-upload"
+              class="hidden"
               accept="image/*"
               @change="handleImageUpload($event, 'electricity', false)"
             />
@@ -133,11 +205,14 @@
       </div>
 
       <div class="form-group mb-4">
-        <label :class="[
-          'block text-sm max-xs:text-xs font-medium mb-1',
-          themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
-        ]">{{ $t('calculator.electricity.rate') }}</label>
-        <input 
+        <label
+          :class="[
+            'block text-sm max-xs:text-xs font-medium mb-1',
+            themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700',
+          ]"
+          >{{ $t("calculator.electricity.rate") }}</label
+        >
+        <input
           type="number"
           inputmode="decimal"
           step="any"
@@ -146,156 +221,217 @@
           @input="sanitizeInputDecimal"
           @paste="onPasteDecimal"
           @wheel.prevent
-          v-model="electricityRateModel" 
+          v-model="electricityRateModel"
           :class="[
             'w-full px-3 py-2 max-sm:px-3 max-sm:py-2 max-xs:px-2 max-xs:py-1.5 rounded-md focus:outline-none transition-colors duration-200',
-            themeStore.isDarkMode 
+            themeStore.isPureDark
+              ? 'bg-neutral-900 border-none text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 shadow-[0_2px_12px_rgba(255,255,255,0.03)]'
+              : themeStore.isDarkMode
               ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
-              : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
+              : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm',
           ]"
           :placeholder="$t('calculator.electricity.ratePlaceholder')"
         />
       </div>
     </div>
 
-    <div :class="[
-      'result-box rounded-lg p-4 max-sm:p-3 max-xs:p-2',
-      themeStore.isDarkMode ? 'bg-gray-700 shadow-[0_4px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] border border-gray-600' : 'bg-gray-50 shadow-sm'
-    ]">
+    <div
+      :class="[
+        'result-box rounded-lg p-4 max-sm:p-3 max-xs:p-2',
+        themeStore.isPureDark ? 'bg-neutral-900 pd-shadow' : themeStore.isDarkMode ? 'bg-gray-700 shadow-[0_4px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] border border-gray-600' : 'bg-gray-50 shadow-sm',
+      ]"
+    >
       <div class="flex justify-between items-center mb-2">
-        <span :class="themeStore.isDarkMode ? 'text-sm max-xs:text-xs text-gray-300' : 'text-sm max-xs:text-xs text-gray-600'">{{ $t('calculator.formula') }}</span>
-        <span :class="themeStore.isDarkMode ? 'text-sm max-xs:text-xs font-medium text-white' : 'text-sm max-xs:text-xs font-medium'">
-          ({{ electricityNewModel || '0' }} - {{ electricityOldModel || '0' }}) × {{ electricityRateModel || defaultElectricityRate }} = {{ formatCurrency(electricityTotal) }}
+        <span
+          :class="
+            themeStore.isDarkMode
+              ? 'text-sm max-xs:text-xs text-gray-300'
+              : 'text-sm max-xs:text-xs text-gray-600'
+          "
+          >{{ $t("calculator.formula") }}</span
+        >
+        <span
+          :class="
+            themeStore.isDarkMode
+              ? 'text-sm max-xs:text-xs font-medium text-white'
+              : 'text-sm max-xs:text-xs font-medium'
+          "
+        >
+          ({{ electricityNewModel || "0" }} - {{ electricityOldModel || "0" }})
+          × {{ electricityRateModel || defaultElectricityRate }} =
+          {{ formatCurrency(electricityTotal) }}
         </span>
       </div>
       <div class="flex justify-between items-center">
-        <span :class="themeStore.isDarkMode ? 'text-sm max-xs:text-xs text-gray-300' : 'text-sm max-xs:text-xs text-gray-600'">{{ $t('calculator.total') }}</span>
-        <span :class="themeStore.isDarkMode ? 'text-lg max-sm:text-base max-xs:text-sm font-bold text-white' : 'text-lg max-sm:text-base max-xs:text-sm font-bold text-indigo-600'">{{ formatCurrency(electricityTotal) }}</span>
+        <span
+          :class="
+            themeStore.isDarkMode
+              ? 'text-sm max-xs:text-xs text-gray-300'
+              : 'text-sm max-xs:text-xs text-gray-600'
+          "
+          >{{ $t("calculator.total") }}</span
+        >
+        <span
+          :class="
+            themeStore.isDarkMode
+              ? 'text-lg max-sm:text-base max-xs:text-sm font-bold text-white'
+              : 'text-lg max-sm:text-base max-xs:text-sm font-bold text-indigo-600'
+          "
+          >{{ formatCurrency(electricityTotal) }}</span
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
-import { useThemeStore } from '../stores/theme'
-import { useLanguageStore } from '../stores/language'
-import { useI18n } from 'vue-i18n'
+import { ref, computed, watch, onMounted } from "vue";
+import { useThemeStore } from "../stores/theme";
+import { useLanguageStore } from "../stores/language";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps<{
-  electricityOld: number | string
-  electricityNew: number | string
-  electricityRate: number
-  defaultElectricityRate: number
-  electricityTotal: number
-  formatCurrency: (value: number) => string
-  isInBothTab?: boolean
-}>()
+  electricityOld: number | string;
+  electricityNew: number | string;
+  electricityRate: number;
+  defaultElectricityRate: number;
+  electricityTotal: number;
+  formatCurrency: (value: number) => string;
+  isInBothTab?: boolean;
+}>();
 
-const emit = defineEmits(['update:electricityOld', 'update:electricityNew', 'update:electricityRate', 'image-upload'])
+const emit = defineEmits([
+  "update:electricityOld",
+  "update:electricityNew",
+  "update:electricityRate",
+  "image-upload",
+]);
 
-const themeStore = useThemeStore()
-const languageStore = useLanguageStore()
-const { locale } = useI18n()
+const themeStore = useThemeStore();
+const languageStore = useLanguageStore();
+const { locale } = useI18n();
 
 // Initialize locale and watch for language changes
 onMounted(() => {
-  locale.value = languageStore.currentLanguage
-})
+  locale.value = languageStore.currentLanguage;
+});
 
-watch(() => languageStore.currentLanguage, (newLang) => {
-  locale.value = newLang
-}, { immediate: true })
-const isCollapsed = ref(false)
+watch(
+  () => languageStore.currentLanguage,
+  (newLang) => {
+    locale.value = newLang;
+  },
+  { immediate: true }
+);
+const isCollapsed = ref(false);
 
 const toggleAccordion = () => {
   if (props.isInBothTab) {
-    isCollapsed.value = !isCollapsed.value
+    isCollapsed.value = !isCollapsed.value;
   }
-}
+};
 
 // Create local models for two-way binding
 const electricityOldModel = computed({
   get: () => props.electricityOld,
-  set: (value) => emit('update:electricityOld', value)
-})
+  set: (value) => emit("update:electricityOld", value),
+});
 
 const electricityNewModel = computed({
   get: () => props.electricityNew,
-  set: (value) => emit('update:electricityNew', value)
-})
+  set: (value) => emit("update:electricityNew", value),
+});
 
 const electricityRateModel = computed({
   get: () => props.electricityRate,
-  set: (value) => emit('update:electricityRate', value)
-})
+  set: (value) => emit("update:electricityRate", value),
+});
 
 // Handle image upload
-const handleImageUpload = (event: Event, type: 'electricity' | 'water', isOld: boolean) => {
-  const input = event.target as HTMLInputElement
-  if (!input.files || !input.files[0]) return
-  
-  const file = input.files[0]
-  emit('image-upload', { file, type, isOld })
-  
+const handleImageUpload = (
+  event: Event,
+  type: "electricity" | "water",
+  isOld: boolean
+) => {
+  const input = event.target as HTMLInputElement;
+  if (!input.files || !input.files[0]) return;
+
+  const file = input.files[0];
+  emit("image-upload", { file, type, isOld });
+
   // Reset input value to allow selecting the same file again
-  input.value = ''
-}
+  input.value = "";
+};
 
 // Prevent invalid characters and sanitize content
 const preventInvalidKeyInteger = (e: KeyboardEvent) => {
-  const invalid = ['e', 'E', '+', '-', '.']
+  const invalid = ["e", "E", "+", "-", "."];
   if (invalid.includes(e.key)) {
-    e.preventDefault()
+    e.preventDefault();
   }
-}
+};
 
 const preventInvalidKeyDecimal = (e: KeyboardEvent) => {
-  const invalid = ['e', 'E', '+', '-']
+  const invalid = ["e", "E", "+", "-"];
   if (invalid.includes(e.key)) {
-    e.preventDefault()
+    e.preventDefault();
   }
-}
+};
 
 const sanitizeInputInteger = (e: Event) => {
-  const input = e.target as HTMLInputElement
-  const cleaned = input.value.replace(/[^\d]/g, '')
-  if (input.value !== cleaned) input.value = cleaned
-}
+  const input = e.target as HTMLInputElement;
+  const cleaned = input.value.replace(/[^\d]/g, "");
+  if (input.value !== cleaned) input.value = cleaned;
+};
 
 const sanitizeInputDecimal = (e: Event) => {
-  const input = e.target as HTMLInputElement
-  let cleaned = input.value.replace(/[^\d.]/g, '')
-  const firstDot = cleaned.indexOf('.')
+  const input = e.target as HTMLInputElement;
+  let cleaned = input.value.replace(/[^\d.]/g, "");
+  const firstDot = cleaned.indexOf(".");
   if (firstDot !== -1) {
-    cleaned = cleaned.slice(0, firstDot + 1) + cleaned.slice(firstDot + 1).replace(/\./g, '')
+    cleaned =
+      cleaned.slice(0, firstDot + 1) +
+      cleaned.slice(firstDot + 1).replace(/\./g, "");
   }
-  if (input.value !== cleaned) input.value = cleaned
-}
+  if (input.value !== cleaned) input.value = cleaned;
+};
 
 const onPasteInteger = (e: ClipboardEvent) => {
-  const input = e.target as HTMLInputElement
-  const text = e.clipboardData?.getData('text') ?? ''
-  const cleaned = text.replace(/[^\d]/g, '')
+  const input = e.target as HTMLInputElement;
+  const text = e.clipboardData?.getData("text") ?? "";
+  const cleaned = text.replace(/[^\d]/g, "");
   if (cleaned !== text) {
-    e.preventDefault()
-    input.setRangeText(cleaned, input.selectionStart ?? input.value.length, input.selectionEnd ?? input.value.length, 'end')
-    input.dispatchEvent(new Event('input', { bubbles: true }))
+    e.preventDefault();
+    input.setRangeText(
+      cleaned,
+      input.selectionStart ?? input.value.length,
+      input.selectionEnd ?? input.value.length,
+      "end"
+    );
+    input.dispatchEvent(new Event("input", { bubbles: true }));
   }
-}
+};
 
 const onPasteDecimal = (e: ClipboardEvent) => {
-  const input = e.target as HTMLInputElement
-  const text = e.clipboardData?.getData('text') ?? ''
-  let cleaned = text.replace(/[^\d.]/g, '')
-  const firstDot = cleaned.indexOf('.')
-  if (firstDot !== -1) cleaned = cleaned.slice(0, firstDot + 1) + cleaned.slice(firstDot + 1).replace(/\./g, '')
+  const input = e.target as HTMLInputElement;
+  const text = e.clipboardData?.getData("text") ?? "";
+  let cleaned = text.replace(/[^\d.]/g, "");
+  const firstDot = cleaned.indexOf(".");
+  if (firstDot !== -1)
+    cleaned =
+      cleaned.slice(0, firstDot + 1) +
+      cleaned.slice(firstDot + 1).replace(/\./g, "");
   if (cleaned !== text) {
-    e.preventDefault()
-    input.setRangeText(cleaned, input.selectionStart ?? input.value.length, input.selectionEnd ?? input.value.length, 'end')
-    input.dispatchEvent(new Event('input', { bubbles: true }))
+    e.preventDefault();
+    input.setRangeText(
+      cleaned,
+      input.selectionStart ?? input.value.length,
+      input.selectionEnd ?? input.value.length,
+      "end"
+    );
+    input.dispatchEvent(new Event("input", { bubbles: true }));
   }
-}
+};
 </script>
 
 <style scoped>
@@ -325,9 +461,15 @@ input[type="number"]:focus {
   transform: translateY(20px);
 }
 
-.form-group:nth-child(1) { animation-delay: 0.1s; }
-.form-group:nth-child(2) { animation-delay: 0.2s; }
-.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.form-group:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.form-group:nth-child(3) {
+  animation-delay: 0.3s;
+}
 
 @keyframes slideInUp {
   to {

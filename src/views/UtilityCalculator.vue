@@ -1,61 +1,88 @@
 <template>
-  <div :class="[
-    'h-screen py-8 px-4 max-sm:py-6 max-sm:px-3 max-xs:py-4 max-xs:px-2 transition-colors duration-300 relative overflow-y-auto overflow-x-hidden',
-    themeStore.isDarkMode ? 'text-white' : '',
-    showDetailModal ? 'overflow-hidden' : '',
-    // Fallback background when AnimatedBackground is disabled
-    !backgroundStore.isEnabled ? (
-      themeStore.isDarkMode
-        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black'
-        : 'bg-gradient-to-br from-blue-50 via-white to-blue-100'
-    ) : ''
-  ]">
+  <div
+    :class="[
+      'h-screen py-8 px-4 max-sm:py-6 max-sm:px-3 max-xs:py-4 max-xs:px-2 transition-colors duration-300 relative overflow-y-auto overflow-x-hidden',
+      themeStore.isDarkMode ? 'text-white' : '',
+      showDetailModal ? 'overflow-hidden' : '',
+      // Fallback background when AnimatedBackground is disabled
+      !backgroundStore.isEnabled
+        ? themeStore.isPureDark
+          ? 'bg-black'
+          : themeStore.isDarkMode
+          ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black'
+          : 'bg-gradient-to-br from-blue-50 via-white to-blue-100'
+        : '',
+    ]"
+  >
     <!-- Animated Background -->
     <AnimatedBackground
       :is-dark-mode="themeStore.isDarkMode"
+      :is-pure-dark="themeStore.isPureDark"
       :is-visible="backgroundStore.isEnabled"
     />
     <div class="max-w-3xl mx-auto relative z-20">
       <LazyLoader :delay="1000" :loading-text="$t('common.loading')">
-        <div :class="[
-          'rounded-2xl max-sm:rounded-xl max-xs:rounded-lg overflow-hidden',
-          // Conditional backdrop blur and transparency based on background state
-          backgroundStore.isEnabled ? 'backdrop-blur-sm' : '',
-          // Different styling when background is enabled vs disabled
-          backgroundStore.isEnabled ? (
-            themeStore.isDarkMode
-              ? 'bg-gray-800/90 shadow-[0_0_30px_rgba(0,0,0,0.8),0_0_60px_rgba(0,0,0,0.4)] border border-gray-700/50'
-              : 'bg-white/85 shadow-xl border border-white/20'
-          ) : (
-            themeStore.isDarkMode
+        <div
+          :class="[
+            'rounded-2xl max-sm:rounded-xl max-xs:rounded-lg overflow-hidden',
+            // Conditional backdrop blur and transparency based on background state
+            backgroundStore.isEnabled ? 'backdrop-blur-sm' : '',
+            // Different styling when background is enabled vs disabled
+            backgroundStore.isEnabled
+              ? themeStore.isPureDark
+                ? 'bg-black/95 pd-shadow-lg border-none'
+                : themeStore.isDarkMode
+                ? 'bg-gray-800/90 shadow-[0_0_30px_rgba(0,0,0,0.8),0_0_60px_rgba(0,0,0,0.4)] border border-gray-700/50'
+                : 'bg-white/85 shadow-xl border border-white/20'
+              : themeStore.isPureDark
+              ? 'bg-black pd-shadow-lg border-none'
+              : themeStore.isDarkMode
               ? 'bg-gray-800 shadow-2xl border border-gray-700'
-              : 'bg-white shadow-xl border border-gray-200'
-          )
-        ]">
+              : 'bg-white shadow-xl border border-gray-200',
+          ]"
+        >
           <!-- Header -->
-          <ScrollReveal :once="true" :delay="200" :duration="1000" direction="down">
+          <ScrollReveal
+            :once="true"
+            :delay="200"
+            :duration="1000"
+            direction="down"
+          >
             <AppHeader />
           </ScrollReveal>
 
           <!-- Calculator Form -->
-          <div :class="['p-6 max-sm:p-4 max-xs:p-3', themeStore.isDarkMode ? 'text-gray-200' : '']">
+          <div
+            :class="[
+              'p-6 max-sm:p-4 max-xs:p-3',
+              themeStore.isDarkMode ? 'text-gray-200' : '',
+            ]"
+          >
             <!-- Tabs -->
-            <ScrollReveal :once="true" :delay="400" :duration="1000" direction="right" :distance="30">
-              <CalculatorTabs 
-                :active-tab="activeTab" 
-                @change-tab="changeTab" 
-              />
+            <ScrollReveal
+              :once="true"
+              :delay="400"
+              :duration="1000"
+              direction="right"
+              :distance="30"
+            >
+              <CalculatorTabs :active-tab="activeTab" @change-tab="changeTab" />
             </ScrollReveal>
 
             <!-- Electricity Calculator -->
-            <transition
-              name="tab-content"
-              mode="out-in"
-              appear
-            >
-              <ScrollReveal v-if="activeTab === 'electricity' || activeTab === 'both'" :once="false" :delay="100" :duration="800" direction="up" :threshold="0.6" root-margin="0px" :hide-delay="120">
+            <transition name="tab-content" mode="out-in" appear>
+              <ScrollReveal
+                v-if="activeTab === 'electricity' || activeTab === 'both'"
+                :once="false"
+                :delay="100"
+                :duration="800"
+                direction="up"
+                :threshold="0.6"
+                root-margin="0px"
+                :hide-delay="120"
+              >
                 <ElectricityCalculator
-                  key="electricity" 
+                  key="electricity"
                   :electricity-old="electricityOld"
                   :electricity-new="electricityNew"
                   :electricity-rate="electricityRate"
@@ -72,12 +99,17 @@
             </transition>
 
             <!-- Water Calculator -->
-            <transition
-              name="tab-content"
-              mode="out-in"
-              appear
-            >
-              <ScrollReveal v-if="activeTab === 'water' || activeTab === 'both'" :once="false" :delay="100" :duration="800" direction="up" :threshold="0.6" root-margin="0px" :hide-delay="120">
+            <transition name="tab-content" mode="out-in" appear>
+              <ScrollReveal
+                v-if="activeTab === 'water' || activeTab === 'both'"
+                :once="false"
+                :delay="100"
+                :duration="800"
+                direction="up"
+                :threshold="0.6"
+                root-margin="0px"
+                :hide-delay="120"
+              >
                 <WaterCalculator
                   key="water"
                   :water-old="waterOld"
@@ -96,33 +128,56 @@
             </transition>
 
             <!-- Separator for Both Tab -->
-            <div v-if="activeTab === 'both'" :class="[
-              'separator my-8 max-sm:my-6 max-xs:my-4 flex items-center',
-              themeStore.isDarkMode ? 'text-gray-500' : 'text-gray-400'
-            ]">
-              <div :class="[
-                'flex-1 h-px',
-                themeStore.isDarkMode ? 'bg-gray-600' : 'bg-gray-300'
-              ]"></div>
+            <div
+              v-if="activeTab === 'both'"
+              :class="[
+                'separator my-8 max-sm:my-6 max-xs:my-4 flex items-center',
+                themeStore.isDarkMode ? 'text-gray-500' : 'text-gray-400',
+              ]"
+            >
+              <div
+                :class="[
+                  'flex-1 h-px',
+                  themeStore.isDarkMode ? 'bg-gray-600' : 'bg-gray-300',
+                ]"
+              ></div>
               <div class="px-4 max-xs:px-2 text-sm font-medium">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 max-xs:h-4 max-xs:w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 max-xs:h-4 max-xs:w-4 inline mr-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                  />
                 </svg>
                 Tiền Nhà
               </div>
-              <div :class="[
-                'flex-1 h-px',
-                themeStore.isDarkMode ? 'bg-gray-600' : 'bg-gray-300'
-              ]"></div>
+              <div
+                :class="[
+                  'flex-1 h-px',
+                  themeStore.isDarkMode ? 'bg-gray-600' : 'bg-gray-300',
+                ]"
+              ></div>
             </div>
 
             <!-- Rent Calculator -->
-            <transition
-              name="tab-content"
-              mode="out-in"
-              appear
-            >
-              <ScrollReveal v-if="activeTab === 'rent' || activeTab === 'both'" :once="false" :delay="100" :duration="800" direction="up" :threshold="0.6" root-margin="0px" :hide-delay="120">
+            <transition name="tab-content" mode="out-in" appear>
+              <ScrollReveal
+                v-if="activeTab === 'rent' || activeTab === 'both'"
+                :once="false"
+                :delay="100"
+                :duration="800"
+                direction="up"
+                :threshold="0.6"
+                root-margin="0px"
+                :hide-delay="120"
+              >
                 <RentCalculator
                   key="rent"
                   :monthly-rent="monthlyRent"
@@ -135,13 +190,14 @@
             </transition>
 
             <!-- Total Summary -->
-            <transition
-              name="tab-content"
-              mode="out-in"
-              appear
-            >
-              <div v-if="activeTab === 'both'" style="overflow: visible;">
-                <ScrollReveal :once="false" :delay="300" :duration="1000" direction="up">
+            <transition name="tab-content" mode="out-in" appear>
+              <div v-if="activeTab === 'both'" style="overflow: visible">
+                <ScrollReveal
+                  :once="false"
+                  :delay="300"
+                  :duration="1000"
+                  direction="up"
+                >
                   <TotalSummary
                     key="total"
                     :total-bill="totalBill"
@@ -153,7 +209,12 @@
                 </ScrollReveal>
 
                 <!-- Data Manager -->
-                <ScrollReveal :once="false" :delay="400" :duration="1000" direction="up">
+                <ScrollReveal
+                  :once="false"
+                  :delay="400"
+                  :duration="1000"
+                  direction="up"
+                >
                   <div class="mt-6">
                     <DataManager
                       :electricity-old="electricityOld"
@@ -179,8 +240,14 @@
           </div>
 
           <!-- Footer -->
-          <ScrollReveal :once="true" :delay="500" :duration="1200" direction="up" :distance="40">
-            <AppFooter 
+          <ScrollReveal
+            :once="true"
+            :delay="500"
+            :duration="1200"
+            direction="up"
+            :distance="40"
+          >
+            <AppFooter
               :current-date="currentDate"
               :electricity-total="electricityTotal"
               :water-total="waterTotal"
@@ -194,7 +261,7 @@
     </div>
 
     <!-- Detail Modal -->
-    <DetailModal 
+    <DetailModal
       v-if="showDetailModal"
       :show-detail-modal="showDetailModal"
       :current-date="currentDate"
@@ -216,58 +283,55 @@
     />
 
     <!-- Processing Overlay -->
-    <ProcessingOverlay 
-      :is-processing="isProcessing"
-      :progress="progress"
-    />
+    <ProcessingOverlay :is-processing="isProcessing" :progress="progress" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useThemeStore } from '../stores/theme'
-import { useLanguageStore } from '../stores/language'
-import { useBackgroundStore } from '../stores/background'
-import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useThemeStore } from "../stores/theme";
+import { useLanguageStore } from "../stores/language";
+import { useBackgroundStore } from "../stores/background";
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from "vue";
+import { useI18n } from "vue-i18n";
 
-import { useUtilityCalculator } from '../composables/useUtilityCalculator'
-import { useModalControl } from '../composables/useModalControl'
-import { useCurrentDate } from '../composables/useCurrentDate'
-import { useToast } from '../composables/useToast'
+import { useUtilityCalculator } from "../composables/useUtilityCalculator";
+import { useModalControl } from "../composables/useModalControl";
+import { useCurrentDate } from "../composables/useCurrentDate";
+import { useToast } from "../composables/useToast";
 
 // @ts-ignore
-import AppHeader from '../components/AppHeader.vue'
+import AppHeader from "../components/AppHeader.vue";
 // @ts-ignore
-import CalculatorTabs from '../components/CalculatorTabs.vue'
+import CalculatorTabs from "../components/CalculatorTabs.vue";
 // @ts-ignore
-import ElectricityCalculator from '../components/ElectricityCalculator.vue'
+import ElectricityCalculator from "../components/ElectricityCalculator.vue";
 // @ts-ignore
-import WaterCalculator from '../components/WaterCalculator.vue'
+import WaterCalculator from "../components/WaterCalculator.vue";
 // @ts-ignore
-import TotalSummary from '../components/TotalSummary.vue'
+import TotalSummary from "../components/TotalSummary.vue";
 // @ts-ignore
-import AppFooter from '../components/AppFooter.vue'
+import AppFooter from "../components/AppFooter.vue";
 // @ts-ignore
-import DetailModal from '../components/DetailModal.vue'
+import DetailModal from "../components/DetailModal.vue";
 // @ts-ignore
-import ProcessingOverlay from '../components/ProcessingOverlay.vue'
+import ProcessingOverlay from "../components/ProcessingOverlay.vue";
 // @ts-ignore
-import LazyLoader from '../components/LazyLoader.vue'
+import LazyLoader from "../components/LazyLoader.vue";
 // @ts-ignore
-import ScrollReveal from '../components/ScrollReveal.vue'
+import ScrollReveal from "../components/ScrollReveal.vue";
 // @ts-ignore
-import DataManager from '../components/DataManager.vue'
+import DataManager from "../components/DataManager.vue";
 // @ts-ignore
-import AnimatedBackground from '../components/AnimatedBackground.vue'
+import AnimatedBackground from "../components/AnimatedBackground.vue";
 // @ts-ignore
-import RentCalculator from '../components/RentCalculator.vue'
+import RentCalculator from "../components/RentCalculator.vue";
 
 // Get stores
-const themeStore = useThemeStore()
-const languageStore = useLanguageStore()
-const backgroundStore = useBackgroundStore()
-const { locale, t } = useI18n()
-const { toastError, toastWarning } = useToast()
+const themeStore = useThemeStore();
+const languageStore = useLanguageStore();
+const backgroundStore = useBackgroundStore();
+const { locale, t } = useI18n();
+const { toastError, toastWarning } = useToast();
 
 // Get composables
 const {
@@ -296,136 +360,145 @@ const {
   isProcessing,
   progress,
   processImageAndSetValue,
-  viewDetails
-} = useUtilityCalculator()
+  viewDetails,
+} = useUtilityCalculator();
 
-const { currentDate, setCurrentDate } = useCurrentDate()
+const { currentDate, setCurrentDate } = useCurrentDate();
 
-const { showDetailModal, openDetailModal, closeDetailModal } = useModalControl()
+const { showDetailModal, openDetailModal, closeDetailModal } =
+  useModalControl();
 
 // Initialize locale and watch for language changes
 onMounted(() => {
   // Ensure locale is synchronized with language store on mount
-  locale.value = languageStore.currentLanguage
-})
+  locale.value = languageStore.currentLanguage;
+});
 
-watch(() => languageStore.currentLanguage, (newLang) => {
-  locale.value = newLang
-}, { immediate: true })
+watch(
+  () => languageStore.currentLanguage,
+  (newLang) => {
+    locale.value = newLang;
+  },
+  { immediate: true }
+);
 
 // Simple validation for modal opening
 const validateBeforeOpenModal = () => {
-  const hasElectricityData = electricityOld.value && electricityNew.value
-  const hasWaterData = waterOld.value && waterNew.value
-  const hasRentData = monthlyRent.value && monthlyRent.value > 0
+  const hasElectricityData = electricityOld.value && electricityNew.value;
+  const hasWaterData = waterOld.value && waterNew.value;
+  const hasRentData = monthlyRent.value && monthlyRent.value > 0;
 
   // Check if any data exists
   if (!hasElectricityData && !hasWaterData && !hasRentData) {
-    toastWarning.noData()
-    console.warn('⚠️ Vui lòng nhập ít nhất một loại tiện ích để xem chi tiết!')
-    return false
+    toastWarning.noData();
+    console.warn("⚠️ Vui lòng nhập ít nhất một loại tiện ích để xem chi tiết!");
+    return false;
   }
 
   // Simple validation for electricity
   if (hasElectricityData) {
-    const oldElec = Number(electricityOld.value) || 0
-    const newElec = Number(electricityNew.value) || 0
+    const oldElec = Number(electricityOld.value) || 0;
+    const newElec = Number(electricityNew.value) || 0;
     if (newElec < oldElec) {
-      toastError.validation()
-      console.error('⚡ Số điện mới không thể nhỏ hơn số điện cũ!')
-      return false
+      toastError.validation();
+      console.error("⚡ Số điện mới không thể nhỏ hơn số điện cũ!");
+      return false;
     }
   }
 
   // Simple validation for water
   if (hasWaterData) {
-    const oldWater = Number(waterOld.value) || 0
-    const newWater = Number(waterNew.value) || 0
+    const oldWater = Number(waterOld.value) || 0;
+    const newWater = Number(waterNew.value) || 0;
     if (newWater < oldWater) {
-      toastError.validation()
-      console.error('💧 Số nước mới không thể nhỏ hơn số nước cũ!')
-      return false
+      toastError.validation();
+      console.error("💧 Số nước mới không thể nhỏ hơn số nước cũ!");
+      return false;
     }
   }
 
-  return true
-}
+  return true;
+};
 
 // Flag to prevent multiple rapid calls
-const isProcessingModalOpen = ref(false)
+const isProcessingModalOpen = ref(false);
 
 // Custom modal opener with validation
 const handleOpenDetailModal = () => {
   // Prevent multiple rapid calls
   if (isProcessingModalOpen.value) {
-    return
+    return;
   }
 
-  isProcessingModalOpen.value = true
+  isProcessingModalOpen.value = true;
 
   if (validateBeforeOpenModal()) {
-    viewDetails() // Trigger fireworks
-    openDetailModal()
+    viewDetails(); // Trigger fireworks
+    openDetailModal();
   }
 
   // Reset flag after a short delay
   setTimeout(() => {
-    isProcessingModalOpen.value = false
-  }, 500)
-}
+    isProcessingModalOpen.value = false;
+  }, 500);
+};
 
 // Handle image upload and OCR
-const handleImageUpload = async (data: { file: File, type: 'electricity' | 'water', isOld: boolean }) => {
-  const { file, type, isOld } = data
+const handleImageUpload = async (data: {
+  file: File;
+  type: "electricity" | "water";
+  isOld: boolean;
+}) => {
+  const { file, type, isOld } = data;
 
   // Check if file is an image
-  if (!file.type.startsWith('image/')) {
-    toastError.validation()
-    console.error('❌ Vui lòng chọn file ảnh!')
-    return
+  if (!file.type.startsWith("image/")) {
+    toastError.validation();
+    console.error("❌ Vui lòng chọn file ảnh!");
+    return;
   }
 
   // Check file size (max 5MB)
   if (file.size > 5 * 1024 * 1024) {
-    toastError.validation()
-    console.error('❌ Kích thước ảnh quá lớn (tối đa 5MB)!')
-    return
+    toastError.validation();
+    console.error("❌ Kích thước ảnh quá lớn (tối đa 5MB)!");
+    return;
   }
 
-  await processImageAndSetValue(file, type, isOld)
-}
+  await processImageAndSetValue(file, type, isOld);
+};
 
 // Handle form update from imported data
 const handleUpdateForm = (record: any) => {
   // Update electricity data
-  electricityOld.value = record.electricityOld
-  electricityNew.value = record.electricityNew
-  electricityRate.value = record.electricityRate
+  electricityOld.value = record.electricityOld;
+  electricityNew.value = record.electricityNew;
+  electricityRate.value = record.electricityRate;
 
   // Update water data
-  waterOld.value = record.waterOld
-  waterNew.value = record.waterNew
-  waterRate.value = record.waterRate
+  waterOld.value = record.waterOld;
+  waterNew.value = record.waterNew;
+  waterRate.value = record.waterRate;
 
   // Update rent data (if available)
   if (record.monthlyRent !== undefined) {
-    monthlyRent.value = record.monthlyRent || 0
+    monthlyRent.value = record.monthlyRent || 0;
   }
 
   // Update date
-  setCurrentDate(record.date)
+  setCurrentDate(record.date);
 
   // Trigger recalculation
   nextTick(() => {
     // The computed properties will automatically recalculate
-    console.log('Form updated with imported data (including rent):', record)
-  })
-}
+    console.log("Form updated with imported data (including rent):", record);
+  });
+};
 
 // Cleanup on component unmount
 onUnmounted(() => {
-  isProcessingModalOpen.value = false
-})
+  isProcessingModalOpen.value = false;
+});
 </script>
 
 <style scoped>
@@ -456,6 +529,7 @@ onUnmounted(() => {
 
 /* Smooth color transitions for theme switching */
 * {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease;
 }
 </style>

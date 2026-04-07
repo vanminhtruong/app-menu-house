@@ -1,75 +1,102 @@
 <template>
-  <div class="flex border-b mb-6" :class="themeStore.isDarkMode ? 'border-gray-800' : 'border-gray-200'">
-    <button 
+  <div
+    class="flex border-b mb-6"
+    :class="themeStore.isDarkMode ? 'border-gray-800' : 'border-gray-200'"
+  >
+    <button
       @click="changeTab('electricity')"
       :class="[
         'tab-button px-4 py-2 font-medium text-sm transition-all duration-300',
-        activeTab === 'electricity' 
-          ? (themeStore.isDarkMode ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator' : 'text-indigo-600 border-b-2 border-indigo-600') 
-          : (themeStore.isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700')
-      ]">
-      {{ $t('calculator.tabs.electricity') }}
+        activeTab === 'electricity'
+          ? themeStore.isDarkMode
+            ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator'
+            : 'text-indigo-600 border-b-2 border-indigo-600'
+          : themeStore.isDarkMode
+          ? 'text-gray-400 hover:text-gray-300'
+          : 'text-gray-500 hover:text-gray-700',
+      ]"
+    >
+      {{ $t("calculator.tabs.electricity") }}
     </button>
-    <button 
+    <button
       @click="changeTab('water')"
       :class="[
         'tab-button px-4 py-2 font-medium text-sm transition-all duration-300',
-        activeTab === 'water' 
-          ? (themeStore.isDarkMode ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator' : 'text-indigo-600 border-b-2 border-indigo-600') 
-          : (themeStore.isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700')
-      ]">
-      {{ $t('calculator.tabs.water') }}
+        activeTab === 'water'
+          ? themeStore.isDarkMode
+            ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator'
+            : 'text-indigo-600 border-b-2 border-indigo-600'
+          : themeStore.isDarkMode
+          ? 'text-gray-400 hover:text-gray-300'
+          : 'text-gray-500 hover:text-gray-700',
+      ]"
+    >
+      {{ $t("calculator.tabs.water") }}
     </button>
-    <button 
+    <button
       @click="changeTab('rent')"
       :class="[
         'tab-button px-4 py-2 font-medium text-sm transition-all duration-300',
-        activeTab === 'rent' 
-          ? (themeStore.isDarkMode ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator' : 'text-indigo-600 border-b-2 border-indigo-600') 
-          : (themeStore.isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700')
-      ]">
-      {{ $t('calculator.tabs.rent', 'Tiền Nhà') }}
+        activeTab === 'rent'
+          ? themeStore.isDarkMode
+            ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator'
+            : 'text-indigo-600 border-b-2 border-indigo-600'
+          : themeStore.isDarkMode
+          ? 'text-gray-400 hover:text-gray-300'
+          : 'text-gray-500 hover:text-gray-700',
+      ]"
+    >
+      {{ $t("calculator.tabs.rent", "Tiền Nhà") }}
     </button>
-    <button 
+    <button
       @click="changeTab('both')"
       :class="[
         'tab-button px-4 py-2 font-medium text-sm transition-all duration-300',
-        activeTab === 'both' 
-          ? (themeStore.isDarkMode ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator' : 'text-indigo-600 border-b-2 border-indigo-600') 
-          : (themeStore.isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700')
-      ]">
-      {{ $t('calculator.tabs.all', 'Tất Cả') }}
+        activeTab === 'both'
+          ? themeStore.isDarkMode
+            ? 'text-white border-b-2 border-white shadow-[0_4px_6px_-6px_rgba(255,255,255,0.3)] active-tab-indicator'
+            : 'text-indigo-600 border-b-2 border-indigo-600'
+          : themeStore.isDarkMode
+          ? 'text-gray-400 hover:text-gray-300'
+          : 'text-gray-500 hover:text-gray-700',
+      ]"
+    >
+      {{ $t("calculator.tabs.all", "Tất Cả") }}
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { watch, onMounted } from 'vue'
-import { useThemeStore } from '../stores/theme'
-import { useLanguageStore } from '../stores/language'
-import { useI18n } from 'vue-i18n'
+import { watch, onMounted } from "vue";
+import { useThemeStore } from "../stores/theme";
+import { useLanguageStore } from "../stores/language";
+import { useI18n } from "vue-i18n";
 
 defineProps<{
-  activeTab: string
-}>()
+  activeTab: string;
+}>();
 
-const emit = defineEmits(['change-tab'])
-const themeStore = useThemeStore()
-const languageStore = useLanguageStore()
-const { locale } = useI18n()
+const emit = defineEmits(["change-tab"]);
+const themeStore = useThemeStore();
+const languageStore = useLanguageStore();
+const { locale } = useI18n();
 
 // Initialize locale and watch for language changes
 onMounted(() => {
-  locale.value = languageStore.currentLanguage
-})
+  locale.value = languageStore.currentLanguage;
+});
 
-watch(() => languageStore.currentLanguage, (newLang) => {
-  locale.value = newLang
-}, { immediate: true })
+watch(
+  () => languageStore.currentLanguage,
+  (newLang) => {
+    locale.value = newLang;
+  },
+  { immediate: true }
+);
 
 const changeTab = (tab: string) => {
-  emit('change-tab', tab)
-}
+  emit("change-tab", tab);
+};
 </script>
 
 <style scoped>
@@ -80,13 +107,18 @@ const changeTab = (tab: string) => {
 }
 
 .tab-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
   transition: left 0.6s ease-in-out;
 }
 
@@ -100,7 +132,8 @@ const changeTab = (tab: string) => {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
   }
   50% {

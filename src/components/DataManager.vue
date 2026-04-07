@@ -1,16 +1,18 @@
 <template>
   <div :class="[
     'rounded-lg border',
-    themeStore.isDarkMode
-      ? 'bg-gray-800 border-gray-600 text-white'
-      : 'bg-white border-gray-200'
+    themeStore.isPureDark
+      ? 'bg-black border-none pd-shadow-lg text-white'
+      : themeStore.isDarkMode
+        ? 'bg-gray-800 border-gray-600 text-white'
+        : 'bg-white border-gray-200'
   ]">
     <!-- Header with toggle button -->
     <div
       @click="isDataManagerExpanded = !isDataManagerExpanded"
       :class="[
         'flex items-center justify-between p-4 cursor-pointer transition-all duration-200',
-        themeStore.isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
+        themeStore.isPureDark ? 'hover:bg-neutral-900' : themeStore.isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
       ]"
     >
       <h3 :class="[
@@ -55,7 +57,7 @@
           <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
       <div :class="[
         'p-3 rounded-lg text-center',
-        themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
+        themeStore.isPureDark ? 'bg-neutral-900' : themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
       ]">
         <div :class="[
           'text-2xl font-bold',
@@ -69,7 +71,7 @@
       
       <div :class="[
         'p-3 rounded-lg text-center',
-        themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
+        themeStore.isPureDark ? 'bg-neutral-900' : themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
       ]">
         <div :class="[
           'text-lg font-bold',
@@ -83,7 +85,7 @@
       
       <div :class="[
         'p-3 rounded-lg text-center',
-        themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
+        themeStore.isPureDark ? 'bg-neutral-900' : themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
       ]">
         <div :class="[
           'text-lg font-bold',
@@ -97,7 +99,7 @@
       
       <div :class="[
         'p-3 rounded-lg text-center',
-        themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
+        themeStore.isPureDark ? 'bg-neutral-900' : themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
       ]">
         <div :class="[
           'text-lg font-bold',
@@ -111,7 +113,7 @@
       
       <div :class="[
         'p-3 rounded-lg text-center',
-        themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
+        themeStore.isPureDark ? 'bg-neutral-900' : themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
       ]">
         <div :class="[
           'text-lg font-bold',
@@ -211,16 +213,18 @@
     <!-- Latest record preview -->
     <div v-if="latestRecord" :class="[
       'rounded-lg border-l-4',
-      themeStore.isDarkMode
-        ? 'bg-gray-700 border-l-blue-400'
-        : 'bg-gray-50 border-l-blue-500'
+      themeStore.isPureDark
+        ? 'bg-neutral-900 border-l-blue-500'
+        : themeStore.isDarkMode
+          ? 'bg-gray-700 border-l-blue-400'
+          : 'bg-gray-50 border-l-blue-500'
     ]">
       <!-- Header with toggle button -->
       <div
         @click="isLatestRecordExpanded = !isLatestRecordExpanded"
         :class="[
           'flex items-center justify-between p-4 cursor-pointer transition-all duration-200',
-          themeStore.isDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-100'
+          themeStore.isPureDark ? 'hover:bg-neutral-800' : themeStore.isDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-100'
         ]"
       >
         <h4 :class="[
@@ -269,7 +273,7 @@
         <!-- Electricity details -->
         <div :class="[
           'p-2 rounded border-l-2',
-          themeStore.isDarkMode ? 'bg-gray-800 border-l-green-400' : 'bg-green-50 border-l-green-500'
+          themeStore.isPureDark ? 'bg-black border-l-green-500' : themeStore.isDarkMode ? 'bg-gray-800 border-l-green-400' : 'bg-green-50 border-l-green-500'
         ]">
           <div class="font-medium text-green-600 mb-1">{{ $t('calculator.tabs.electricity', 'Điện') }}:</div>
           <div class="text-xs space-y-1">
@@ -284,7 +288,7 @@
         <!-- Water details -->
         <div :class="[
           'p-2 rounded border-l-2',
-          themeStore.isDarkMode ? 'bg-gray-800 border-l-cyan-400' : 'bg-cyan-50 border-l-cyan-500'
+          themeStore.isPureDark ? 'bg-black border-l-cyan-500' : themeStore.isDarkMode ? 'bg-gray-800 border-l-cyan-400' : 'bg-cyan-50 border-l-cyan-500'
         ]">
           <div class="font-medium text-cyan-600 mb-1">{{ $t('calculator.tabs.water', 'Nước') }}:</div>
           <div class="text-xs space-y-1">
@@ -299,7 +303,7 @@
         <!-- Rent details -->
         <div v-if="latestRecord.monthlyRent && latestRecord.monthlyRent > 0" :class="[
           'p-2 rounded border-l-2',
-          themeStore.isDarkMode ? 'bg-gray-800 border-l-orange-400' : 'bg-orange-50 border-l-orange-500'
+          themeStore.isPureDark ? 'bg-black border-l-orange-500' : themeStore.isDarkMode ? 'bg-gray-800 border-l-orange-400' : 'bg-orange-50 border-l-orange-500'
         ]">
           <div class="font-medium text-orange-600 mb-1">{{ $t('calculator.tabs.rent', 'Tiền Nhà') }}:</div>
           <div class="text-xs space-y-1">
@@ -312,7 +316,7 @@
         <!-- Total -->
         <div :class="[
           'p-2 rounded border-l-2 font-medium',
-          themeStore.isDarkMode ? 'bg-gray-800 border-l-purple-400 text-purple-400' : 'bg-purple-50 border-l-purple-500 text-purple-600'
+          themeStore.isPureDark ? 'bg-black border-l-purple-500 text-purple-400' : themeStore.isDarkMode ? 'bg-gray-800 border-l-purple-400 text-purple-400' : 'bg-purple-50 border-l-purple-500 text-purple-600'
         ]">
           <div class="text-xs mb-1 opacity-75">
             {{ formatCurrency(latestRecord.electricityTotal) }} + {{ formatCurrency(latestRecord.waterTotal) }}{{ latestRecord.quarterlyRent ? ' + ' + formatCurrency(latestRecord.quarterlyRent) : '' }}

@@ -1,31 +1,46 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 export const useThemeStore = defineStore('theme', () => {
-  // Đọc giá trị từ localStorage hoặc sử dụng dark mode mặc định
-  const storedTheme = localStorage.getItem('isDarkMode')
-  const isDarkMode = ref(storedTheme !== null ? storedTheme === 'true' : true)
+  const storedTheme = localStorage.getItem('themeMode')
+  const oldStored = localStorage.getItem('isDarkMode')
+  
+  let defaultTheme: 'light' | 'dark' | 'pure-dark' = 'dark'
+  if (storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'pure-dark') {
+    defaultTheme = storedTheme
+  } else if (oldStored !== null) {
+    defaultTheme = oldStored === 'true' ? 'dark' : 'light'
+  }
+  
+  const themeMode = ref<'light' | 'dark' | 'pure-dark'>(defaultTheme)
+  const isDarkMode = computed(() => themeMode.value !== 'light')
+  const isPureDark = computed(() => themeMode.value === 'pure-dark')
   
   function toggleTheme() {
-    isDarkMode.value = !isDarkMode.value
-    // Lưu vào localStorage khi chuyển đổi theme
+    if (themeMode.value === 'light') {
+      themeMode.value = 'dark'
+    } else if (themeMode.value === 'dark') {
+      themeMode.value = 'pure-dark'
+    } else {
+      themeMode.value = 'light'
+    }
+    
+    localStorage.setItem('themeMode', themeMode.value)
     localStorage.setItem('isDarkMode', isDarkMode.value.toString())
     updateThemeClass()
   }
   
   function updateThemeClass() {
-    // Update document class for dark mode
-    if (isDarkMode.value) {
-      document.documentElement.classList.add('dark-mode')
-      document.documentElement.classList.add('dark') // Thêm class dark cho tailwind
-    } else {
-      document.documentElement.classList.remove('dark-mode')
-      document.documentElement.classList.remove('dark') // Xóa class dark cho tailwind
+    document.documentElement.classList.remove('dark-mode', 'dark', 'pure-dark-mode')
+    if (themeMode.value === 'dark') {
+      document.documentElement.classList.add('dark-mode', 'dark')
+    } else if (themeMode.value === 'pure-dark') {
+      document.documentElement.classList.add('dark-mode', 'dark', 'pure-dark-mode')
     }
   }
 
-  // Initialize theme on store creation
+  // Initialize
   updateThemeClass()
 
-  return { isDarkMode, toggleTheme, updateThemeClass }
+  return { isDarkMode, themeMode, isPureDark, toggleTheme, updateThemeClass }
 }) 

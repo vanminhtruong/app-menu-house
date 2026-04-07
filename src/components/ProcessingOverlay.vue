@@ -5,7 +5,7 @@
   >
     <div :class="[
       'p-6 rounded-xl max-w-sm w-full text-center',
-      themeStore.isDarkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white shadow-xl'
+      themeStore.isPureDark ? 'bg-black border-none pd-shadow-lg text-white' : themeStore.isDarkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white shadow-xl'
     ]">
       <div class="mb-4">
         <svg class="animate-spin h-10 w-10 mx-auto" :class="themeStore.isDarkMode ? 'text-blue-400' : 'text-indigo-600'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -17,12 +17,15 @@
         {{ $t('calculator.imageUpload.processing') }}
       </h3>
       <div class="mt-4">
-        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 overflow-hidden">
+        <div :class="[
+          'w-full rounded-full h-2.5 overflow-hidden',
+          themeStore.isPureDark ? 'bg-neutral-900' : themeStore.isDarkMode ? 'bg-gray-700' : 'bg-gray-200'
+        ]">
           <div class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" :style="{ width: `${progress}%` }"></div>
         </div>
-        <p :class="themeStore.isDarkMode ? 'text-gray-400 text-sm mt-2' : 'text-gray-600 text-sm mt-2'">{{ progress }}%</p>
+        <p :class="themeStore.isPureDark ? 'text-neutral-500 text-sm mt-2' : themeStore.isDarkMode ? 'text-gray-400 text-sm mt-2' : 'text-gray-600 text-sm mt-2'">{{ progress }}%</p>
       </div>
-      <p class="text-xs mt-4" :class="themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-500'">
+      <p class="text-xs mt-4" :class="themeStore.isPureDark ? 'text-neutral-500' : themeStore.isDarkMode ? 'text-gray-400' : 'text-gray-500'">
         {{ $t('calculator.imageUpload.pleaseWait') }}
       </p>
     </div>

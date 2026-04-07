@@ -9,7 +9,9 @@
       <div
         :class="[
           'relative rounded-lg max-w-lg w-full max-h-[calc(100vh-2rem)] overflow-hidden transform transition-all duration-300 animate-scale-in',
-          themeStore.isDarkMode
+          themeStore.isPureDark
+            ? 'bg-black border-none pd-shadow-lg text-white'
+            : themeStore.isDarkMode
             ? 'bg-gray-800 border border-gray-700 text-white shadow-[0_25px_50px_rgba(0,0,0,0.5)]'
             : 'bg-white text-gray-800 shadow-2xl',
         ]"
@@ -17,7 +19,9 @@
         <div
           class="sticky top-0 z-10 flex justify-between items-center p-4 border-b"
           :class="
-            themeStore.isDarkMode
+            themeStore.isPureDark
+              ? 'bg-neutral-900 border-none pd-shadow'
+              : themeStore.isDarkMode
               ? 'bg-gradient-to-r from-gray-700 to-gray-600 border-gray-600'
               : 'bg-white border-gray-200'
           "
@@ -29,7 +33,9 @@
             @click="closeDetailModal"
             :class="[
               'p-2 rounded-full transition-all duration-200 focus:outline-none',
-              themeStore.isDarkMode
+              themeStore.isPureDark
+                ? 'hover:bg-neutral-800 hover:text-white active:bg-neutral-700 hover:shadow-md'
+                : themeStore.isDarkMode
                 ? 'hover:bg-gray-600 hover:text-white active:bg-gray-500 hover:shadow-md'
                 : 'hover:bg-red-100 text-gray-700 hover:text-red-600 active:bg-red-200',
             ]"
@@ -56,7 +62,7 @@
           class="overflow-y-auto max-h-[calc(100vh-8rem)] p-6 pt-4 space-y-6 text-left"
         >
           <!-- Ngày tháng -->
-          <div class="text-center text-lg font-medium">
+          <div class="text-center text-lg font-medium" dir="ltr">
             {{ currentDate }}
           </div>
 
@@ -68,7 +74,9 @@
             <div
               :class="[
                 'rounded-lg p-4',
-                themeStore.isDarkMode
+                themeStore.isPureDark
+                  ? 'bg-black border-none pd-shadow'
+                  : themeStore.isDarkMode
                   ? 'bg-gray-900 border border-gray-600 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
                   : 'bg-gray-50',
               ]"
@@ -104,7 +112,9 @@
             <div
               :class="[
                 'rounded-lg p-4',
-                themeStore.isDarkMode
+                themeStore.isPureDark
+                  ? 'bg-black border-none pd-shadow'
+                  : themeStore.isDarkMode
                   ? 'bg-gray-900 border border-gray-600 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
                   : 'bg-gray-50',
               ]"
@@ -140,7 +150,9 @@
             <div
               :class="[
                 'rounded-lg p-4',
-                themeStore.isDarkMode
+                themeStore.isPureDark
+                  ? 'bg-black border-none pd-shadow'
+                  : themeStore.isDarkMode
                   ? 'bg-gray-900 border border-gray-600 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
                   : 'bg-gray-50',
               ]"
@@ -178,7 +190,9 @@
             <div
               :class="[
                 'rounded-lg p-4',
-                themeStore.isDarkMode
+                themeStore.isPureDark
+                  ? 'bg-black border-none pd-shadow'
+                  : themeStore.isDarkMode
                   ? 'bg-gray-900 border border-gray-600 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
                   : 'bg-gray-50',
               ]"
@@ -205,7 +219,9 @@
             <div
               :class="[
                 'rounded-lg p-4 border-2 text-center',
-                themeStore.isDarkMode
+                themeStore.isPureDark
+                  ? 'bg-black border-none pd-shadow-lg'
+                  : themeStore.isDarkMode
                   ? 'bg-gradient-to-br from-gray-700 to-gray-600 border-gray-500 shadow-[0_4px_12px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15)]'
                   : 'bg-blue-50 border-blue-200',
               ]"
@@ -216,7 +232,11 @@
               <div
                 class="text-sm mt-1"
                 :class="
-                  themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                  themeStore.isPureDark
+                    ? 'text-gray-400'
+                    : themeStore.isDarkMode
+                    ? 'text-gray-300'
+                    : 'text-gray-600'
                 "
               >
                 {{ $t("calculator.detailModal.note") }}
@@ -230,7 +250,9 @@
               @click="copyDetailToClipboard"
               :class="[
                 'flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2',
-                themeStore.isDarkMode
+                themeStore.isPureDark
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500 focus:ring-offset-black'
+                  : themeStore.isDarkMode
                   ? 'bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500 focus:ring-offset-gray-800'
                   : 'bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500',
               ]"
@@ -256,7 +278,9 @@
               @click="copyTotalToClipboard"
               :class="[
                 'flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2',
-                themeStore.isDarkMode
+                themeStore.isPureDark
+                  ? 'bg-green-600 hover:bg-green-700 text-white focus:ring-green-500 focus:ring-offset-black'
+                  : themeStore.isDarkMode
                   ? 'bg-green-600 hover:bg-green-700 text-white focus:ring-green-500 focus:ring-offset-gray-800'
                   : 'bg-green-600 hover:bg-green-700 text-white focus:ring-green-500',
               ]"
@@ -286,7 +310,9 @@
         <div
           :class="[
             'py-2 text-center text-xs sticky bottom-0',
-            themeStore.isDarkMode
+            themeStore.isPureDark
+              ? 'bg-gray-900 text-gray-500 border-t border-gray-800'
+              : themeStore.isDarkMode
               ? 'bg-gray-700 text-gray-400 border-t border-gray-600'
               : 'bg-gray-50 text-gray-500 border-t border-gray-200',
           ]"

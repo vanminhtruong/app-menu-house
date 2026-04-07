@@ -5,9 +5,11 @@
     <div :class="[
       'absolute inset-0',
       isTransitioning ? 'transition-colors duration-500' : 'transition-colors duration-1000',
-      isDarkMode
-        ? 'bg-gradient-to-b from-gray-900 via-gray-800 to-black'
-        : 'bg-gradient-to-b from-blue-500 via-blue-300 to-orange-200'
+      isPureDark 
+        ? 'bg-black' 
+        : isDarkMode
+          ? 'bg-gradient-to-b from-gray-900 via-gray-800 to-black'
+          : 'bg-gradient-to-b from-blue-500 via-blue-300 to-orange-200'
     ]"></div>
 
     <!-- Sun/Moon -->
@@ -664,6 +666,7 @@ import { ref, onMounted, watch, withDefaults } from 'vue'
 
 interface Props {
   isDarkMode: boolean
+  isPureDark?: boolean
   isVisible?: boolean
 }
 

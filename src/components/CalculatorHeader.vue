@@ -1,7 +1,7 @@
 <template>
   <div :class="[
     'px-6 py-4 max-sm:px-4 max-sm:py-3 max-xs:px-3 max-xs:py-2 flex justify-between items-center flex-wrap gap-2',
-    themeStore.isDarkMode ? 'bg-gradient-to-r from-gray-700 to-gray-600 border-b border-gray-600' : 'bg-indigo-600'
+    themeStore.isPureDark ? 'bg-black border-b border-gray-900' : themeStore.isDarkMode ? 'bg-gradient-to-r from-gray-700 to-gray-600 border-b border-gray-600' : 'bg-indigo-600'
   ]">
     <div class="min-w-0">
       <h1 class="text-2xl max-sm:text-xl max-xs:text-lg font-bold text-white leading-tight">{{ $t('calculator.title') }}</h1>
@@ -41,9 +41,12 @@
       <button 
         @click="themeStore.toggleTheme"
         class="p-2 max-xs:p-1.5 rounded-full hover:bg-opacity-10 hover:bg-white"
-        :title="themeStore.isDarkMode ? $t('calculator.theme.lightMode') : $t('calculator.theme.darkMode')"
+        :title="themeStore.themeMode === 'pure-dark' ? 'Chế độ sáng' : themeStore.themeMode === 'dark' ? 'Chế độ tối đen tuyền' : $t('calculator.theme.darkMode')"
       >
-        <svg v-if="themeStore.isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 max-sm:h-5 max-sm:w-5 max-xs:h-5 max-xs:w-5 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg v-if="themeStore.themeMode === 'pure-dark'" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 max-sm:h-5 max-sm:w-5 max-xs:h-5 max-xs:w-5 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" />
+        </svg>
+        <svg v-else-if="themeStore.themeMode === 'dark'" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 max-sm:h-5 max-sm:w-5 max-xs:h-5 max-xs:w-5 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
         <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 max-sm:h-5 max-sm:w-5 max-xs:h-5 max-xs:w-5 text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">

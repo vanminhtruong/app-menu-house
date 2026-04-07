@@ -4,8 +4,8 @@
       @click="toggleAccordion" 
       :class="[
         'flex justify-between items-center cursor-pointer py-3 px-4 max-sm:py-2 max-sm:px-3 max-xs:py-1 max-xs:px-2 gap-2 max-sm:gap-2 max-xs:gap-1 rounded-md transition-all duration-300 mt-8 max-sm:mt-6 max-xs:mt-4',
-        isInBothTab ? (themeStore.isDarkMode ? 'hover:bg-gray-700 border border-gray-700' : 'hover:bg-gray-100 border border-gray-200') : '',
-        isInBothTab && isCollapsed ? (themeStore.isDarkMode ? 'mb-3' : 'mb-3') : 'mb-4'
+        isInBothTab ? (themeStore.isPureDark ? 'hover:bg-neutral-900 pd-shadow' : themeStore.isDarkMode ? 'hover:bg-gray-700 border border-gray-700' : 'hover:bg-gray-100 border border-gray-200') : '',
+        isInBothTab && isCollapsed ? 'mb-3' : 'mb-4'
       ]"
     >
       <div class="flex items-center flex-1 min-w-0">
@@ -53,9 +53,11 @@
               id="water-old" 
               :class="[
                 'w-full px-3 py-2 rounded-md focus:outline-none transition-colors duration-200',
-                themeStore.isDarkMode 
-                  ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
-                  : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
+                themeStore.isPureDark
+                  ? 'bg-neutral-900 text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 pd-shadow-input'
+                  : themeStore.isDarkMode 
+                    ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
+                    : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
               ]"
               :placeholder="$t('calculator.water.oldReadingPlaceholder')"
             />
@@ -63,9 +65,11 @@
               :for="'water-old-image-upload'"
               :class="[
                 'absolute right-2 top-2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200',
-                themeStore.isDarkMode 
-                  ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
-                  : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
+                themeStore.isPureDark
+                  ? 'bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white'
+                  : themeStore.isDarkMode 
+                    ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
+                    : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
               ]"
               :title="$t('calculator.imageUpload.title')"
             >
@@ -101,9 +105,11 @@
               id="water-new" 
               :class="[
                 'w-full px-3 py-2 rounded-md focus:outline-none transition-colors duration-200',
-                themeStore.isDarkMode 
-                  ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
-                  : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
+                themeStore.isPureDark
+                  ? 'bg-neutral-900 border-none text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 pd-shadow-input'
+                  : themeStore.isDarkMode 
+                    ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
+                    : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
               ]"
               :placeholder="$t('calculator.water.newReadingPlaceholder')"
             />
@@ -111,9 +117,11 @@
               :for="'water-new-image-upload'"
               :class="[
                 'absolute right-2 top-2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200',
-                themeStore.isDarkMode 
-                  ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
-                  : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
+                themeStore.isPureDark
+                  ? 'bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white'
+                  : themeStore.isDarkMode 
+                    ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
+                    : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
               ]"
               :title="$t('calculator.imageUpload.title')"
             >
@@ -149,9 +157,11 @@
           v-model="waterRateModel" 
           :class="[
             'w-full px-3 py-2 rounded-md focus:outline-none transition-colors duration-200',
-            themeStore.isDarkMode 
-              ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
-              : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
+            themeStore.isPureDark
+              ? 'bg-neutral-900 border-none text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 pd-shadow-input'
+              : themeStore.isDarkMode 
+                ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
+                : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
           ]"
           :placeholder="$t('calculator.water.ratePlaceholder')"
         />
@@ -160,7 +170,7 @@
 
     <div :class="[
       'result-box rounded-lg p-4',
-      themeStore.isDarkMode ? 'bg-gray-700 shadow-[0_4px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] border border-gray-600' : 'bg-gray-50 shadow-sm'
+      themeStore.isPureDark ? 'bg-neutral-900 pd-shadow border-none' : themeStore.isDarkMode ? 'bg-gray-700 shadow-[0_4px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] border border-gray-600' : 'bg-gray-50 shadow-sm'
     ]">
       <div class="flex justify-between items-center mb-2">
         <span :class="themeStore.isDarkMode ? 'text-sm text-gray-300' : 'text-sm text-gray-600'">{{ $t('calculator.formula') }}</span>
