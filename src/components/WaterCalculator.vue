@@ -38,58 +38,6 @@
           <label :class="[
             'block text-sm font-medium mb-1',
             themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
-          ]">{{ $t('calculator.water.oldReading') }}</label>
-          <div class="relative">
-            <input 
-              type="number"
-              inputmode="numeric"
-              step="1"
-              min="0"
-              @keydown="preventInvalidKeyInteger"
-              @input="sanitizeInputInteger"
-              @paste="onPasteInteger"
-              @wheel.prevent
-              v-model="waterOldModel"
-              id="water-old" 
-              :class="[
-                'w-full px-3 py-2 rounded-md focus:outline-none transition-colors duration-200',
-                themeStore.isPureDark
-                  ? 'bg-neutral-900 text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 pd-shadow-input'
-                  : themeStore.isDarkMode 
-                    ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
-                    : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
-              ]"
-              :placeholder="$t('calculator.water.oldReadingPlaceholder')"
-            />
-            <label 
-              :for="'water-old-image-upload'"
-              :class="[
-                'absolute right-2 top-2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200',
-                themeStore.isPureDark
-                  ? 'bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white'
-                  : themeStore.isDarkMode 
-                    ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
-                    : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
-              ]"
-              :title="$t('calculator.imageUpload.title')"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-              </svg>
-            </label>
-            <input 
-              type="file" 
-              id="water-old-image-upload" 
-              class="hidden" 
-              accept="image/*"
-              @change="handleImageUpload($event, 'water', true)"
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label :class="[
-            'block text-sm font-medium mb-1',
-            themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
           ]">{{ $t('calculator.water.newReading') }}</label>
           <div class="relative">
             <input 
@@ -106,7 +54,7 @@
               :class="[
                 'w-full px-3 py-2 rounded-md focus:outline-none transition-colors duration-200',
                 themeStore.isPureDark
-                  ? 'bg-neutral-900 border-none text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 pd-shadow-input'
+                  ? 'bg-neutral-900 text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 pd-shadow-input'
                   : themeStore.isDarkMode 
                     ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
                     : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
@@ -135,6 +83,58 @@
               class="hidden" 
               accept="image/*"
               @change="handleImageUpload($event, 'water', false)"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label :class="[
+            'block text-sm font-medium mb-1',
+            themeStore.isDarkMode ? 'text-gray-300' : 'text-gray-700'
+          ]">{{ $t('calculator.water.oldReading') }}</label>
+          <div class="relative">
+            <input 
+              type="number"
+              inputmode="numeric"
+              step="1"
+              min="0"
+              @keydown="preventInvalidKeyInteger"
+              @input="sanitizeInputInteger"
+              @paste="onPasteInteger"
+              @wheel.prevent
+              v-model="waterOldModel"
+              id="water-old" 
+              :class="[
+                'w-full px-3 py-2 rounded-md focus:outline-none transition-colors duration-200',
+                themeStore.isPureDark
+                  ? 'bg-neutral-900 border-none text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 pd-shadow-input'
+                  : themeStore.isDarkMode 
+                    ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
+                    : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm'
+              ]"
+              :placeholder="$t('calculator.water.oldReadingPlaceholder')"
+            />
+            <label 
+              :for="'water-old-image-upload'"
+              :class="[
+                'absolute right-2 top-2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200',
+                themeStore.isPureDark
+                  ? 'bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white'
+                  : themeStore.isDarkMode 
+                    ? 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white' 
+                    : 'bg-gray-100 hover:bg-indigo-100 text-gray-500 hover:text-indigo-600'
+              ]"
+              :title="$t('calculator.imageUpload.title')"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </label>
+            <input 
+              type="file" 
+              id="water-old-image-upload" 
+              class="hidden" 
+              accept="image/*"
+              @change="handleImageUpload($event, 'water', true)"
             />
           </div>
         </div>

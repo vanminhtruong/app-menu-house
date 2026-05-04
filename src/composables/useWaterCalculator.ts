@@ -12,9 +12,32 @@ export function useWaterCalculator() {
   // For debouncing validation
   const debounceTimeout = ref<number | null>(null)
 
+  // Helper: get current period as YYYY-MM
+  const getCurrentPeriod = (): string => {
+    const now = new Date()
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+  }
+
+  // Check for month transition: new reading becomes old reading
+  const currentPeriod = getCurrentPeriod()
+  const lastActivePeriod = localStorage.getItem('utility_last_period')
+  let storedOld = localStorage.getItem('water_old') || ''
+  let storedNew = localStorage.getItem('water_new') || ''
+
+  if (lastActivePeriod && lastActivePeriod < currentPeriod && storedNew) {
+    // Month changed: shift new -> old, clear new
+    storedOld = storedNew
+    storedNew = ''
+    localStorage.setItem('water_old', storedOld)
+    localStorage.setItem('water_new', storedNew)
+  }
+
+  // Always update last active period to current
+  localStorage.setItem('utility_last_period', currentPeriod)
+
   // State
-  const waterOld = ref(localStorage.getItem('water_old') || '')
-  const waterNew = ref(localStorage.getItem('water_new') || '')
+  const waterOld = ref(storedOld)
+  const waterNew = ref(storedNew)
   const storedRate = localStorage.getItem('water_rate')
   const waterRate = ref(storedRate ? Number(storedRate) : defaultWaterRate)
 

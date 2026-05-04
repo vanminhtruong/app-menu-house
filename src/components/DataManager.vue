@@ -52,7 +52,7 @@
       leave-to-class="opacity-0 max-h-0"
     >
       <div v-show="isDataManagerExpanded" class="overflow-hidden">
-        <div class="p-4 pt-0">
+        <div class="p-4 pt-6">
           <!-- Statistics -->
           <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
       <div :class="[

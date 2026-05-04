@@ -1,0 +1,158 @@
+{
+  "calculator": {
+    "title": "电费 & 水费计算器",
+    "subtitle": "计算每月公用事业费用",
+    "tabs": {
+      "electricity": "电费",
+      "water": "水费",
+      "both": "汇总",
+      "rent": "房租",
+      "all": "全部"
+    },
+    "electricity": {
+      "title": "电费账单",
+      "oldReading": "上次读数",
+      "newReading": "当前读数",
+      "rate": "费率 (VND/kWh)",
+      "oldReadingPlaceholder": "输入上次读数",
+      "newReadingPlaceholder": "输入当前读数",
+      "ratePlaceholder": "电费费率"
+    },
+    "water": {
+      "title": "水费账单",
+      "oldReading": "上次读数",
+      "newReading": "当前读数",
+      "rate": "费率 (VND/m³)",
+      "oldReadingPlaceholder": "输入上次读数",
+      "newReadingPlaceholder": "输入当前读数",
+      "ratePlaceholder": "水费费率"
+    },
+    "rent": {
+      "title": "房租计算器",
+      "monthlyRent": "月租",
+      "placeholder": "输入月租...",
+      "calculation": "计算详情",
+      "perMonth": "月租",
+      "formula": "公式",
+      "quarterlyTotal": "季度房租",
+      "emptyState": "输入月租以查看计算详情"
+    },
+    "formula": "公式:",
+    "total": "总计:",
+    "summary": {
+      "title": "电费 & 水费总计",
+      "note": "包括税费"
+    },
+    "footer": {
+      "updatedOn": "更新于",
+      "sampleData": "示例数据",
+      "reset": "重置",
+      "viewDetail": "查看详情"
+    },
+    "theme": {
+      "lightMode": "切换到浅色模式",
+      "darkMode": "切换到深色模式"
+    },
+    "background": {
+      "toggle": "背景"
+    },
+    "detailModal": {
+      "title": "计算详情",
+      "reading": "读数",
+      "amount": "金额",
+      "new": "新",
+      "old": "旧",
+      "utilityTotal": "公用事业总计",
+      "utilityAndRentTotal": "公用事业 & 房租总计",
+      "grandTotal": "总计",
+      "note": "金额包括税费",
+      "closeButton": "关闭详情",
+      "copyButton": "复制详情",
+      "copyTotalButton": "复制总计"
+    },
+    "fireworks": {
+      "congratulation": "恭喜您完成计算！"
+    },
+    "imageUpload": {
+      "title": "上传电表读数图片",
+      "processing": "正在处理图片...",
+      "success": "识别成功！",
+      "error": "无法从图片识别数字",
+      "unsupportedFile": "请选择图片文件",
+      "fileTooLarge": "图片文件太大",
+      "pleaseWait": "请稍候，我们正在处理您的图片",
+      "manualEntry": "无法识别读数，请手动输入。"
+    }
+  },
+  "toast": {
+    "success": {
+      "copy": "复制成功！",
+      "copyDetail": "计算详情已复制！",
+      "copyTotal": "总金额已复制！",
+      "save": "保存成功！",
+      "reset": "表单重置成功！",
+      "upload": "图片上传成功！",
+      "calculate": "计算完成！",
+      "fillSampleData": "示例数据填充成功！",
+      "dataLoaded": "数据加载成功！",
+      "dataSaved": "数据保存成功！",
+      "general": "操作成功！"
+    },
+    "error": {
+      "copy": "无法复制！",
+      "save": "保存数据错误！",
+      "upload": "上传图片错误！",
+      "network": "网络连接错误！",
+      "validation": "无效数据！",
+      "electricityValidation": "新电表读数不能小于旧读数！",
+      "waterValidation": "新水表读数不能小于旧读数！",
+      "dataLoadFailed": "加载数据失败！",
+      "dataSaveFailed": "保存数据失败！",
+      "general": "发生错误！"
+    },
+    "warning": {
+      "validation": "请检查您的数据！",
+      "limit": "已达到限制！",
+      "noData": "请至少输入一种公用事业以查看详情！",
+      "general": "警告！"
+    },
+    "info": {
+      "processing": "处理中...",
+      "loading": "加载中...",
+      "general": "信息"
+    }
+  },
+  "dataManager": {
+    "title": "数据管理",
+    "totalRecords": "总记录数",
+    "totalElectricity": "总电费",
+    "totalWater": "总水费",
+    "totalRent": "总房租",
+    "totalSpent": "总支出",
+    "saveProgress": "保存进度",
+    "saving": "保存中...",
+    "exportData": "导出数据",
+    "importData": "导入数据",
+    "loading": "加载中...",
+    "clearAll": "清除全部",
+    "latestRecord": "最新记录",
+    "date": "日期",
+    "total": "总计",
+    "noDataToSave": "没有数据可保存！",
+    "saveSuccess": "进度保存成功！",
+    "confirmClear": "您确定要删除所有数据吗？",
+    "clearSuccess": "所有数据已清除！",
+    "oldReading": "旧读数",
+    "newReading": "新读数",
+    "usage": "用量",
+    "rate": "费率",
+    "amount": "金额",
+    "grandTotal": "总计",
+    "loadRecord": "加载此记录",
+    "recordLoaded": "记录已加载到表单！"
+  },
+  "common": {
+    "backToTop": "返回顶部",
+    "loading": "加载中..."
+  }
+}

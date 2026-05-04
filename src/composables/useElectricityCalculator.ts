@@ -12,9 +12,32 @@ export function useElectricityCalculator() {
   // For debouncing validation
   const debounceTimeout = ref<number | null>(null)
 
+  // Helper: get current period as YYYY-MM
+  const getCurrentPeriod = (): string => {
+    const now = new Date()
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+  }
+
+  // Check for month transition: new reading becomes old reading
+  const currentPeriod = getCurrentPeriod()
+  const lastActivePeriod = localStorage.getItem('utility_last_period')
+  let storedOld = localStorage.getItem('electricity_old') || ''
+  let storedNew = localStorage.getItem('electricity_new') || ''
+
+  if (lastActivePeriod && lastActivePeriod < currentPeriod && storedNew) {
+    // Month changed: shift new -> old, clear new
+    storedOld = storedNew
+    storedNew = ''
+    localStorage.setItem('electricity_old', storedOld)
+    localStorage.setItem('electricity_new', storedNew)
+  }
+
+  // Always update last active period to current
+  localStorage.setItem('utility_last_period', currentPeriod)
+
   // State
-  const electricityOld = ref(localStorage.getItem('electricity_old') || '')
-  const electricityNew = ref(localStorage.getItem('electricity_new') || '')
+  const electricityOld = ref(storedOld)
+  const electricityNew = ref(storedNew)
   const storedRate = localStorage.getItem('electricity_rate')
   const electricityRate = ref(storedRate ? Number(storedRate) : defaultElectricityRate)
 

@@ -3,7 +3,7 @@
     :class="[
       'h-screen py-8 px-4 max-sm:py-6 max-sm:px-3 max-xs:py-4 max-xs:px-2 transition-colors duration-300 relative overflow-y-auto overflow-x-hidden',
       themeStore.isDarkMode ? 'text-white' : '',
-      showDetailModal ? 'overflow-hidden' : '',
+      modalControl.showDetailModal.value ? 'overflow-hidden' : '',
       // Fallback background when AnimatedBackground is disabled
       !backgroundStore.isEnabled
         ? themeStore.isPureDark
@@ -21,7 +21,7 @@
       :is-visible="backgroundStore.isEnabled"
     />
     <div class="max-w-3xl mx-auto relative z-20">
-      <LazyLoader :delay="1000" :loading-text="$t('common.loading')">
+      <LazyLoader :delay="1000" :loading-text="i18n.t('common.loading')">
         <div
           :class="[
             'rounded-2xl max-sm:rounded-xl max-xs:rounded-lg overflow-hidden',
@@ -66,13 +66,13 @@
               direction="right"
               :distance="30"
             >
-              <CalculatorTabs :active-tab="activeTab" @change-tab="changeTab" />
+              <CalculatorTabs :active-tab="utilityCalculator.activeTab.value" @change-tab="utilityCalculator.changeTab" />
             </ScrollReveal>
 
             <!-- Electricity Calculator -->
             <transition name="tab-content" mode="out-in" appear>
               <ScrollReveal
-                v-if="activeTab === 'electricity' || activeTab === 'both'"
+                v-if="utilityCalculator.activeTab.value === 'electricity' || utilityCalculator.activeTab.value === 'both'"
                 :once="false"
                 :delay="100"
                 :duration="800"
@@ -83,17 +83,17 @@
               >
                 <ElectricityCalculator
                   key="electricity"
-                  :electricity-old="electricityOld"
-                  :electricity-new="electricityNew"
-                  :electricity-rate="electricityRate"
-                  :default-electricity-rate="defaultElectricityRate"
-                  :electricity-total="electricityTotal"
-                  :format-currency="formatCurrency"
-                  :is-in-both-tab="activeTab === 'both'"
-                  @update:electricity-old="electricityOld = $event"
-                  @update:electricity-new="electricityNew = $event"
-                  @update:electricity-rate="electricityRate = $event"
-                  @image-upload="handleImageUpload"
+                  :electricity-old="utilityCalculator.electricityOld.value"
+                  :electricity-new="utilityCalculator.electricityNew.value"
+                  :electricity-rate="utilityCalculator.electricityRate.value"
+                  :default-electricity-rate="utilityCalculator.defaultElectricityRate"
+                  :electricity-total="utilityCalculator.electricityTotal.value"
+                  :format-currency="utilityCalculator.formatCurrency"
+                  :is-in-both-tab="utilityCalculator.activeTab.value === 'both'"
+                  @update:electricity-old="utilityCalculator.electricityOld.value = $event"
+                  @update:electricity-new="utilityCalculator.electricityNew.value = $event"
+                  @update:electricity-rate="utilityCalculator.electricityRate.value = $event"
+                  @image-upload="viewComposable.handleImageUpload"
                 />
               </ScrollReveal>
             </transition>
@@ -101,7 +101,7 @@
             <!-- Water Calculator -->
             <transition name="tab-content" mode="out-in" appear>
               <ScrollReveal
-                v-if="activeTab === 'water' || activeTab === 'both'"
+                v-if="utilityCalculator.activeTab.value === 'water' || utilityCalculator.activeTab.value === 'both'"
                 :once="false"
                 :delay="100"
                 :duration="800"
@@ -112,24 +112,24 @@
               >
                 <WaterCalculator
                   key="water"
-                  :water-old="waterOld"
-                  :water-new="waterNew"
-                  :water-rate="waterRate"
-                  :default-water-rate="defaultWaterRate"
-                  :water-total="waterTotal"
-                  :format-currency="formatCurrency"
-                  :is-in-both-tab="activeTab === 'both'"
-                  @update:water-old="waterOld = $event"
-                  @update:water-new="waterNew = $event"
-                  @update:water-rate="waterRate = $event"
-                  @image-upload="handleImageUpload"
+                  :water-old="utilityCalculator.waterOld.value"
+                  :water-new="utilityCalculator.waterNew.value"
+                  :water-rate="utilityCalculator.waterRate.value"
+                  :default-water-rate="utilityCalculator.defaultWaterRate"
+                  :water-total="utilityCalculator.waterTotal.value"
+                  :format-currency="utilityCalculator.formatCurrency"
+                  :is-in-both-tab="utilityCalculator.activeTab.value === 'both'"
+                  @update:water-old="utilityCalculator.waterOld.value = $event"
+                  @update:water-new="utilityCalculator.waterNew.value = $event"
+                  @update:water-rate="utilityCalculator.waterRate.value = $event"
+                  @image-upload="viewComposable.handleImageUpload"
                 />
               </ScrollReveal>
             </transition>
 
             <!-- Separator for Both Tab -->
             <div
-              v-if="activeTab === 'both'"
+              v-if="utilityCalculator.activeTab.value === 'both'"
               :class="[
                 'separator my-8 max-sm:my-6 max-xs:my-4 flex items-center',
                 themeStore.isDarkMode ? 'text-gray-500' : 'text-gray-400',
@@ -169,7 +169,7 @@
             <!-- Rent Calculator -->
             <transition name="tab-content" mode="out-in" appear>
               <ScrollReveal
-                v-if="activeTab === 'rent' || activeTab === 'both'"
+                v-if="utilityCalculator.activeTab.value === 'rent' || utilityCalculator.activeTab.value === 'both'"
                 :once="false"
                 :delay="100"
                 :duration="800"
@@ -180,18 +180,18 @@
               >
                 <RentCalculator
                   key="rent"
-                  :monthly-rent="monthlyRent"
-                  :quarterly-rent="quarterlyRent"
-                  :format-currency="formatCurrency"
-                  :is-in-both-tab="activeTab === 'both'"
-                  @update:monthly-rent="monthlyRent = $event"
+                  :monthly-rent="utilityCalculator.monthlyRent.value"
+                  :quarterly-rent="utilityCalculator.quarterlyRent.value"
+                  :format-currency="utilityCalculator.formatCurrency"
+                  :is-in-both-tab="utilityCalculator.activeTab.value === 'both'"
+                  @update:monthly-rent="utilityCalculator.monthlyRent.value = $event"
                 />
               </ScrollReveal>
             </transition>
 
             <!-- Total Summary -->
             <transition name="tab-content" mode="out-in" appear>
-              <div v-if="activeTab === 'both'" style="overflow: visible">
+              <div v-if="utilityCalculator.activeTab.value === 'both'" style="overflow: visible">
                 <ScrollReveal
                   :once="false"
                   :delay="300"
@@ -200,11 +200,11 @@
                 >
                   <TotalSummary
                     key="total"
-                    :total-bill="totalBill"
-                    :electricity-total="electricityTotal"
-                    :water-total="waterTotal"
-                    :quarterly-rent="quarterlyRent"
-                    :format-currency="formatCurrency"
+                    :total-bill="utilityCalculator.totalBill.value"
+                    :electricity-total="utilityCalculator.electricityTotal.value"
+                    :water-total="utilityCalculator.waterTotal.value"
+                    :quarterly-rent="utilityCalculator.quarterlyRent.value"
+                    :format-currency="utilityCalculator.formatCurrency"
                   />
                 </ScrollReveal>
 
@@ -217,21 +217,21 @@
                 >
                   <div class="mt-6">
                     <DataManager
-                      :electricity-old="electricityOld"
-                      :electricity-new="electricityNew"
-                      :electricity-rate="electricityRate"
-                      :electricity-usage="electricityUsage"
-                      :electricity-total="electricityTotal"
-                      :water-old="waterOld"
-                      :water-new="waterNew"
-                      :water-rate="waterRate"
-                      :water-usage="waterUsage"
-                      :water-total="waterTotal"
-                      :monthly-rent="monthlyRent"
-                      :quarterly-rent="quarterlyRent"
-                      :total-bill="totalBill"
-                      :current-date="currentDate"
-                      @update-form="handleUpdateForm"
+                      :electricity-old="utilityCalculator.electricityOld.value"
+                      :electricity-new="utilityCalculator.electricityNew.value"
+                      :electricity-rate="utilityCalculator.electricityRate.value"
+                      :electricity-usage="utilityCalculator.electricityUsage.value"
+                      :electricity-total="utilityCalculator.electricityTotal.value"
+                      :water-old="utilityCalculator.waterOld.value"
+                      :water-new="utilityCalculator.waterNew.value"
+                      :water-rate="utilityCalculator.waterRate.value"
+                      :water-usage="utilityCalculator.waterUsage.value"
+                      :water-total="utilityCalculator.waterTotal.value"
+                      :monthly-rent="utilityCalculator.monthlyRent.value"
+                      :quarterly-rent="utilityCalculator.quarterlyRent.value"
+                      :total-bill="utilityCalculator.totalBill.value"
+                      :current-date="currentDateComposable.currentDate.value"
+                      @update-form="viewComposable.handleUpdateForm"
                     />
                   </div>
                 </ScrollReveal>
@@ -248,12 +248,12 @@
             :distance="40"
           >
             <AppFooter
-              :current-date="currentDate"
-              :electricity-total="electricityTotal"
-              :water-total="waterTotal"
-              @fill-sample-data="fillSampleData"
-              @open-detail-modal="handleOpenDetailModal"
-              @reset-form="resetForm"
+              :current-date="currentDateComposable.currentDate.value"
+              :electricity-total="utilityCalculator.electricityTotal.value"
+              :water-total="utilityCalculator.waterTotal.value"
+              @fill-sample-data="utilityCalculator.fillSampleData"
+              @open-detail-modal="viewComposable.handleOpenDetailModal"
+              @reset-form="utilityCalculator.resetForm"
             />
           </ScrollReveal>
         </div>
@@ -262,28 +262,28 @@
 
     <!-- Detail Modal -->
     <DetailModal
-      v-if="showDetailModal"
-      :show-detail-modal="showDetailModal"
-      :current-date="currentDate"
-      :electricity-old="electricityOld"
-      :electricity-new="electricityNew"
-      :electricity-rate="electricityRate"
-      :electricity-usage="electricityUsage"
-      :electricity-total="electricityTotal"
-      :water-old="waterOld"
-      :water-new="waterNew"
-      :water-rate="waterRate"
-      :water-usage="waterUsage"
-      :water-total="waterTotal"
-      :monthly-rent="monthlyRent"
-      :quarterly-rent="quarterlyRent"
-      :total-bill="totalBill"
-      :format-currency="formatCurrency"
-      @close-detail-modal="closeDetailModal"
+      v-if="modalControl.showDetailModal.value"
+      :show-detail-modal="modalControl.showDetailModal.value"
+      :current-date="currentDateComposable.currentDate.value"
+      :electricity-old="utilityCalculator.electricityOld.value"
+      :electricity-new="utilityCalculator.electricityNew.value"
+      :electricity-rate="utilityCalculator.electricityRate.value"
+      :electricity-usage="utilityCalculator.electricityUsage.value"
+      :electricity-total="utilityCalculator.electricityTotal.value"
+      :water-old="utilityCalculator.waterOld.value"
+      :water-new="utilityCalculator.waterNew.value"
+      :water-rate="utilityCalculator.waterRate.value"
+      :water-usage="utilityCalculator.waterUsage.value"
+      :water-total="utilityCalculator.waterTotal.value"
+      :monthly-rent="utilityCalculator.monthlyRent.value"
+      :quarterly-rent="utilityCalculator.quarterlyRent.value"
+      :total-bill="utilityCalculator.totalBill.value"
+      :format-currency="utilityCalculator.formatCurrency"
+      @close-detail-modal="modalControl.closeDetailModal"
     />
 
     <!-- Processing Overlay -->
-    <ProcessingOverlay :is-processing="isProcessing" :progress="progress" />
+    <ProcessingOverlay :is-processing="utilityCalculator.isProcessing.value" :progress="utilityCalculator.progress.value" />
   </div>
 </template>
 
@@ -291,13 +291,14 @@
 import { useThemeStore } from "../stores/theme";
 import { useLanguageStore } from "../stores/language";
 import { useBackgroundStore } from "../stores/background";
-import { ref, computed, watch, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { useUtilityCalculator } from "../composables/useUtilityCalculator";
 import { useModalControl } from "../composables/useModalControl";
 import { useCurrentDate } from "../composables/useCurrentDate";
 import { useToast } from "../composables/useToast";
+import { useUtilityCalculatorView } from "../composables/useUtilityCalculatorView";
 
 // @ts-ignore
 import AppHeader from "../components/AppHeader.vue";
@@ -330,206 +331,21 @@ import RentCalculator from "../components/RentCalculator.vue";
 const themeStore = useThemeStore();
 const languageStore = useLanguageStore();
 const backgroundStore = useBackgroundStore();
-const { locale, t } = useI18n();
-const { toastError, toastWarning } = useToast();
+const i18n = useI18n();
+const toast = useToast();
 
 // Get composables
-const {
-  activeTab,
-  electricityOld,
-  electricityNew,
-  electricityRate,
-  waterOld,
-  waterNew,
-  waterRate,
-  monthlyRent,
-  quarterlyRent,
-  defaultElectricityRate,
-  defaultWaterRate,
-  electricityUsage,
-  electricityTotal,
-  waterUsage,
-  waterTotal,
-  totalBill,
-  validateElectricityReadings,
-  validateWaterReadings,
-  formatCurrency,
-  resetForm,
-  fillSampleData,
-  changeTab,
-  isProcessing,
-  progress,
-  processImageAndSetValue,
-  viewDetails,
-} = useUtilityCalculator();
-
-const { currentDate, setCurrentDate } = useCurrentDate();
-
-const { showDetailModal, openDetailModal, closeDetailModal } =
-  useModalControl();
-
-// Initialize locale and watch for language changes
-onMounted(() => {
-  // Ensure locale is synchronized with language store on mount
-  locale.value = languageStore.currentLanguage;
-});
-
-watch(
-  () => languageStore.currentLanguage,
-  (newLang) => {
-    locale.value = newLang;
-  },
-  { immediate: true }
+const utilityCalculator = useUtilityCalculator();
+const currentDateComposable = useCurrentDate();
+const modalControl = useModalControl();
+const viewComposable = useUtilityCalculatorView(
+  utilityCalculator,
+  currentDateComposable,
+  modalControl
 );
 
-// Simple validation for modal opening
-const validateBeforeOpenModal = () => {
-  const hasElectricityData = electricityOld.value && electricityNew.value;
-  const hasWaterData = waterOld.value && waterNew.value;
-  const hasRentData = monthlyRent.value && monthlyRent.value > 0;
-
-  // Check if any data exists
-  if (!hasElectricityData && !hasWaterData && !hasRentData) {
-    toastWarning.noData();
-    console.warn("⚠️ Vui lòng nhập ít nhất một loại tiện ích để xem chi tiết!");
-    return false;
-  }
-
-  // Simple validation for electricity
-  if (hasElectricityData) {
-    const oldElec = Number(electricityOld.value) || 0;
-    const newElec = Number(electricityNew.value) || 0;
-    if (newElec < oldElec) {
-      toastError.validation();
-      console.error("⚡ Số điện mới không thể nhỏ hơn số điện cũ!");
-      return false;
-    }
-  }
-
-  // Simple validation for water
-  if (hasWaterData) {
-    const oldWater = Number(waterOld.value) || 0;
-    const newWater = Number(waterNew.value) || 0;
-    if (newWater < oldWater) {
-      toastError.validation();
-      console.error("💧 Số nước mới không thể nhỏ hơn số nước cũ!");
-      return false;
-    }
-  }
-
-  return true;
-};
-
-// Flag to prevent multiple rapid calls
-const isProcessingModalOpen = ref(false);
-
-// Custom modal opener with validation
-const handleOpenDetailModal = () => {
-  // Prevent multiple rapid calls
-  if (isProcessingModalOpen.value) {
-    return;
-  }
-
-  isProcessingModalOpen.value = true;
-
-  if (validateBeforeOpenModal()) {
-    viewDetails(); // Trigger fireworks
-    openDetailModal();
-  }
-
-  // Reset flag after a short delay
-  setTimeout(() => {
-    isProcessingModalOpen.value = false;
-  }, 500);
-};
-
-// Handle image upload and OCR
-const handleImageUpload = async (data: {
-  file: File;
-  type: "electricity" | "water";
-  isOld: boolean;
-}) => {
-  const { file, type, isOld } = data;
-
-  // Check if file is an image
-  if (!file.type.startsWith("image/")) {
-    toastError.validation();
-    console.error("❌ Vui lòng chọn file ảnh!");
-    return;
-  }
-
-  // Check file size (max 5MB)
-  if (file.size > 5 * 1024 * 1024) {
-    toastError.validation();
-    console.error("❌ Kích thước ảnh quá lớn (tối đa 5MB)!");
-    return;
-  }
-
-  await processImageAndSetValue(file, type, isOld);
-};
-
-// Handle form update from imported data
-const handleUpdateForm = (record: any) => {
-  // Update electricity data
-  electricityOld.value = record.electricityOld;
-  electricityNew.value = record.electricityNew;
-  electricityRate.value = record.electricityRate;
-
-  // Update water data
-  waterOld.value = record.waterOld;
-  waterNew.value = record.waterNew;
-  waterRate.value = record.waterRate;
-
-  // Update rent data (if available)
-  if (record.monthlyRent !== undefined) {
-    monthlyRent.value = record.monthlyRent || 0;
-  }
-
-  // Update date
-  setCurrentDate(record.date);
-
-  // Trigger recalculation
-  nextTick(() => {
-    // The computed properties will automatically recalculate
-    console.log("Form updated with imported data (including rent):", record);
-  });
-};
-
-// Cleanup on component unmount
-onUnmounted(() => {
-  isProcessingModalOpen.value = false;
-});
 </script>
 
-<style scoped>
-/* Tab content transition animations */
-.tab-content-enter-active,
-.tab-content-leave-active {
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.tab-content-enter-from {
-  opacity: 0;
-  transform: translateY(20px) scale(0.98);
-  filter: blur(2px);
-}
-
-.tab-content-leave-to {
-  opacity: 0;
-  transform: translateY(-10px) scale(1.02);
-  filter: blur(1px);
-}
-
-.tab-content-enter-to,
-.tab-content-leave-from {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
-}
-
-/* Smooth color transitions for theme switching */
-* {
-  transition: background-color 0.3s ease, border-color 0.3s ease,
-    color 0.3s ease;
-}
+<style>
+@import "./css/UtilityCalculator.css";
 </style>

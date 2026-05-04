@@ -23,21 +23,34 @@ export const useLanguageStore = defineStore('language', {
   state: () => ({
     currentLanguage: getStoredLanguage() || 'vi'
   }),
-  
+
   actions: {
     setLanguage(lang: string) {
       this.currentLanguage = lang
       setStoredLanguage(lang)
     },
-    
+
     toggleLanguage() {
-      const newLang = this.currentLanguage === 'vi' ? 'en' : 'vi'
-      this.setLanguage(newLang)
+      const languages = ['vi', 'en', 'ko', 'zh']
+      const currentIndex = languages.indexOf(this.currentLanguage)
+      const nextIndex = (currentIndex + 1) % languages.length
+      this.setLanguage(languages[nextIndex])
     }
   },
-  
+
   getters: {
     isVietnamese: (state) => state.currentLanguage === 'vi',
-    isEnglish: (state) => state.currentLanguage === 'en'
+    isEnglish: (state) => state.currentLanguage === 'en',
+    isKorean: (state) => state.currentLanguage === 'ko',
+    isChinese: (state) => state.currentLanguage === 'zh',
+    currentLanguageLabel: (state) => {
+      const labels: Record<string, string> = {
+        vi: 'VI',
+        en: 'EN',
+        ko: 'KO',
+        zh: 'ZH'
+      }
+      return labels[state.currentLanguage] || 'VI'
+    }
   }
 })

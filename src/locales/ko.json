@@ -1,0 +1,158 @@
+{
+  "calculator": {
+    "title": "전기 & 수도 요금 계산기",
+    "subtitle": "월간 공공요금 계산",
+    "tabs": {
+      "electricity": "전기",
+      "water": "수도",
+      "both": "요약",
+      "rent": "임대료",
+      "all": "전체"
+    },
+    "electricity": {
+      "title": "전기 요금",
+      "oldReading": "이전 검침",
+      "newReading": "현재 검침",
+      "rate": "단가 (VND/kWh)",
+      "oldReadingPlaceholder": "이전 검침 입력",
+      "newReadingPlaceholder": "현재 검침 입력",
+      "ratePlaceholder": "전기 요금 단가"
+    },
+    "water": {
+      "title": "수도 요금",
+      "oldReading": "이전 검침",
+      "newReading": "현재 검침",
+      "rate": "단가 (VND/m³)",
+      "oldReadingPlaceholder": "이전 검침 입력",
+      "newReadingPlaceholder": "현재 검침 입력",
+      "ratePlaceholder": "수도 요금 단가"
+    },
+    "rent": {
+      "title": "임대료 계산기",
+      "monthlyRent": "월세",
+      "placeholder": "월세 입력...",
+      "calculation": "계산 상세",
+      "perMonth": "월세",
+      "formula": "공식",
+      "quarterlyTotal": "분기 임대료",
+      "emptyState": "계산 상세를 보려면 월세를 입력하세요"
+    },
+    "formula": "공식:",
+    "total": "총액:",
+    "summary": {
+      "title": "전기 & 수도 총액",
+      "note": "세금 및 수수료 포함"
+    },
+    "footer": {
+      "updatedOn": "업데이트 날짜",
+      "sampleData": "샘플 데이터",
+      "reset": "초기화",
+      "viewDetail": "상세 보기"
+    },
+    "theme": {
+      "lightMode": "라이트 모드로 전환",
+      "darkMode": "다크 모드로 전환"
+    },
+    "background": {
+      "toggle": "배경"
+    },
+    "detailModal": {
+      "title": "계산 상세",
+      "reading": "검침",
+      "amount": "금액",
+      "new": "새로운",
+      "old": "이전",
+      "utilityTotal": "공공요금 총액",
+      "utilityAndRentTotal": "공공요금 & 임대료 총액",
+      "grandTotal": "총합",
+      "note": "금액에는 세금 및 수수료가 포함됩니다",
+      "closeButton": "상세 닫기",
+      "copyButton": "상세 복사",
+      "copyTotalButton": "총액 복사"
+    },
+    "fireworks": {
+      "congratulation": "계산 완료를 축하합니다!"
+    },
+    "imageUpload": {
+      "title": "미터 이미지 업로드",
+      "processing": "이미지 처리 중...",
+      "success": "성공적으로 인식되었습니다!",
+      "error": "이미지에서 숫자를 인식할 수 없습니다",
+      "unsupportedFile": "이미지 파일을 선택하세요",
+      "fileTooLarge": "이미지 파일이 너무 큽니다",
+      "pleaseWait": "이미지를 처리하는 동안 잠시 기다려주세요",
+      "manualEntry": "검침을 인식할 수 없습니다. 수동으로 입력하세요."
+    }
+  },
+  "toast": {
+    "success": {
+      "copy": "성공적으로 복사되었습니다!",
+      "copyDetail": "계산 상세가 복사되었습니다!",
+      "copyTotal": "총액이 복사되었습니다!",
+      "save": "성공적으로 저장되었습니다!",
+      "reset": "폼이 성공적으로 초기화되었습니다!",
+      "upload": "이미지가 성공적으로 업로드되었습니다!",
+      "calculate": "계산 완료!",
+      "fillSampleData": "샘플 데이터가 성공적으로 채워졌습니다!",
+      "dataLoaded": "데이터가 성공적으로 로드되었습니다!",
+      "dataSaved": "데이터가 성공적으로 저장되었습니다!",
+      "general": "작업 성공!"
+    },
+    "error": {
+      "copy": "복사할 수 없습니다!",
+      "save": "데이터 저장 오류!",
+      "upload": "이미지 업로드 오류!",
+      "network": "네트워크 연결 오류!",
+      "validation": "유효하지 않은 데이터!",
+      "electricityValidation": "새 전기 검침은 이전 검침보다 작을 수 없습니다!",
+      "waterValidation": "새 수도 검침은 이전 검침보다 작을 수 없습니다!",
+      "dataLoadFailed": "데이터 로드 실패!",
+      "dataSaveFailed": "데이터 저장 실패!",
+      "general": "오류가 발생했습니다!"
+    },
+    "warning": {
+      "validation": "데이터를 확인하세요!",
+      "limit": "허용 한도에 도달했습니다!",
+      "noData": "상세를 보려면 최소 하나의 공공요금을 입력하세요!",
+      "general": "경고!"
+    },
+    "info": {
+      "processing": "처리 중...",
+      "loading": "로딩 중...",
+      "general": "정보"
+    }
+  },
+  "dataManager": {
+    "title": "데이터 관리",
+    "totalRecords": "총 레코드",
+    "totalElectricity": "총 전기 요금",
+    "totalWater": "총 수도 요금",
+    "totalRent": "총 임대료",
+    "totalSpent": "총 지출",
+    "saveProgress": "진행 저장",
+    "saving": "저장 중...",
+    "exportData": "데이터 내보내기",
+    "importData": "데이터 가져오기",
+    "loading": "로딩 중...",
+    "clearAll": "모두 지우기",
+    "latestRecord": "최신 레코드",
+    "date": "날짜",
+    "total": "총계",
+    "noDataToSave": "저장할 데이터가 없습니다!",
+    "saveSuccess": "진행이 성공적으로 저장되었습니다!",
+    "confirmClear": "모든 데이터를 삭제하시겠습니까?",
+    "clearSuccess": "모든 데이터가 삭제되었습니다!",
+    "oldReading": "이전 검침",
+    "newReading": "새 검침",
+    "usage": "사용량",
+    "rate": "단가",
+    "amount": "금액",
+    "grandTotal": "총합",
+    "loadRecord": "이 레코드 로드",
+    "recordLoaded": "레코드가 폼에 로드되었습니다!"
+  },
+  "common": {
+    "backToTop": "맨 위로",
+    "loading": "로딩 중..."
+  }
+}

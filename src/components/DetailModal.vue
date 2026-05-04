@@ -1,8 +1,10 @@
 <template>
   <div
     v-if="showDetailModal"
-    class="fixed inset-0 z-50 bg-black bg-opacity-50 transition-opacity duration-300 animate-fade-in"
-    style="overflow-y: auto; padding: 1rem"
+    :class="[
+      'fixed inset-0 z-50 bg-black bg-opacity-50 transition-opacity duration-300 animate-fade-in',
+    ]"
+    :style="themeStore.isPureDark ? { backdropFilter: 'blur(20px)', overflowY: 'auto', padding: '1rem' } : { overflowY: 'auto', padding: '1rem' }"
     @click.self="closeDetailModal"
   >
     <div class="flex items-start justify-center min-h-full py-4">
@@ -311,7 +313,7 @@
           :class="[
             'py-2 text-center text-xs sticky bottom-0',
             themeStore.isPureDark
-              ? 'bg-gray-900 text-gray-500 border-t border-gray-800'
+              ? 'bg-black text-gray-500 border-t border-gray-800'
               : themeStore.isDarkMode
               ? 'bg-gray-700 text-gray-400 border-t border-gray-600'
               : 'bg-gray-50 text-gray-500 border-t border-gray-200',

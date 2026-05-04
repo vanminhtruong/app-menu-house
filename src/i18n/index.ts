@@ -1,6 +1,8 @@
 import { createI18n } from 'vue-i18n'
 import en from '../locales/en.json'
 import vi from '../locales/vi.json'
+import ko from '../locales/ko.json'
+import zh from '../locales/zh.json'
 
 // Safe localStorage access
 const getStoredLanguage = () => {
@@ -16,7 +18,7 @@ const storedLanguage = getStoredLanguage()
 
 console.log('i18n init - Stored language:', storedLanguage)
 console.log('i18n init - Using locale:', storedLanguage || defaultLocale)
-console.log('i18n init - Available messages:', Object.keys({ en, vi }))
+console.log('i18n init - Available messages:', Object.keys({ en, vi, ko, zh }))
 
 const i18n = createI18n({
   legacy: false, // You must set `false`, to use Composition API
@@ -25,7 +27,9 @@ const i18n = createI18n({
   globalInjection: true, // Enable global $t
   messages: {
     en,
-    vi
+    vi,
+    ko,
+    zh
   },
   silentTranslationWarn: false, // Show missing translation warnings
   missingWarn: false,

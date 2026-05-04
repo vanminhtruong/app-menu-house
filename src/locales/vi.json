@@ -27,6 +27,16 @@
       "newReadingPlaceholder": "Nhập số nước mới",
       "ratePlaceholder": "Đơn giá nước"
     },
+    "rent": {
+      "title": "Máy Tính Tiền Nhà",
+      "monthlyRent": "Tiền Nhà Hàng Tháng",
+      "placeholder": "Nhập tiền nhà hàng tháng...",
+      "calculation": "Chi Tiết Tính Toán",
+      "perMonth": "Tiền nhà/tháng",
+      "formula": "Công thức",
+      "quarterlyTotal": "Tiền Nhà Hàng Quý",
+      "emptyState": "Nhập tiền nhà hàng tháng để xem chi tiết tính toán"
+    },
     "formula": "Công thức:",
     "total": "Thành Tiền:",
     "summary": {
