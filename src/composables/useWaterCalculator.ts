@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useToast } from './useToast'
 import { useI18n } from 'vue-i18n'
 
@@ -18,28 +18,52 @@ export function useWaterCalculator() {
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
   }
 
-  // Check for month transition: new reading becomes old reading
+  // --- Init: apply month transition on load ---
   const currentPeriod = getCurrentPeriod()
-  const lastActivePeriod = localStorage.getItem('utility_last_period')
+  const lastActivePeriod = localStorage.getItem('water_last_period')
   let storedOld = localStorage.getItem('water_old') || ''
   let storedNew = localStorage.getItem('water_new') || ''
 
   if (lastActivePeriod && lastActivePeriod < currentPeriod && storedNew) {
-    // Month changed: shift new -> old, clear new
     storedOld = storedNew
     storedNew = ''
     localStorage.setItem('water_old', storedOld)
     localStorage.setItem('water_new', storedNew)
   }
+  localStorage.setItem('water_last_period', currentPeriod)
 
-  // Always update last active period to current
-  localStorage.setItem('utility_last_period', currentPeriod)
-
-  // State
+  // State (declared after init so applyMonthTransition can reference them)
   const waterOld = ref(storedOld)
   const waterNew = ref(storedNew)
   const storedRate = localStorage.getItem('water_rate')
   const waterRate = ref(storedRate ? Number(storedRate) : defaultWaterRate)
+
+  // Real-time month transition: runs every minute while app is open
+  // Uses dedicated key 'water_last_period' to avoid race condition with electricity
+  const applyMonthTransition = () => {
+    const period = getCurrentPeriod()
+    const lastPeriod = localStorage.getItem('water_last_period')
+    if (lastPeriod && lastPeriod < period) {
+      const savedNew = localStorage.getItem('water_new') || ''
+      if (savedNew) {
+        waterOld.value = savedNew
+        waterNew.value = ''
+        localStorage.setItem('water_old', savedNew)
+        localStorage.setItem('water_new', '')
+      }
+      localStorage.setItem('water_last_period', period)
+    }
+  }
+
+  let monthCheckInterval: ReturnType<typeof setInterval> | null = null
+
+  onMounted(() => {
+    monthCheckInterval = setInterval(applyMonthTransition, 60 * 1000)
+  })
+
+  onUnmounted(() => {
+    if (monthCheckInterval) clearInterval(monthCheckInterval)
+  })
 
   // Validation state flags
   const waterErrorShown = ref(false)

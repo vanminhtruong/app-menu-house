@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useToast } from './useToast'
 import { useI18n } from 'vue-i18n'
 
@@ -18,28 +18,52 @@ export function useElectricityCalculator() {
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
   }
 
-  // Check for month transition: new reading becomes old reading
+  // --- Init: apply month transition on load ---
   const currentPeriod = getCurrentPeriod()
-  const lastActivePeriod = localStorage.getItem('utility_last_period')
+  const lastActivePeriod = localStorage.getItem('electricity_last_period')
   let storedOld = localStorage.getItem('electricity_old') || ''
   let storedNew = localStorage.getItem('electricity_new') || ''
 
   if (lastActivePeriod && lastActivePeriod < currentPeriod && storedNew) {
-    // Month changed: shift new -> old, clear new
     storedOld = storedNew
     storedNew = ''
     localStorage.setItem('electricity_old', storedOld)
     localStorage.setItem('electricity_new', storedNew)
   }
+  localStorage.setItem('electricity_last_period', currentPeriod)
 
-  // Always update last active period to current
-  localStorage.setItem('utility_last_period', currentPeriod)
-
-  // State
+  // State (declared after init so applyMonthTransition can reference them)
   const electricityOld = ref(storedOld)
   const electricityNew = ref(storedNew)
   const storedRate = localStorage.getItem('electricity_rate')
   const electricityRate = ref(storedRate ? Number(storedRate) : defaultElectricityRate)
+
+  // Real-time month transition: runs every minute while app is open
+  // Uses dedicated key 'electricity_last_period' to avoid race condition with water
+  const applyMonthTransition = () => {
+    const period = getCurrentPeriod()
+    const lastPeriod = localStorage.getItem('electricity_last_period')
+    if (lastPeriod && lastPeriod < period) {
+      const savedNew = localStorage.getItem('electricity_new') || ''
+      if (savedNew) {
+        electricityOld.value = savedNew
+        electricityNew.value = ''
+        localStorage.setItem('electricity_old', savedNew)
+        localStorage.setItem('electricity_new', '')
+      }
+      localStorage.setItem('electricity_last_period', period)
+    }
+  }
+
+  let monthCheckInterval: ReturnType<typeof setInterval> | null = null
+
+  onMounted(() => {
+    monthCheckInterval = setInterval(applyMonthTransition, 60 * 1000)
+  })
+
+  onUnmounted(() => {
+    if (monthCheckInterval) clearInterval(monthCheckInterval)
+  })
 
   // Validation state flags
   const electricityErrorShown = ref(false)

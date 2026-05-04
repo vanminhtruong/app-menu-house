@@ -63,31 +63,31 @@
           ref="langBtnRef"
           @click="toggleLangDropdown"
           :class="[
-            'lang-trigger flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-medium text-sm transition-all duration-200 focus:outline-none',
+            'lang-trigger group flex items-center gap-2 px-3 py-1.5 rounded-xl font-medium text-sm transition-all duration-200 focus:outline-none border',
             isLangOpen
               ? themeStore.isPureDark
-                ? 'bg-white/10 text-white ring-2 ring-white/20'
+                ? 'bg-white/12 text-white border-white/20 shadow-lg shadow-black/30'
                 : themeStore.isDarkMode
-                ? 'bg-white/15 text-white ring-2 ring-white/25'
-                : 'bg-white/25 text-white ring-2 ring-white/40'
+                ? 'bg-white/15 text-white border-white/20 shadow-lg shadow-black/20'
+                : 'bg-white/30 text-white border-white/50 shadow-lg shadow-indigo-900/20'
               : themeStore.isPureDark
-              ? 'bg-transparent text-white hover:bg-white/10'
+              ? 'bg-white/6 text-white/90 border-white/10 hover:bg-white/12 hover:border-white/20 hover:text-white'
               : themeStore.isDarkMode
-              ? 'bg-transparent text-white hover:bg-white/15'
-              : 'bg-transparent text-white hover:bg-white/20',
+              ? 'bg-white/8 text-white/90 border-white/12 hover:bg-white/15 hover:border-white/22 hover:text-white'
+              : 'bg-white/15 text-white border-white/30 hover:bg-white/28 hover:border-white/50',
           ]"
           :title="`${$t('calculator.language.select', 'Chọn ngôn ngữ')}: ${
             currentLang?.name
           }`"
         >
-          <span class="lang-flag text-base leading-none">{{
-            currentLang?.flag
-          }}</span>
-          <span class="lang-code font-bold tracking-wide">{{
-            currentLang?.code
-          }}</span>
+          <img
+            v-if="currentLang"
+            :src="getFlagSvg(currentLang.countryCode)"
+            :alt="currentLang.name"
+            class="lang-flag-img w-5 h-auto rounded-sm shadow-sm object-cover"
+          />
           <svg
-            class="lang-caret w-3.5 h-3.5 transition-transform duration-300 opacity-80"
+            class="lang-caret w-3 h-3 transition-transform duration-300 opacity-70"
             :class="isLangOpen ? 'rotate-180' : 'rotate-0'"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -111,82 +111,115 @@
               :class="[
                 'lang-panel-teleport rounded-2xl overflow-hidden',
                 themeStore.isPureDark
-                  ? 'bg-neutral-900/95 border border-white/8 shadow-[0_8px_32px_rgba(0,0,0,0.8)]'
+                  ? 'bg-[#111]/96 border border-white/10 shadow-[0_16px_48px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.04)]'
                   : themeStore.isDarkMode
-                  ? 'bg-gray-800/95 border border-white/12 shadow-[0_8px_32px_rgba(0,0,0,0.6)]'
-                  : 'bg-white/95 border border-indigo-100 shadow-[0_8px_32px_rgba(79,70,229,0.18)]',
+                  ? 'bg-gray-800/96 border border-white/10 shadow-[0_16px_48px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.06)]'
+                  : 'bg-white/98 border border-indigo-100/80 shadow-[0_16px_48px_rgba(79,70,229,0.22),0_4px_12px_rgba(0,0,0,0.08)]',
               ]"
               :style="dropdownStyle"
-              style="
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-              "
+              style="backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);"
             >
               <!-- Panel Header -->
               <div
                 :class="[
-                  'px-3 py-2 text-xs font-semibold uppercase tracking-widest border-b',
+                  'flex items-center gap-2 px-4 py-2.5 border-b',
                   themeStore.isPureDark
-                    ? 'text-gray-500 border-white/6'
+                    ? 'border-white/8'
                     : themeStore.isDarkMode
-                    ? 'text-gray-400 border-white/8'
-                    : 'text-indigo-400 border-indigo-50',
+                    ? 'border-white/8'
+                    : 'border-indigo-100',
                 ]"
               >
-                {{ $t("calculator.language.select", "Ngôn ngữ") }}
+                <!-- Globe icon -->
+                <svg
+                  class="w-3.5 h-3.5 flex-shrink-0"
+                  :class="themeStore.isDarkMode ? 'text-indigo-400' : 'text-indigo-500'"
+                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor"
+                >
+                  <circle cx="12" cy="12" r="10" stroke-width="1.8"/>
+                  <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke-width="1.8"/>
+                </svg>
+                <span
+                  :class="[
+                    'text-xs font-semibold uppercase tracking-widest',
+                    themeStore.isPureDark
+                      ? 'text-gray-400'
+                      : themeStore.isDarkMode
+                      ? 'text-gray-400'
+                      : 'text-indigo-500',
+                  ]"
+                >
+                  {{ $t("calculator.language.select", "Ngôn ngữ") }}
+                </span>
               </div>
 
               <!-- Language Options -->
-              <div class="py-1">
+              <div class="p-1.5 flex flex-col gap-0.5">
                 <button
                   v-for="lang in languages"
                   :key="lang.code"
                   @click="selectLang(lang.locale)"
                   :class="[
-                    'lang-option w-full flex items-center gap-3 px-3 py-2.5 text-sm transition-all duration-150 focus:outline-none',
+                    'lang-option w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 focus:outline-none',
                     languageStore.currentLanguage === lang.locale
                       ? themeStore.isPureDark
-                        ? 'bg-indigo-500/20 text-indigo-300'
+                        ? 'bg-indigo-500/18 text-indigo-300 shadow-sm'
                         : themeStore.isDarkMode
-                        ? 'bg-indigo-500/25 text-indigo-200'
-                        : 'bg-indigo-50 text-indigo-700'
+                        ? 'bg-indigo-500/22 text-indigo-200 shadow-sm'
+                        : 'bg-indigo-600 text-white shadow-md shadow-indigo-200'
                       : themeStore.isPureDark
-                      ? 'text-gray-300 hover:bg-white/6 hover:text-white'
+                      ? 'text-gray-300 hover:bg-white/7 hover:text-white'
                       : themeStore.isDarkMode
                       ? 'text-gray-200 hover:bg-white/8 hover:text-white'
-                      : 'text-gray-700 hover:bg-indigo-50/70 hover:text-indigo-700',
+                      : 'text-gray-600 hover:bg-indigo-50 hover:text-indigo-700',
                   ]"
                 >
-                  <span class="text-xl leading-none">{{ lang.flag }}</span>
-                  <div class="flex-1 text-left">
-                    <div class="font-semibold text-xs tracking-wider">
+                  <!-- Flag badge -->
+                  <span
+                    :class="[
+                      'lang-flag-badge w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden flex-shrink-0',
+                      languageStore.currentLanguage === lang.locale
+                        ? themeStore.isDarkMode
+                          ? 'ring-2 ring-indigo-400/40'
+                          : 'ring-2 ring-white/40'
+                        : '',
+                    ]"
+                  >
+                    <img
+                      :src="getFlagSvg(lang.countryCode)"
+                      :alt="lang.name"
+                      class="w-full h-full object-cover"
+                    />
+                  </span>
+                  <div class="flex-1 text-left min-w-0">
+                    <div
+                      :class="[
+                        'font-semibold text-xs tracking-wider leading-none mb-0.5',
+                        languageStore.currentLanguage === lang.locale && !themeStore.isDarkMode ? 'text-white' : '',
+                      ]"
+                    >
                       {{ lang.code }}
                     </div>
-                    <div class="text-xs opacity-60 font-normal leading-tight">
+                    <div
+                      :class="[
+                        'text-xs leading-tight truncate',
+                        languageStore.currentLanguage === lang.locale
+                          ? themeStore.isDarkMode ? 'opacity-70' : 'text-indigo-100'
+                          : 'opacity-50',
+                      ]"
+                    >
                       {{ lang.name }}
                     </div>
                   </div>
-                  <!-- Active checkmark -->
-                  <svg
+                  <!-- Active indicator dot -->
+                  <div
                     v-if="languageStore.currentLanguage === lang.locale"
-                    class="w-4 h-4 flex-shrink-0"
-                    :class="
-                      themeStore.isDarkMode
-                        ? 'text-indigo-300'
-                        : 'text-indigo-600'
-                    "
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2.5"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                    :class="[
+                      'w-2 h-2 rounded-full flex-shrink-0',
+                      themeStore.isDarkMode ? 'bg-indigo-400' : 'bg-white',
+                    ]"
+                  ></div>
                 </button>
               </div>
             </div>
@@ -257,6 +290,7 @@ import { useI18n } from "vue-i18n";
 import { useThemeStore } from "../stores/theme";
 import { useLanguageStore } from "../stores/language";
 import { useBackgroundStore } from "../stores/background";
+import * as flags from "country-flag-icons/string/3x2";
 
 const themeStore = useThemeStore();
 const languageStore = useLanguageStore();
@@ -275,16 +309,22 @@ const dropdownStyle = computed(() => ({
   position: "fixed" as const,
   top: dropdownPos.value.top + "px",
   right: dropdownPos.value.right + "px",
-  width: "176px",
+  width: "192px",
   zIndex: 9999,
 }));
 
 const languages = [
-  { locale: "vi", code: "VI", name: "Tiếng Việt", flag: "🇻🇳" },
-  { locale: "en", code: "EN", name: "English", flag: "🇬🇧" },
-  { locale: "ko", code: "KO", name: "한국어", flag: "🇰🇷" },
-  { locale: "zh", code: "ZH", name: "中文", flag: "🇨🇳" },
+  { locale: "vi", code: "VI", name: "Tiếng Việt", countryCode: "VN" },
+  { locale: "en", code: "EN", name: "English", countryCode: "GB" },
+  { locale: "ko", code: "KO", name: "한국어", countryCode: "KR" },
+  { locale: "zh", code: "ZH", name: "中文", countryCode: "CN" },
 ];
+
+const getFlagSvg = (countryCode: string): string => {
+  const svg = (flags as unknown as Record<string, string>)[countryCode];
+  if (!svg) return "";
+  return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
+};
 
 const currentLang = computed(
   () =>
@@ -363,24 +403,25 @@ const handleBackgroundToggle = () => {
 
 /* Dropdown panel animation */
 .lang-dropdown-enter-active {
-  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .lang-dropdown-leave-active {
   transition: opacity 0.15s ease, transform 0.15s ease;
 }
 .lang-dropdown-enter-from {
   opacity: 0;
-  transform: translateY(-8px) scale(0.95);
+  transform: translateY(-10px) scale(0.94);
 }
 .lang-dropdown-leave-to {
   opacity: 0;
   transform: translateY(-4px) scale(0.97);
 }
 
-/* Option hover ripple feel */
+/* Option hover */
 .lang-option {
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 .lang-option::after {
   content: "";
@@ -388,14 +429,26 @@ const handleBackgroundToggle = () => {
   inset: 0;
   background: currentColor;
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.12s ease;
+  border-radius: inherit;
 }
 .lang-option:active::after {
-  opacity: 0.08;
+  opacity: 0.07;
 }
 
-/* Trigger button glow on open */
+/* Trigger button */
 .lang-trigger {
   position: relative;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Flag badge subtle scale on hover */
+.lang-option:hover .lang-flag-badge {
+  transform: scale(1.08);
+  transition: transform 0.15s ease;
+}
+.lang-flag-badge {
+  transition: transform 0.15s ease;
 }
 </style>
