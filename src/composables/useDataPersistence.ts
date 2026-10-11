@@ -18,6 +18,8 @@ export interface CalculationRecord {
   waterTotal: number
   monthlyRent?: number
   quarterlyRent?: number
+  /** Trạng thái công tắc "cộng tiền nhà vào tổng" khi lưu bản ghi */
+  includeRent?: boolean
   totalBill: number
 }
 

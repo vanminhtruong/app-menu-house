@@ -301,14 +301,14 @@
         </div>
 
         <!-- Rent details -->
-        <div v-if="latestRecord.monthlyRent && latestRecord.monthlyRent > 0" :class="[
+        <div v-if="latestRecord.quarterlyRent && latestRecord.quarterlyRent > 0" :class="[
           'p-2 rounded border-l-2',
           themeStore.isPureDark ? 'bg-black border-l-orange-500' : themeStore.isDarkMode ? 'bg-gray-800 border-l-orange-400' : 'bg-orange-50 border-l-orange-500'
         ]">
           <div class="font-medium text-orange-600 mb-1">{{ $t('calculator.tabs.rent', 'Tiền Nhà') }}:</div>
           <div class="text-xs space-y-1">
-            <div>{{ $t('calculator.rent.perMonth', 'Tiền nhà/tháng') }}: {{ formatCurrency(latestRecord.monthlyRent) }}</div>
-            <div>{{ $t('calculator.rent.formula', 'Công thức') }}: {{ formatCurrency(latestRecord.monthlyRent) }} × 3</div>
+            <div>{{ $t('calculator.rent.perMonth', 'Tiền nhà/tháng') }}: {{ formatCurrency(latestRecord.monthlyRent || 0) }}</div>
+            <div>{{ $t('calculator.rent.formula', 'Công thức') }}: {{ formatCurrency(latestRecord.monthlyRent || 0) }} × 3</div>
             <div class="font-medium">{{ $t('dataManager.amount', 'Thành tiền') }}: {{ formatCurrency(latestRecord.quarterlyRent || 0) }}</div>
           </div>
         </div>
@@ -371,6 +371,7 @@ const props = defineProps<{
   waterTotal: number
   monthlyRent: number
   quarterlyRent: number
+  includeRent: boolean
   totalBill: number
   currentDate: string
 }>()
@@ -446,6 +447,7 @@ const saveCurrentCalculation = async () => {
     waterTotal: props.waterTotal,
     monthlyRent: props.monthlyRent,
     quarterlyRent: props.quarterlyRent,
+    includeRent: props.includeRent,
     totalBill: props.totalBill
   })
 

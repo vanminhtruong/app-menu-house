@@ -35,7 +35,11 @@
       "perMonth": "Tiền nhà/tháng",
       "formula": "Công thức",
       "quarterlyTotal": "Tiền Nhà Hàng Quý",
-      "emptyState": "Nhập tiền nhà hàng tháng để xem chi tiết tính toán"
+      "emptyState": "Nhập tiền nhà hàng tháng để xem chi tiết tính toán",
+      "fixed": "Tiền nhà cố định",
+      "includeToggle": "Cộng tiền nhà",
+      "included": "Đang cộng tiền nhà vào tổng",
+      "excluded": "Đã tắt — tiền nhà không được cộng vào tổng"
     },
     "formula": "Công thức:",
     "total": "Thành Tiền:",

@@ -35,7 +35,11 @@
       "perMonth": "Rent/month",
       "formula": "Formula",
       "quarterlyTotal": "Quarterly Rent",
-      "emptyState": "Enter monthly rent to view calculation details"
+      "emptyState": "Enter monthly rent to view calculation details",
+      "fixed": "Fixed rent",
+      "includeToggle": "Include rent",
+      "included": "Rent is included in the total",
+      "excluded": "Off — rent is not included in the total"
     },
     "formula": "Formula:",
     "total": "Total:",

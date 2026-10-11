@@ -7,7 +7,7 @@ export function useElectricityCalculator() {
   const { t } = useI18n()
 
   // Default values
-  const defaultElectricityRate = 3500
+  const defaultElectricityRate = 4000
 
   // For debouncing validation
   const debounceTimeout = ref<number | null>(null)
@@ -32,11 +32,30 @@ export function useElectricityCalculator() {
   }
   localStorage.setItem('electricity_last_period', currentPeriod)
 
+  // --- Init: migrate legacy default rate 3500 -> 4000 (runs once) ---
+  // Only the old default value is upgraded, so a custom rate the user typed is kept.
+  const LEGACY_DEFAULT_ELECTRICITY_RATE = 3500
+  const RATE_MIGRATION_KEY = 'electricity_rate_migrated_to_4000'
+
+  const storedRate = localStorage.getItem('electricity_rate')
+  const shouldMigrateRate =
+    localStorage.getItem(RATE_MIGRATION_KEY) !== '1' &&
+    storedRate !== null &&
+    Number(storedRate) === LEGACY_DEFAULT_ELECTRICITY_RATE
+
+  if (shouldMigrateRate) {
+    localStorage.setItem('electricity_rate', String(defaultElectricityRate))
+  }
+  // Mark the migration as done on every load so it never touches a rate
+  // the user sets (or loads from a saved record) afterwards.
+  localStorage.setItem(RATE_MIGRATION_KEY, '1')
+
   // State (declared after init so applyMonthTransition can reference them)
   const electricityOld = ref(storedOld)
   const electricityNew = ref(storedNew)
-  const storedRate = localStorage.getItem('electricity_rate')
-  const electricityRate = ref(storedRate ? Number(storedRate) : defaultElectricityRate)
+  const electricityRate = ref(
+    shouldMigrateRate || !storedRate ? defaultElectricityRate : Number(storedRate)
+  )
 
   // Real-time month transition: runs every minute while app is open
   // Uses dedicated key 'electricity_last_period' to avoid race condition with water

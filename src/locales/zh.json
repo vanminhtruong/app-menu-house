@@ -35,7 +35,11 @@
       "perMonth": "月租",
       "formula": "公式",
       "quarterlyTotal": "季度房租",
-      "emptyState": "输入月租以查看计算详情"
+      "emptyState": "输入月租以查看计算详情",
+      "fixed": "固定房租",
+      "includeToggle": "计入房租",
+      "included": "房租已计入总计",
+      "excluded": "已关闭 — 房租不计入总计"
     },
     "formula": "公式:",
     "total": "总计:",

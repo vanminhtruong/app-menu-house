@@ -35,7 +35,11 @@
       "perMonth": "월세",
       "formula": "공식",
       "quarterlyTotal": "분기 임대료",
-      "emptyState": "계산 상세를 보려면 월세를 입력하세요"
+      "emptyState": "계산 상세를 보려면 월세를 입력하세요",
+      "fixed": "고정 임대료",
+      "includeToggle": "임대료 포함",
+      "included": "임대료가 총액에 포함됨",
+      "excluded": "꺼짐 — 임대료가 총액에 포함되지 않음"
     },
     "formula": "공식:",
     "total": "총액:",

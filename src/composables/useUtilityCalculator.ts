@@ -142,11 +142,14 @@ export function useUtilityCalculator() {
     
     // State from rent calculator
     monthlyRent: rent.monthlyRent,
+    includeRent: rent.includeRent,
     
     // Computed from rent calculator
     quarterlyRent: rent.quarterlyRent,
     
     // Methods from rent calculator
+    setIncludeRent: rent.setIncludeRent,
+    toggleRent: rent.toggleRent,
     validateRent: rent.validateRent,
     
     // Tab control

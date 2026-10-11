@@ -18,7 +18,6 @@ export function useUtilityCalculatorView(
     electricityNew,
     waterOld,
     waterNew,
-    monthlyRent,
     viewDetails
   } = utilityCalculator
 
@@ -43,10 +42,10 @@ export function useUtilityCalculatorView(
   const validateBeforeOpenModal = () => {
     const hasElectricityData = electricityOld.value && electricityNew.value
     const hasWaterData = waterOld.value && waterNew.value
-    const hasRentData = monthlyRent.value && monthlyRent.value > 0
 
-    // Check if any data exists
-    if (!hasElectricityData && !hasWaterData && !hasRentData) {
+    // Tiền nhà là khoản CỐ ĐỊNH (luôn > 0) nên KHÔNG tính là "đã nhập dữ liệu":
+    // phải có ít nhất số điện hoặc số nước thì mới xem được chi tiết.
+    if (!hasElectricityData && !hasWaterData) {
       toast.toastWarning.noData()
       console.warn('⚠️ Vui lòng nhập ít nhất một loại tiện ích để xem chi tiết!')
       return false
@@ -141,6 +140,14 @@ export function useUtilityCalculatorView(
     if (record.monthlyRent !== undefined) {
       utilityCalculator.monthlyRent.value = record.monthlyRent || 0
     }
+
+    // Khôi phục trạng thái công tắc "cộng tiền nhà vào tổng".
+    // Bản ghi cũ chưa có includeRent → suy ra từ quarterlyRent (>0 là đang bật).
+    const rentIncluded =
+      record.includeRent !== undefined
+        ? Boolean(record.includeRent)
+        : Number(record.quarterlyRent) > 0
+    utilityCalculator.setIncludeRent(rentIncluded)
 
     // Update date
     setCurrentDate(record.date)

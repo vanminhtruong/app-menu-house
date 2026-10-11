@@ -1,9 +1,8 @@
 <template>
   <div
     :class="[
-      'h-screen py-8 px-4 max-sm:py-6 max-sm:px-3 max-xs:py-4 max-xs:px-2 transition-colors duration-300 relative overflow-y-auto overflow-x-hidden',
+      'h-screen py-8 px-4 max-sm:py-6 max-sm:px-3 max-xs:py-4 max-xs:px-2 transition-colors duration-300 relative overflow-hidden',
       themeStore.isDarkMode ? 'text-white' : '',
-      modalControl.showDetailModal.value ? 'overflow-hidden' : '',
       // Fallback background when AnimatedBackground is disabled
       !backgroundStore.isEnabled
         ? themeStore.isPureDark
@@ -20,11 +19,11 @@
       :is-pure-dark="themeStore.isPureDark"
       :is-visible="backgroundStore.isEnabled"
     />
-    <div class="max-w-3xl mx-auto relative z-20">
+    <div class="max-w-3xl mx-auto relative z-20 h-full flex flex-col">
       <LazyLoader :delay="1000" :loading-text="i18n.t('common.loading')">
         <div
           :class="[
-            'rounded-2xl max-sm:rounded-xl max-xs:rounded-lg overflow-hidden',
+            'rounded-2xl max-sm:rounded-xl max-xs:rounded-lg overflow-hidden flex flex-col flex-1 min-h-0',
             // Conditional backdrop blur and transparency based on background state
             backgroundStore.isEnabled ? 'backdrop-blur-sm' : '',
             // Different styling when background is enabled vs disabled
@@ -41,8 +40,9 @@
               : 'bg-white shadow-xl border border-gray-200',
           ]"
         >
-          <!-- Header -->
+          <!-- Header (cố định, không cuộn) -->
           <ScrollReveal
+            class="flex-none relative z-10"
             :once="true"
             :delay="200"
             :duration="1000"
@@ -51,11 +51,13 @@
             <AppHeader />
           </ScrollReveal>
 
-          <!-- Calculator Form -->
+          <!-- Calculator Form: vùng cuộn duy nhất của khung -->
           <div
+            ref="scrollBodyRef"
             :class="[
-              'p-6 max-sm:p-4 max-xs:p-3',
+              'pd-scroll pd-scroll--stable p-6 max-sm:p-4 max-xs:p-3 flex-1 min-h-0 overscroll-contain',
               themeStore.isDarkMode ? 'text-gray-200' : '',
+              modalControl.showDetailModal.value ? 'overflow-hidden' : 'overflow-y-auto',
             ]"
           >
             <!-- Tabs -->
@@ -182,9 +184,11 @@
                   key="rent"
                   :monthly-rent="utilityCalculator.monthlyRent.value"
                   :quarterly-rent="utilityCalculator.quarterlyRent.value"
+                  :include-rent="utilityCalculator.includeRent.value"
                   :format-currency="utilityCalculator.formatCurrency"
                   :is-in-both-tab="utilityCalculator.activeTab.value === 'both'"
                   @update:monthly-rent="utilityCalculator.monthlyRent.value = $event"
+                  @update:include-rent="utilityCalculator.setIncludeRent"
                 />
               </ScrollReveal>
             </transition>
@@ -229,6 +233,7 @@
                       :water-total="utilityCalculator.waterTotal.value"
                       :monthly-rent="utilityCalculator.monthlyRent.value"
                       :quarterly-rent="utilityCalculator.quarterlyRent.value"
+                      :include-rent="utilityCalculator.includeRent.value"
                       :total-bill="utilityCalculator.totalBill.value"
                       :current-date="currentDateComposable.currentDate.value"
                       @update-form="viewComposable.handleUpdateForm"
@@ -239,8 +244,9 @@
             </transition>
           </div>
 
-          <!-- Footer -->
+          <!-- Footer (cố định, không cuộn) -->
           <ScrollReveal
+            class="flex-none relative z-10"
             :once="true"
             :delay="500"
             :duration="1200"
@@ -291,7 +297,8 @@
 import { useThemeStore } from "../stores/theme";
 import { useLanguageStore } from "../stores/language";
 import { useBackgroundStore } from "../stores/background";
-import { ref, computed } from "vue";
+import { useBackToTopStore } from "../stores/backToTop";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { useUtilityCalculator } from "../composables/useUtilityCalculator";
@@ -331,8 +338,20 @@ import RentCalculator from "../components/RentCalculator.vue";
 const themeStore = useThemeStore();
 const languageStore = useLanguageStore();
 const backgroundStore = useBackgroundStore();
+const backToTopStore = useBackToTopStore();
 const i18n = useI18n();
 const toast = useToast();
+
+// Vùng cuộn giữa của khung tính tiền (thay cho scroll của window)
+const scrollBodyRef = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  backToTopStore.registerScrollElement(scrollBodyRef.value);
+});
+
+onUnmounted(() => {
+  backToTopStore.registerScrollElement(null);
+});
 
 // Get composables
 const utilityCalculator = useUtilityCalculator();

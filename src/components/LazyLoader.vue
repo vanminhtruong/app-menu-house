@@ -48,7 +48,11 @@ onMounted(() => {
 .lazy-loader-container {
   position: relative;
   width: 100%;
-  min-height: 100px;
+  /* Vừa là khung chờ, vừa là mắt nối chiều cao cho layout cuộn bên trong */
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
   transition: all 0.3s ease;
 }
 
@@ -98,6 +102,10 @@ onMounted(() => {
 }
 
 .content-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
