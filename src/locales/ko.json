@@ -43,6 +43,8 @@
     },
     "formula": "공식:",
     "total": "총액:",
+    "rateLock": "단가 잠금",
+    "rateUnlock": "단가 잠금 해제",
     "summary": {
       "title": "전기 & 수도 총액",
       "note": "세금 및 수수료 포함"

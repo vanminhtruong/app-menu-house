@@ -212,26 +212,81 @@
           ]"
           >{{ $t("calculator.electricity.rate") }}</label
         >
-        <input
-          type="number"
-          inputmode="decimal"
-          step="any"
-          min="0"
-          @keydown="preventInvalidKeyDecimal"
-          @input="sanitizeInputDecimal"
-          @paste="onPasteDecimal"
-          @wheel.prevent
-          v-model="electricityRateModel"
-          :class="[
-            'w-full px-3 py-2 max-sm:px-3 max-sm:py-2 max-xs:px-2 max-xs:py-1.5 rounded-md focus:outline-none transition-colors duration-200',
-            themeStore.isPureDark
-              ? 'bg-neutral-900 border-none text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 shadow-[0_2px_12px_rgba(255,255,255,0.03)]'
-              : themeStore.isDarkMode
-              ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
-              : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm',
-          ]"
-          :placeholder="$t('calculator.electricity.ratePlaceholder')"
-        />
+        <div class="flex items-stretch gap-2">
+          <input
+            id="electricity-rate"
+            type="number"
+            inputmode="decimal"
+            step="any"
+            min="0"
+            @keydown="preventInvalidKeyDecimal"
+            @input="sanitizeInputDecimal"
+            @paste="onPasteDecimal"
+            @wheel.prevent
+            v-model="electricityRateModel"
+            :disabled="isRateLocked"
+            :class="[
+              'flex-1 min-w-0 px-3 py-2 max-sm:px-3 max-sm:py-2 max-xs:px-2 max-xs:py-1.5 rounded-md focus:outline-none transition-colors duration-200',
+              themeStore.isPureDark
+                ? 'bg-neutral-900 border-none text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-700 shadow-[0_2px_12px_rgba(255,255,255,0.03)]'
+                : themeStore.isDarkMode
+                ? 'bg-gray-900 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 hover:border-gray-500 shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
+                : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hover:border-gray-400 shadow-sm',
+              isRateLocked ? 'opacity-50 grayscale filter cursor-not-allowed' : '',
+            ]"
+            :placeholder="$t('calculator.electricity.ratePlaceholder')"
+          />
+          <button
+            type="button"
+            role="switch"
+            :aria-checked="isRateLocked"
+            data-testid="electricity-rate-lock"
+            :aria-label="isRateLocked ? $t('calculator.rateUnlock', 'Mở khóa đơn giá') : $t('calculator.rateLock', 'Khóa đơn giá')"
+            :title="isRateLocked ? $t('calculator.rateUnlock', 'Mở khóa đơn giá') : $t('calculator.rateLock', 'Khóa đơn giá')"
+            :class="[
+              'flex-none w-10 max-xs:w-9 flex items-center justify-center rounded-md border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500',
+              isRateLocked
+                ? 'bg-yellow-500 border-yellow-500 text-white hover:bg-yellow-400 hover:border-yellow-400'
+                : themeStore.isPureDark
+                ? 'bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white'
+                : themeStore.isDarkMode
+                ? 'bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600 hover:text-white'
+                : 'bg-gray-100 border-gray-300 text-gray-500 hover:bg-indigo-100 hover:text-indigo-600',
+            ]"
+            @click="isRateLocked = !isRateLocked"
+          >
+            <svg
+              v-if="isRateLocked"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </svg>
+            <svg
+              v-else
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -323,7 +378,9 @@ watch(
   },
   { immediate: true }
 );
-const isCollapsed = ref(false);
+const isCollapsed = ref(false)
+// Trạng thái khoá đơn giá (mờ input khi bị khoá)
+const isRateLocked = ref(false);
 
 const toggleAccordion = () => {
   if (props.isInBothTab) {
@@ -435,6 +492,16 @@ const onPasteDecimal = (e: ClipboardEvent) => {
 </script>
 
 <style scoped>
+#electricity-rate::-webkit-outer-spin-button,
+#electricity-rate::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#electricity-rate {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 /* Smooth focus and hover states for inputs */
 input[type="number"] {
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);

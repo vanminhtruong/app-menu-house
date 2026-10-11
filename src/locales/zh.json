@@ -43,6 +43,8 @@
     },
     "formula": "公式:",
     "total": "总计:",
+    "rateLock": "锁定单价",
+    "rateUnlock": "解锁单价",
     "summary": {
       "title": "电费 & 水费总计",
       "note": "包括税费"

@@ -43,6 +43,8 @@
     },
     "formula": "Công thức:",
     "total": "Thành Tiền:",
+    "rateLock": "Khóa đơn giá",
+    "rateUnlock": "Mở khóa đơn giá",
     "summary": {
       "title": "Tổng Điện & Nước",
       "note": "Đã bao gồm thuế và phí"

@@ -43,6 +43,8 @@
     },
     "formula": "Formula:",
     "total": "Total:",
+    "rateLock": "Lock rate",
+    "rateUnlock": "Unlock rate",
     "summary": {
       "title": "Total Electricity & Water",
       "note": "Including taxes and fees"

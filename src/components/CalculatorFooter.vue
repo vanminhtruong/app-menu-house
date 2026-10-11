@@ -34,7 +34,7 @@
           'px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-300 w-full',
           canShowDetails 
             ? (themeStore.isPureDark
-                ? 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:from-blue-500 hover:to-indigo-600 focus:ring-blue-500 shadow-[0_0_15px_rgba(37,99,235,0.5)] animate-pulse-subtle border border-blue-500'
+                ? 'pd-primary-dark text-white border focus:ring-gray-400'
                 : themeStore.isDarkMode
                   ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-400 hover:to-indigo-500 focus:ring-blue-400 shadow-[0_0_15px_rgba(66,153,225,0.5)] animate-pulse-subtle border border-blue-400'
                   : 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-400 hover:to-indigo-500 focus:ring-blue-400 shadow-md animate-pulse-subtle')
@@ -105,6 +105,16 @@ const canShowDetails = computed(() => {
 </script>
 
 <style scoped>
+/* Nút chính ở chế độ nền đen thuần: xám trung tính (không ánh xanh) */
+.pd-primary-dark {
+  background-color: #2a2a2a;
+  border-color: #5a5a5a;
+}
+.pd-primary-dark:hover {
+  background-color: #3d3d3d;
+  border-color: #707070;
+}
+
 /* Button hover animations */
 button {
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);

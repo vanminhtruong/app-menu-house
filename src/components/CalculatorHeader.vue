@@ -33,13 +33,22 @@
             :class="[
               'relative w-11 h-6 rounded-full transition-all duration-300 ease-in-out',
               backgroundStore.isEnabled
-                ? 'bg-blue-600 shadow-lg'
+                ? themeStore.isPureDark
+                  ? 'pd-bg-track-on'
+                  : 'bg-blue-600 shadow-lg'
+                : themeStore.isPureDark
+                ? 'pd-bg-track-off'
                 : 'bg-gray-400',
             ]"
           >
             <div
               :class="[
-                'absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-all duration-300 ease-in-out shadow-md',
+                'absolute top-0.5 left-0.5 rounded-full h-5 w-5 transition-all duration-300 ease-in-out shadow-md',
+                themeStore.isPureDark
+                  ? backgroundStore.isEnabled
+                    ? 'pd-bg-knob-on'
+                    : 'pd-bg-knob-off'
+                  : 'bg-white',
                 backgroundStore.isEnabled
                   ? 'transform translate-x-5'
                   : 'transform translate-x-0',
@@ -391,6 +400,20 @@ const handleBackgroundToggle = () => {
 </script>
 
 <style scoped>
+/* Công tắc "Nền" ở chế độ nền đen thuần: xám trung tính, đủ tương phản trên nền đen */
+.pd-bg-track-on {
+  background-color: #5a5a5a;
+}
+.pd-bg-track-off {
+  background-color: #3d3d3d;
+}
+.pd-bg-knob-on {
+  background-color: #f0f0f0;
+}
+.pd-bg-knob-off {
+  background-color: #a0a0a0;
+}
+
 /* Dropdown wrapper needs relative positioning */
 .lang-dropdown-wrapper {
   position: relative;
