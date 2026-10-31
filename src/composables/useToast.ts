@@ -1,5 +1,6 @@
 import { useToast as useVueToastification } from 'vue-toastification'
-import { useI18n } from 'vue-i18n'
+import i18n from '../i18n'
+import { watch } from 'vue'
 import { useToastTheme } from './useToastTheme'
 
 // Interface cho toast options
@@ -48,18 +49,11 @@ export function useToast() {
   // Initialize toast theme management
   const { forceUpdateTheme } = useToastTheme()
 
-  // Get translation function safely
-  let t: any
-  try {
-    const i18n = useI18n()
-    t = i18n.t
-  } catch {
-    // Fallback if i18n is not available
-    t = (_key: string, fallback: string) => fallback
-  }
+  // Resolve translations through the shared i18n instance, also outside component setup.
+  const t = (key: string, fallback: string) => i18n.global.t(key, fallback)
 
-  // Predefined toast messages
-  const messages: ToastMessages = {
+  // Rebuild predefined messages when the selected language changes.
+  const createMessages = (): ToastMessages => ({
     success: {
       copy: t('toast.success.copy', 'Đã sao chép thành công!'),
       save: t('toast.success.save', 'Đã lưu thành công!'),
@@ -87,7 +81,14 @@ export function useToast() {
       loading: t('toast.info.loading', 'Đang tải...'),
       general: t('toast.info.general', 'Thông tin')
     }
-  }
+  })
+  const messages = createMessages()
+  watch(i18n.global.locale, () => {
+    const translated = createMessages()
+    for (const category of ['success', 'error', 'warning', 'info'] as const) {
+      Object.assign(messages[category], translated[category])
+    }
+  }, { flush: 'sync' })
 
   // Success toast
   const showSuccess = (message?: string, options?: ToastOptions) => {
